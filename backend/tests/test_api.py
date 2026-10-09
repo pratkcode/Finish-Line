@@ -14,11 +14,15 @@ def test_health():
 
 
 def test_list_courses():
-    courses = client.get("/api/courses").json()
+    response = client.get("/api/courses")
+    courses = response.json()
     codes = [c["code"] for c in courses]
-    assert "INST326" in codes
+    # The whole catalog across departments, returned a page at a time.
+    assert int(response.headers["X-Total-Count"]) > 5000
+    assert len(codes) == 200
     assert codes == sorted(codes)
     assert set(courses[0]) == {"code", "name", "credits_min", "credits_max"}
+    assert "INST326" in [c["code"] for c in client.get("/api/courses", params={"search": "INST326"}).json()]
 
 
 def test_search_by_code():
@@ -127,3 +131,8 @@ def test_database_outage_returns_503(monkeypatch):
     response = client.get("/api/courses")
     assert response.status_code == 503
     assert response.json() == {"detail": "Database unavailable"}
+
+
+def test_total_count_header_is_readable_cross_origin():
+    response = client.get("/api/courses", headers={"Origin": "http://localhost:3000"})
+    assert "X-Total-Count" in response.headers["access-control-expose-headers"]

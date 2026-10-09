@@ -301,6 +301,13 @@ function Suggestions({
   return (
     <div className="mt-2">
       <ul className="space-y-1.5">{shown.map(item)}</ul>
+      {unit.candidate_count > suggestions.length && (
+        <p className="mt-1.5 text-xs text-slate-500">
+          Showing {suggestions.length} of {unit.candidate_count} courses that count, with verified
+          prerequisites first. Search <Link href="/courses" className="underline">Courses</Link> for
+          the rest.
+        </p>
+      )}
       {hidden.length > 0 && (
         <details className="mt-1.5">
           <summary className="cursor-pointer text-sm text-slate-500 underline hover:text-slate-700">

@@ -113,6 +113,9 @@ def choose_courses(tree, graph: PrereqGraph, rules: Rules, completed: dict[str, 
         have = set(completed) | set(planned)
         unavailable = {c for c in graph.courses if rules.blocked_reason(c, have - {c})}
         unavailable |= set(removed) - set(pinned)
+        # Courses no longer in the current catalog are never suggested.
+        unavailable |= {c for c, info in graph.courses.items()
+                        if not info.get("in_current_catalog", True)} - set(pinned)
         done = {code: c["grade"] for code, c in completed.items()} | {c: None for c in planned}
         return Checker(graph, done, unavailable), unavailable
 
@@ -162,13 +165,17 @@ def choose_courses(tree, graph: PrereqGraph, rules: Rules, completed: dict[str, 
                 continue
             # Prefer courses that also fill other remaining requirements, then
             # the fewest extra prerequisites, then fixed-credit courses.
-            coverage = {c: sum(c in {x["code"] for x in u["candidate_courses"]} for u in units)
-                        for c in allowed}
+            unit_sets = [{x["code"] for x in u["candidate_courses"]} for u in units]
+            coverage = {c: sum(c in codes for codes in unit_sets) for c in allowed}
+            position = {c: i for i, c in enumerate(candidates)}
             picks = [min(allowed, key=lambda c: (
                 -coverage[c],
+                # Prefer courses whose prerequisites are verified (curated,
+                # fully parsed, or none) over ones known only as text.
+                not graph.courses[c].get("prerequisites_complete", True),
                 checker.cost(c, unit["min_grade"]),
                 graph.courses[c]["credits_min"] != graph.courses[c]["credits_max"],
-                candidates.index(c),
+                position[c],
             ))]
 
         added = False

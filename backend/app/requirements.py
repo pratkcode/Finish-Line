@@ -53,7 +53,10 @@ class Requirement(BaseModel):
     source_url: str | None
     courses: list[CourseSummary]  # courses listed by name in the requirement
     filters: list[CourseFilter]  # patterns that match more courses
-    eligible_courses: list[CourseSummary]  # every known course that can satisfy it
+    # Courses that can satisfy it: the first MAX_LISTED (verified prerequisites
+    # first), plus the total. Empty when any course counts.
+    eligible_courses: list[CourseSummary]
+    eligible_count: int
     progress: Progress | None = None
     children: list["Requirement"]
 
@@ -161,7 +164,11 @@ def load_requirements(conn, program: dict) -> tuple[list[dict], dict]:
     for course in conn.execute(
         """
         SELECT c.code, c.name, c.credits_min, c.credits_max, c.subject, c.number,
-               array_remove(array_agg(g.tag), NULL) AS gen_ed
+               c.prerequisite_status IN ('curated', 'parsed', 'none')
+                   AND c.prerequisites_complete AS verified_prerequisites,
+               -- Only unconditional, verified Gen Ed tags count toward requirements.
+               COALESCE(array_agg(g.tag) FILTER (WHERE g.tag IS NOT NULL
+                                                  AND g.condition_text IS NULL), '{}') AS gen_ed
         FROM courses c LEFT JOIN course_gen_ed g ON g.course_id = c.id
         WHERE c.university_id = %s
         GROUP BY c.id ORDER BY c.code
@@ -207,7 +214,9 @@ def load_requirements(conn, program: dict) -> tuple[list[dict], dict]:
             # True when every course counts (e.g. "120 total credits").
             "any_course": row["rule"] in ("min_courses", "min_credits")
                           and not listed_codes and not node_filters,
-            "eligible_courses": [courses[code] for code in eligible],
+            "eligible_courses": listed_courses(eligible, courses, row["rule"], listed_codes,
+                                               node_filters),
+            "eligible_count": len(eligible),
             "children": [],
         }
         nodes[row["id"]] = node
@@ -216,6 +225,21 @@ def load_requirements(conn, program: dict) -> tuple[list[dict], dict]:
         else:
             nodes[row["parent_id"]]["children"].append(node)
     return roots, courses
+
+
+MAX_LISTED = 50
+
+
+def listed_courses(eligible: list[str], courses: dict, rule: str, listed: list[str],
+                   filters: list[dict]) -> list[dict]:
+    """The courses to show for a requirement. Large pattern-based sets (Gen Ed,
+    upper-level) are capped; courses with verified prerequisites come first."""
+    if rule in ("min_courses", "min_credits") and not listed and not filters:
+        return []  # any course counts, e.g. "120 total credits"
+    if len(eligible) <= MAX_LISTED:
+        return [courses[code] for code in eligible]
+    ranked = sorted(eligible, key=lambda code: (not courses[code]["verified_prerequisites"], code))
+    return [courses[code] for code in ranked[:MAX_LISTED]]
 
 
 def eligible_codes(rule: str, listed: list[str], filters: list[dict], courses: dict) -> list[str]:

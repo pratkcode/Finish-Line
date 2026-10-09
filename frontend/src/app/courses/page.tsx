@@ -8,7 +8,7 @@ export default function CoursesPage() {
   return (
     <PageShell
       title="Courses"
-      description="Search UMD Information Science courses and see what each one requires and unlocks."
+      description="Search the UMD undergraduate catalog across all departments and see what each course requires and unlocks."
     >
       <CourseBrowser />
     </PageShell>

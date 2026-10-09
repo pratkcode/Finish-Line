@@ -13,14 +13,20 @@ class Rules:
     restrictions: dict[str, dict]  # code -> {min_credits, programs, other, avoid_in_plan}
     exclusions: list[tuple[str, str, str]]  # (course, other_course, 'credit_overlap'|'not_after')
 
+    def __post_init__(self):
+        # Exclusions by course, so checks don't scan every pair.
+        self._exclusions_by_course: dict[str, list[tuple[str, str]]] = {}
+        for course, other, kind in self.exclusions:
+            self._exclusions_by_course.setdefault(course, []).append((other, kind))
+
     def blocked_reason(self, code: str, have: set[str], elective: bool = True) -> str | None:
         r = self.restrictions.get(code, {})
         if r.get("programs") and self.program_name not in r["programs"]:
             return "Restricted to other programs"
         if elective and r.get("avoid_in_plan"):
             return "Not generally open: " + (r.get("other") or "see restrictions")
-        for course, other, kind in self.exclusions:
-            if course == code and other in have:
+        for other, kind in self._exclusions_by_course.get(code, ()):
+            if other in have:
                 if kind == "credit_overlap":
                     return f"Credit is only granted for one of {code} and {other}"
                 return f"Can't be taken after {other}"

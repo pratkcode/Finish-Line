@@ -33,6 +33,7 @@ app.add_middleware(
     allow_origins=CORS_ORIGINS,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
     allow_headers=["Content-Type"],
+    expose_headers=["X-Total-Count"],  # search result totals
 )
 
 

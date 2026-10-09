@@ -50,8 +50,10 @@ class RequirementSummary(BaseModel):
     courses_remaining: int | None
     credits_remaining: int | None
     applied_courses: list[AppliedCourse]
-    # Courses that could still satisfy it. Empty when any course counts.
+    # Courses that could still satisfy it: the first MAX_CANDIDATES (verified
+    # prerequisites first), plus the total. Empty when any course counts.
     candidate_courses: list[CandidateCourse]
+    candidate_count: int
     # "Complete one of" requirements list their options here.
     options: list[str]
 
@@ -83,7 +85,7 @@ def get_degree_progress(session_id: UUID):
 def calculate_degree_progress(conn, session_id: UUID) -> dict:
     session = load_session(conn, session_id)
     program = find_program(conn, session["program_slug"])
-    tree, _ = load_requirements(conn, program)
+    tree, courses = load_requirements(conn, program)
 
     taken = {
         c["code"]: {"code": c["code"], "name": c["name"], "credits": c["credits"],
@@ -96,7 +98,24 @@ def calculate_degree_progress(conn, session_id: UUID) -> dict:
         node["progress"] = results[node["key"]]
 
     summary = summarize(tree, taken, load_rules(conn, program))
+    verified = {code for code, c in courses.items() if c["verified_prerequisites"]}
+    for unit in (summary["completed_requirements"] + summary["remaining_requirements"]
+                 + summary["untracked_requirements"]):
+        cap_candidates(unit, verified)
     return {"session_id": session_id, "program": program, "requirements": tree, **summary}
+
+
+MAX_CANDIDATES = 40
+
+
+def cap_candidates(unit: dict, verified: set[str]) -> None:
+    """Keep responses small: list at most MAX_CANDIDATES suggestions, verified
+    prerequisites and retakes first, and report how many there are in total."""
+    candidates = unit["candidate_courses"]
+    unit["candidate_count"] = len(candidates)
+    if len(candidates) > MAX_CANDIDATES:
+        candidates.sort(key=lambda c: (not c["earned_grade"], c["code"] not in verified, c["code"]))
+        unit["candidate_courses"] = candidates[:MAX_CANDIDATES]
 
 
 def add_reported_credits(tree: list[dict], taken: dict[str, dict], credits: int) -> None:

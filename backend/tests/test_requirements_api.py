@@ -72,7 +72,13 @@ def test_gen_ed_requirement_uses_tags():
     tree = client.get(f"/api/programs/{SLUG}/requirements").json()["requirements"]
     big_question = find(tree, "umd.gened.big_question")
     assert big_question["filters"][0]["gen_ed"] == "SCIS"
-    assert {"INST104", "INST204"} <= set(codes(big_question["eligible_courses"]))
+    # Hundreds of Big Question courses across departments; the list is capped.
+    assert big_question["eligible_count"] > 100  # 210 in the 2026-2027 data
+    assert len(big_question["eligible_courses"]) == 50
+    listed = codes(big_question["eligible_courses"])
+    assert len({c[:4] for c in listed}) > 5
+    for code in listed[:5] + ["INST104", "INST204"]:
+        assert "SCIS" in client.get(f"/api/courses/{code}").json()["gen_ed"]
 
 
 def test_progress_checklist():
@@ -81,7 +87,7 @@ def test_progress_checklist():
         {"code": "inst 311", "grade": "B"},     # codes are normalized
         {"code": "INST314", "grade": "D"},      # below C-: doesn't count for the major
         {"code": "INST354", "grade": "A-"},
-        {"code": "ENGL101", "grade": "A"},      # not in the database
+        {"code": "ZZZZ999", "grade": "A"},      # not a UMD course
     ])
     tree = data["requirements"]
     core = find(tree, "infosci.core")["progress"]
@@ -95,7 +101,7 @@ def test_progress_checklist():
 
     # A D still earns credit toward the degree total.
     assert "INST314" in codes(find(tree, "umd.degree.total_credits")["progress"]["applied_courses"])
-    assert data["unrecognized_courses"] == ["ENGL101"]
+    assert data["unrecognized_courses"] == ["ZZZZ999"]
 
 
 def test_core_course_is_not_also_an_elective():

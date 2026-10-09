@@ -54,7 +54,7 @@ export default function RequirementItem({ requirement }: Props) {
 }
 
 function CourseChecklist({ requirement }: Props) {
-  const { rule, progress, courses, filters, eligible_courses } = requirement;
+  const { rule, progress, courses, filters, eligible_courses, eligible_count } = requirement;
   if (!progress || rule === "not_tracked") return null;
 
   const applied = new Map(progress.applied_courses.map((c) => [c.code, c]));
@@ -104,10 +104,12 @@ function CourseChecklist({ requirement }: Props) {
       {(filters.length > 0 || courses.length > 0) && eligible_courses.length > 0 && (
         <details className="mt-2 text-sm">
           <summary className="cursor-pointer text-slate-500 hover:text-slate-700">
-            {eligibleLabel(filters)} ({eligible_courses.length} known)
+            {eligibleLabel(filters)} ({eligible_count} in the catalog)
           </summary>
           <p className="mt-1 leading-relaxed text-slate-600">
             {eligible_courses.map((c) => c.code).join(", ")}
+            {eligible_count > eligible_courses.length &&
+              `, and ${eligible_count - eligible_courses.length} more (search Courses to see all)`}
           </p>
         </details>
       )}

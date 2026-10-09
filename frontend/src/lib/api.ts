@@ -66,6 +66,8 @@ export type Prerequisites = {
   groups: PrerequisiteGroup[];
   // False when the official text has conditions the groups don't capture.
   complete: boolean;
+  // Where the groups come from. "unstructured": only the official wording is known.
+  status: "curated" | "parsed" | "partial" | "unstructured" | "none";
   prerequisite_text: string | null;
   corequisite_text: string | null;
 };
@@ -79,12 +81,37 @@ export function getHealth(): Promise<HealthResponse> {
   return get("/api/health");
 }
 
-export function getCourses(
+export type CourseSearchResult = {
+  courses: CourseSummary[];
+  total: number; // all matches; `courses` is capped (see the API's X-Total-Count)
+};
+
+export async function searchCourses(
   search: string,
-  signal?: AbortSignal,
-): Promise<CourseSummary[]> {
-  const query = search ? `?search=${encodeURIComponent(search)}` : "";
-  return get(`/api/courses${query}`, signal);
+  options: { department?: string; limit?: number; signal?: AbortSignal } = {},
+): Promise<CourseSearchResult> {
+  const params = new URLSearchParams();
+  if (search) params.set("search", search);
+  if (options.department) params.set("department", options.department);
+  if (options.limit) params.set("limit", String(options.limit));
+  const query = params.toString() ? `?${params}` : "";
+  const res = await fetch(`${API_URL}/api/courses${query}`, { signal: options.signal }).catch((err) => {
+    if (err instanceof DOMException && err.name === "AbortError") throw err;
+    throw new ApiError(0, "Can't reach the Finish Line server. Is the backend running?");
+  });
+  if (!res.ok) throw new ApiError(res.status, `Search failed (${res.status})`);
+  const courses: CourseSummary[] = await res.json();
+  return { courses, total: Number(res.headers.get("X-Total-Count") ?? courses.length) };
+}
+
+export async function getCourses(search: string, signal?: AbortSignal): Promise<CourseSummary[]> {
+  return (await searchCourses(search, { signal })).courses;
+}
+
+export type Department = { code: string; name: string; course_count: number };
+
+export function getDepartments(signal?: AbortSignal) {
+  return get<Department[]>("/api/courses/departments", signal);
 }
 
 export function getCourse(
@@ -156,7 +183,8 @@ export type Requirement = {
   source_url: string | null;
   courses: CourseSummary[];
   filters: CourseFilter[];
-  eligible_courses: CourseSummary[];
+  eligible_courses: CourseSummary[]; // capped; see eligible_count
+  eligible_count: number;
   progress: RequirementProgress | null;
   children: Requirement[];
 };
@@ -264,7 +292,8 @@ export type RequirementSummary = {
   courses_remaining: number | null;
   credits_remaining: number | null;
   applied_courses: AppliedCourse[];
-  candidate_courses: CandidateCourse[];
+  candidate_courses: CandidateCourse[]; // capped; see candidate_count
+  candidate_count: number;
   options: string[];
 };
 
@@ -402,10 +431,25 @@ export function savePlanOverrides(sessionId: string, overrides: PlanOverrides) {
 }
 
 export type CourseDetailExtras = {
-  gen_ed: string[];
+  department: string;
+  department_name: string | null;
+  catalog_year: string | null;
+  source_url: string | null;
+  in_current_catalog: boolean;
+  gen_ed: string[]; // verified tags that count toward requirements
+  gen_ed_conditional: { tag: string; condition: string }[]; // shown, not counted
   gen_ed_text: string | null;
+  gen_ed_status: "verified" | "none_found";
+  gen_ed_term: string | null;
+  prerequisite_status: Prerequisites["status"];
   restriction_text: string | null;
   credit_only_granted_for: string | null;
+  formerly: string | null;
+  cross_listed_with: string | null;
+  jointly_offered_with: string | null;
+  repeatable_to: string | null;
+  recommended: string | null;
+  additional_information: string | null;
 };
 
 export type Dependent = CourseSummary & {

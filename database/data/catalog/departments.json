@@ -1,0 +1,815 @@
+{
+ "source": "https://academiccatalog.umd.edu/undergraduate/approved-courses/",
+ "catalog_year": "2026-2027",
+ "retrieved": "2026-10-09",
+ "departments": {
+  "AAAS": {
+   "name": "African American and Africana Studies",
+   "slug": "aaas"
+  },
+  "AAST": {
+   "name": "Asian American Studies",
+   "slug": "aast"
+  },
+  "ABRM": {
+   "name": "Anti-Black Racism",
+   "slug": "abrm"
+  },
+  "AGNR": {
+   "name": "Agriculture and Natural Resources",
+   "slug": "agnr"
+  },
+  "AGST": {
+   "name": "Agricultural Science and Technology",
+   "slug": "agst"
+  },
+  "AIME": {
+   "name": "Artificial Intelligence Interdisciplinary Education",
+   "slug": "aime"
+  },
+  "AMSC": {
+   "name": "Applied Mathematics & Scientific Computation",
+   "slug": "amsc"
+  },
+  "AMST": {
+   "name": "American Studies",
+   "slug": "amst"
+  },
+  "ANSC": {
+   "name": "Animal Science",
+   "slug": "ansc"
+  },
+  "ANTH": {
+   "name": "Anthropology",
+   "slug": "anth"
+  },
+  "AOSC": {
+   "name": "Atmospheric and Oceanic Science",
+   "slug": "aosc"
+  },
+  "ARAB": {
+   "name": "Arabic",
+   "slug": "arab"
+  },
+  "ARCH": {
+   "name": "Architecture",
+   "slug": "arch"
+  },
+  "AREC": {
+   "name": "Agricultural and Resource Economics",
+   "slug": "arec"
+  },
+  "ARHU": {
+   "name": "Arts and Humanities",
+   "slug": "arhu"
+  },
+  "ARHX": {
+   "name": "Art History & Archaeology Education Abroad",
+   "slug": "arhx"
+  },
+  "ARMY": {
+   "name": "Army",
+   "slug": "army"
+  },
+  "ARSC": {
+   "name": "Air Science",
+   "slug": "arsc"
+  },
+  "ARTH": {
+   "name": "Art History & Archaeology",
+   "slug": "arth"
+  },
+  "ARTT": {
+   "name": "Art Studio",
+   "slug": "artt"
+  },
+  "ARTX": {
+   "name": "Art Studio Education Abroad",
+   "slug": "artx"
+  },
+  "ARUX": {
+   "name": "Arts and Humanities Education Abroad",
+   "slug": "arux"
+  },
+  "ASTR": {
+   "name": "Astronomy",
+   "slug": "astr"
+  },
+  "BCHM": {
+   "name": "Biochemistry",
+   "slug": "bchm"
+  },
+  "BIOE": {
+   "name": "Bioengineering",
+   "slug": "bioe"
+  },
+  "BIOM": {
+   "name": "Biometrics",
+   "slug": "biom"
+  },
+  "BMGT": {
+   "name": "Business and Management",
+   "slug": "bmgt"
+  },
+  "BMIN": {
+   "name": "General Business Minor",
+   "slug": "bmin"
+  },
+  "BSCI": {
+   "name": "Biological Sciences Program",
+   "slug": "bsci"
+  },
+  "BSOS": {
+   "name": "Behavioral and Social Sciences",
+   "slug": "bsos"
+  },
+  "BSST": {
+   "name": "Terrorism Studies",
+   "slug": "bsst"
+  },
+  "CCJS": {
+   "name": "Criminology and Criminal Justice",
+   "slug": "ccjs"
+  },
+  "CHBE": {
+   "name": "Chemical and Biomolecular Engineering",
+   "slug": "chbe"
+  },
+  "CHEM": {
+   "name": "Chemistry",
+   "slug": "chem"
+  },
+  "CHIN": {
+   "name": "Chinese",
+   "slug": "chin"
+  },
+  "CHSE": {
+   "name": "Counseling, Higher Education, and Special Education",
+   "slug": "chse"
+  },
+  "CINE": {
+   "name": "Cinema and Media Studies",
+   "slug": "cine"
+  },
+  "CINX": {
+   "name": "Cinema and Media Studies Education Abroad",
+   "slug": "cinx"
+  },
+  "CLAS": {
+   "name": "Classics",
+   "slug": "clas"
+  },
+  "CLAX": {
+   "name": "Classics Education Abroad",
+   "slug": "clax"
+  },
+  "CMLT": {
+   "name": "Comparative Literature",
+   "slug": "cmlt"
+  },
+  "CMLX": {
+   "name": "Comparative Literature Education Abroad",
+   "slug": "cmlx"
+  },
+  "CMNS": {
+   "name": "Computer, Math, and Natural Sciences",
+   "slug": "cmns"
+  },
+  "CMSC": {
+   "name": "Computer Science",
+   "slug": "cmsc"
+  },
+  "COMM": {
+   "name": "Communication",
+   "slug": "comm"
+  },
+  "COMX": {
+   "name": "Communication Education Abroad",
+   "slug": "comx"
+  },
+  "CPBE": {
+   "name": "College Park Scholars-Business, Society, and Entrepreneurship",
+   "slug": "cpbe"
+  },
+  "CPCV": {
+   "name": "College Park Scholars-Civic Engagement for Social Good",
+   "slug": "cpcv"
+  },
+  "CPDJ": {
+   "name": "College Park Scholars-Data Justice",
+   "slug": "cpdj"
+  },
+  "CPET": {
+   "name": "College Park Scholars-Environment, Technology & Economy",
+   "slug": "cpet"
+  },
+  "CPGH": {
+   "name": "College Park Scholars-Global Public Health",
+   "slug": "cpgh"
+  },
+  "CPJT": {
+   "name": "College Park Scholars-Justice and Legal Thought",
+   "slug": "cpjt"
+  },
+  "CPMS": {
+   "name": "College Park Scholars-Media, Self and Society",
+   "slug": "cpms"
+  },
+  "CPPL": {
+   "name": "College Park Scholars-Public Leadership",
+   "slug": "cppl"
+  },
+  "CPSA": {
+   "name": "College Park Scholars-Arts",
+   "slug": "cpsa"
+  },
+  "CPSD": {
+   "name": "College Park Scholars-Science, Discovery & the Universe",
+   "slug": "cpsd"
+  },
+  "CPSF": {
+   "name": "College Park Scholars-Life Sciences",
+   "slug": "cpsf"
+  },
+  "CPSG": {
+   "name": "College Park Scholars-Science and Global Change",
+   "slug": "cpsg"
+  },
+  "CPSN": {
+   "name": "College Park Scholars-International Studies",
+   "slug": "cpsn"
+  },
+  "CPSP": {
+   "name": "College Park Scholars Program",
+   "slug": "cpsp"
+  },
+  "CPSS": {
+   "name": "College Park Scholars-Science, Technology and Society",
+   "slug": "cpss"
+  },
+  "DANC": {
+   "name": "Dance",
+   "slug": "danc"
+  },
+  "DATA": {
+   "name": "Data Science and Analytics",
+   "slug": "data"
+  },
+  "EALL": {
+   "name": "East Asian Languages and Literatures",
+   "slug": "eall"
+  },
+  "ECON": {
+   "name": "Economics",
+   "slug": "econ"
+  },
+  "EDCI": {
+   "name": "Curriculum and Instruction",
+   "slug": "edci"
+  },
+  "EDCP": {
+   "name": "Education Counseling and Personnel Services",
+   "slug": "edcp"
+  },
+  "EDDI": {
+   "name": "Education Dialogues",
+   "slug": "eddi"
+  },
+  "EDHD": {
+   "name": "Education, Human Development",
+   "slug": "edhd"
+  },
+  "EDHI": {
+   "name": "Education Leadership, Higher Ed and International Ed",
+   "slug": "edhi"
+  },
+  "EDPS": {
+   "name": "Education Policy Studies",
+   "slug": "edps"
+  },
+  "EDSP": {
+   "name": "Education, Special",
+   "slug": "edsp"
+  },
+  "EDUC": {
+   "name": "Education",
+   "slug": "educ"
+  },
+  "ENAE": {
+   "name": "Engineering, Aerospace",
+   "slug": "enae"
+  },
+  "ENBC": {
+   "name": "Biocomputational Engineering",
+   "slug": "enbc"
+  },
+  "ENCE": {
+   "name": "Engineering, Civil",
+   "slug": "ence"
+  },
+  "ENEB": {
+   "name": "Cyber-Physical Systems Engineering",
+   "slug": "eneb"
+  },
+  "ENED": {
+   "name": "Engineering Education",
+   "slug": "ened"
+  },
+  "ENEE": {
+   "name": "Electrical & Computer Engineering",
+   "slug": "enee"
+  },
+  "ENES": {
+   "name": "Engineering Science",
+   "slug": "enes"
+  },
+  "ENFP": {
+   "name": "Engineering, Fire Protection",
+   "slug": "enfp"
+  },
+  "ENGL": {
+   "name": "English",
+   "slug": "engl"
+  },
+  "ENGX": {
+   "name": "English Education Abroad",
+   "slug": "engx"
+  },
+  "ENMA": {
+   "name": "Engineering, Materials",
+   "slug": "enma"
+  },
+  "ENME": {
+   "name": "Engineering, Mechanical",
+   "slug": "enme"
+  },
+  "ENMT": {
+   "name": "Mechatronics Engineering",
+   "slug": "enmt"
+  },
+  "ENRE": {
+   "name": "Reliability Engineering",
+   "slug": "enre"
+  },
+  "ENSP": {
+   "name": "Environmental Science and Policy",
+   "slug": "ensp"
+  },
+  "ENST": {
+   "name": "Environmental Science and Technology",
+   "slug": "enst"
+  },
+  "ENTE": {
+   "name": "Engineering Test and Evaluation",
+   "slug": "ente"
+  },
+  "EPIB": {
+   "name": "Epidemiology and Biostatistics",
+   "slug": "epib"
+  },
+  "FGSM": {
+   "name": "Federal and Global Fellows",
+   "slug": "fgsm"
+  },
+  "FIRE": {
+   "name": "First-Year Innovation & Research Experience",
+   "slug": "fire"
+  },
+  "FMSC": {
+   "name": "Family Science",
+   "slug": "fmsc"
+  },
+  "FREN": {
+   "name": "French",
+   "slug": "fren"
+  },
+  "GBHL": {
+   "name": "Global Health",
+   "slug": "gbhl"
+  },
+  "GEMS": {
+   "name": "Gemstone",
+   "slug": "gems"
+  },
+  "GEOG": {
+   "name": "Geographical Sciences",
+   "slug": "geog"
+  },
+  "GEOL": {
+   "name": "Geology",
+   "slug": "geol"
+  },
+  "GERS": {
+   "name": "German Studies",
+   "slug": "gers"
+  },
+  "GFPL": {
+   "name": "Global and Foreign Policy",
+   "slug": "gfpl"
+  },
+  "GLBC": {
+   "name": "Global Culture and Thought",
+   "slug": "glbc"
+  },
+  "GREK": {
+   "name": "Greek",
+   "slug": "grek"
+  },
+  "GVPT": {
+   "name": "Government and Politics",
+   "slug": "gvpt"
+  },
+  "HACS": {
+   "name": "ACES-Cybersecurity",
+   "slug": "hacs"
+  },
+  "HBUS": {
+   "name": "Interdisciplinary Business Honors",
+   "slug": "hbus"
+  },
+  "HDCC": {
+   "name": "Design Cultures and Creativity",
+   "slug": "hdcc"
+  },
+  "HEBR": {
+   "name": "Hebrew",
+   "slug": "hebr"
+  },
+  "HEIP": {
+   "name": "Entrepreneurship and Innovation",
+   "slug": "heip"
+  },
+  "HESI": {
+   "name": "Higher Ed, Student Affairs, and International Ed Policy",
+   "slug": "hesi"
+  },
+  "HESP": {
+   "name": "Hearing and Speech Sciences",
+   "slug": "hesp"
+  },
+  "HGLO": {
+   "name": "Honors Global Communities",
+   "slug": "hglo"
+  },
+  "HHUM": {
+   "name": "Honors Humanities",
+   "slug": "hhum"
+  },
+  "HISP": {
+   "name": "Historic Preservation",
+   "slug": "hisp"
+  },
+  "HIST": {
+   "name": "History",
+   "slug": "hist"
+  },
+  "HISX": {
+   "name": "History Education Abroad",
+   "slug": "hisx"
+  },
+  "HLSA": {
+   "name": "Health Services Administration",
+   "slug": "hlsa"
+  },
+  "HLSC": {
+   "name": "Integrated Life Sciences",
+   "slug": "hlsc"
+  },
+  "HLTH": {
+   "name": "Health",
+   "slug": "hlth"
+  },
+  "HNUH": {
+   "name": "University Honors",
+   "slug": "hnuh"
+  },
+  "HONR": {
+   "name": "Honors",
+   "slug": "honr"
+  },
+  "IDEA": {
+   "name": "Academy for Innovation & Entrepreneurship",
+   "slug": "idea"
+  },
+  "IMDM": {
+   "name": "Immersive Media Design",
+   "slug": "imdm"
+  },
+  "IMMR": {
+   "name": "Immigration Studies",
+   "slug": "immr"
+  },
+  "INAG": {
+   "name": "Institute of Applied Agriculture",
+   "slug": "inag"
+  },
+  "INST": {
+   "name": "Information Studies",
+   "slug": "inst"
+  },
+  "ISRL": {
+   "name": "Israel Studies",
+   "slug": "isrl"
+  },
+  "ITAL": {
+   "name": "Italian",
+   "slug": "ital"
+  },
+  "ITAX": {
+   "name": "Italian Education Abroad",
+   "slug": "itax"
+  },
+  "IVSP": {
+   "name": "Individual Studies Program",
+   "slug": "ivsp"
+  },
+  "JAPN": {
+   "name": "Japanese",
+   "slug": "japn"
+  },
+  "JOUR": {
+   "name": "Journalism",
+   "slug": "jour"
+  },
+  "JWST": {
+   "name": "Jewish Studies",
+   "slug": "jwst"
+  },
+  "KNES": {
+   "name": "Kinesiology",
+   "slug": "knes"
+  },
+  "KORA": {
+   "name": "Korean",
+   "slug": "kora"
+  },
+  "LACS": {
+   "name": "Latin American and Caribbean Studies",
+   "slug": "lacs"
+  },
+  "LARC": {
+   "name": "Landscape Architecture",
+   "slug": "larc"
+  },
+  "LASX": {
+   "name": "Certificate in Latin American Studies Education Abroad",
+   "slug": "lasx"
+  },
+  "LATN": {
+   "name": "Latin",
+   "slug": "latn"
+  },
+  "LBSC": {
+   "name": "Library Science",
+   "slug": "lbsc"
+  },
+  "LEAD": {
+   "name": "Leadership Education and Development",
+   "slug": "lead"
+  },
+  "LGBT": {
+   "name": "LGBTQ Studies",
+   "slug": "lgbt"
+  },
+  "LGBX": {
+   "name": "LGBTQ Studies Education Abroad",
+   "slug": "lgbx"
+  },
+  "LING": {
+   "name": "Linguistics",
+   "slug": "ling"
+  },
+  "MATH": {
+   "name": "Mathematics",
+   "slug": "math"
+  },
+  "MEES": {
+   "name": "Marine-Estuarine-Environmental Sciences",
+   "slug": "mees"
+  },
+  "MIEH": {
+   "name": "Maryland Institute for Applied Environmental Health",
+   "slug": "mieh"
+  },
+  "MITH": {
+   "name": "Maryland Institute for Technology in the Humanities",
+   "slug": "mith"
+  },
+  "MLAW": {
+   "name": "MPower Undergraduate Law Programs",
+   "slug": "mlaw"
+  },
+  "MLSC": {
+   "name": "MD Language Science Ctr",
+   "slug": "mlsc"
+  },
+  "MUED": {
+   "name": "Music Education",
+   "slug": "mued"
+  },
+  "MUET": {
+   "name": "Ethnomusicology",
+   "slug": "muet"
+  },
+  "MUSC": {
+   "name": "School of Music",
+   "slug": "musc"
+  },
+  "MUSP": {
+   "name": "Music Performance",
+   "slug": "musp"
+  },
+  "NAVY": {
+   "name": "Navy",
+   "slug": "navy"
+  },
+  "NEUR": {
+   "name": "Neuroscience",
+   "slug": "neur"
+  },
+  "NFSC": {
+   "name": "Nutrition and Food Science",
+   "slug": "nfsc"
+  },
+  "OURS": {
+   "name": "Office of Undergraduate Research",
+   "slug": "ours"
+  },
+  "PEER": {
+   "name": "Health Center",
+   "slug": "peer"
+  },
+  "PERS": {
+   "name": "Persian",
+   "slug": "pers"
+  },
+  "PHIL": {
+   "name": "Philosophy",
+   "slug": "phil"
+  },
+  "PHIX": {
+   "name": "Philosophy Education Abroad",
+   "slug": "phix"
+  },
+  "PHPE": {
+   "name": "Philosophy, Politics, and Economics",
+   "slug": "phpe"
+  },
+  "PHPX": {
+   "name": "Philosophy, Politics, and Economics Education Abroad",
+   "slug": "phpx"
+  },
+  "PHSC": {
+   "name": "Public Health Science",
+   "slug": "phsc"
+  },
+  "PHYS": {
+   "name": "Physics",
+   "slug": "phys"
+  },
+  "PLCY": {
+   "name": "Public Policy",
+   "slug": "plcy"
+  },
+  "PLSC": {
+   "name": "Plant Sciences",
+   "slug": "plsc"
+  },
+  "PORT": {
+   "name": "Portuguese",
+   "slug": "port"
+  },
+  "PSIT": {
+   "name": "Public Service Interpreting and Translation",
+   "slug": "psit"
+  },
+  "PSYC": {
+   "name": "Psychology",
+   "slug": "psyc"
+  },
+  "QMMS": {
+   "name": "Quantitative Methodology: Measurement and Statistics",
+   "slug": "qmms"
+  },
+  "RDEV": {
+   "name": "Real Estate Development",
+   "slug": "rdev"
+  },
+  "RELS": {
+   "name": "Religious Studies",
+   "slug": "rels"
+  },
+  "RELX": {
+   "name": "Religious Studies Education Abroad",
+   "slug": "relx"
+  },
+  "RUSS": {
+   "name": "Russian",
+   "slug": "russ"
+  },
+  "SDSB": {
+   "name": "Social Data Science, BSOS",
+   "slug": "sdsb"
+  },
+  "SDSI": {
+   "name": "Social Data Science, INFO",
+   "slug": "sdsi"
+  },
+  "SLAA": {
+   "name": "Second Language Acquisition and Application",
+   "slug": "slaa"
+  },
+  "SLLC": {
+   "name": "School of Languages, Literatures and Cultures",
+   "slug": "sllc"
+  },
+  "SLLX": {
+   "name": "School of Languages, Literatures & Cultures Education Abroad",
+   "slug": "sllx"
+  },
+  "SMLP": {
+   "name": "Southern Management Leadership Program",
+   "slug": "smlp"
+  },
+  "SOCY": {
+   "name": "Sociology",
+   "slug": "socy"
+  },
+  "SPAN": {
+   "name": "Spanish",
+   "slug": "span"
+  },
+  "SPAX": {
+   "name": "Spanish Education Abroad",
+   "slug": "spax"
+  },
+  "SPHL": {
+   "name": "Public Health",
+   "slug": "sphl"
+  },
+  "STAT": {
+   "name": "Statistics and Probability",
+   "slug": "stat"
+  },
+  "SURV": {
+   "name": "Survey and Data Science",
+   "slug": "surv"
+  },
+  "TDPS": {
+   "name": "Theatre, Dance and Performance Studies",
+   "slug": "tdps"
+  },
+  "THET": {
+   "name": "Theatre",
+   "slug": "thet"
+  },
+  "THEX": {
+   "name": "Theatre Education Abroad",
+   "slug": "thex"
+  },
+  "TLPL": {
+   "name": "Teaching and Learning, Policy and Leadership",
+   "slug": "tlpl"
+  },
+  "TLTC": {
+   "name": "Teaching and Learning Transformation Center",
+   "slug": "tltc"
+  },
+  "UMEI": {
+   "name": "Maryland English Institute",
+   "slug": "umei"
+  },
+  "UNIV": {
+   "name": "University Courses",
+   "slug": "univ"
+  },
+  "URSP": {
+   "name": "Urban Studies and Planning",
+   "slug": "ursp"
+  },
+  "USLT": {
+   "name": "Latina/o Studies",
+   "slug": "uslt"
+  },
+  "VIPS": {
+   "name": "Vertically Integrated Projects",
+   "slug": "vips"
+  },
+  "WEID": {
+   "name": "Words of Engagement Intergroup Dialogue Program",
+   "slug": "weid"
+  },
+  "WGSS": {
+   "name": "Women, Gender, and Sexuality Studies",
+   "slug": "wgss"
+  },
+  "WMSX": {
+   "name": "Women's Studies Education Abroad",
+   "slug": "wmsx"
+  },
+  "XPER": {
+   "name": "xFoundry",
+   "slug": "xper"
+  }
+ }
+}

@@ -1,0 +1,3792 @@
+{
+ "source": "https://app.testudo.umd.edu/soc/gen-ed/",
+ "terms": [
+  "202508",
+  "202512",
+  "202601",
+  "202605",
+  "202608"
+ ],
+ "retrieved": "2026-10-09",
+ "skipped_codes_not_in_catalog": [
+  "AAAS100H",
+  "AAAS202H",
+  "AAAS400H",
+  "AASP100",
+  "AASP211",
+  "AASP230",
+  "AMST298C",
+  "ARCH441",
+  "ARHU158A",
+  "ARHU158D",
+  "ARHU158I",
+  "ARHU158K",
+  "ARHU158L",
+  "ARHU158M",
+  "ARHU158N",
+  "ARHU158O",
+  "ARHU158R",
+  "ARHU158U",
+  "ARHU158V",
+  "ARHU158W",
+  "ARHU158Y",
+  "ARHU319D",
+  "ARHU319E",
+  "ARTT110S",
+  "BMGT230L",
+  "BMGT262L",
+  "BMGT290H",
+  "BMGT461M",
+  "BMGT461N",
+  "BMGT490H",
+  "BSCI103M",
+  "CHIN206",
+  "CHSE228C",
+  "CHSE228D",
+  "CINE299L",
+  "COMM107B",
+  "COMM107C",
+  "CPSP339P",
+  "CPSP359G",
+  "CPSP359S",
+  "EDMS451",
+  "EDUC388T",
+  "EDUC388U",
+  "ENED290H",
+  "ENED490H",
+  "ENES100A",
+  "ENGL101A",
+  "ENGL101H",
+  "ENGL101S",
+  "ENGL101X",
+  "ENGL390H",
+  "ENGL391H",
+  "ENGL393H",
+  "ENGL393Q",
+  "ENGL439D",
+  "FMSC110S",
+  "FMSC190S",
+  "FREN250H",
+  "FREN351H",
+  "GERS322H",
+  "HDCC208A",
+  "HDCC208B",
+  "HDCC208J",
+  "HDCC208P",
+  "HDCC208R",
+  "HDCC208T",
+  "HDCC208Z",
+  "HDCC209A",
+  "HDCC209B",
+  "HDCC209C",
+  "HDCC209E",
+  "HIST134S",
+  "HIST408D",
+  "HIST408E",
+  "HIST408I",
+  "HIST408K",
+  "HIST408M",
+  "HIST408O",
+  "HIST408Q",
+  "HIST408R",
+  "HIST408W",
+  "HIST408X",
+  "HIST408Z",
+  "HLTH234H",
+  "HLTH285H",
+  "HLTH391H",
+  "HLTH460H",
+  "HNUH218L",
+  "HNUH228D",
+  "HNUH228L",
+  "HNUH228N",
+  "HNUH238D",
+  "HNUH238L",
+  "HNUH238N",
+  "HNUH238Q",
+  "HNUH248C",
+  "HNUH248N",
+  "HNUH258O",
+  "HNUH268Q",
+  "HNUH269T",
+  "HNUH278Q",
+  "INAG110S",
+  "INST204S",
+  "INST232C",
+  "KNES350H",
+  "KNES486",
+  "LACS234H",
+  "LGBT398F",
+  "LGBT448L",
+  "LGBT448Y",
+  "MATH140H",
+  "NFSC100H",
+  "PHYS137",
+  "PHYS171H",
+  "PHYS260H",
+  "PHYS272H",
+  "PLCY201S",
+  "QMMS451",
+  "SPAN234H",
+  "THET240",
+  "WEID139B",
+  "WEID139L",
+  "WEID139N",
+  "WEID139T",
+  "WGSS498Y"
+ ],
+ "courses": {
+  "AAAS100": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AAAS101": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "AAAS187": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "AAAS200": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "AAAS202": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AAAS211": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "AAAS230": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "AAAS234": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AAAS254": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "AAAS265": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "AAAS271": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "AAAS400": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AAST200": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AAST201": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "AAST250": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "AAST322": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AAST350": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "AAST351": {
+   "text": "DSSP, DVUP",
+   "term": "202608"
+  },
+  "AAST355": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AAST363": {
+   "text": "DSHS, DVUP",
+   "term": "202508"
+  },
+  "AAST394": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "AAST421": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "AAST440": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AAST443": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "ABRM330": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "AGNR230": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "AGST130": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "AMST101": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST203": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST204": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST205": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST210": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "AMST213": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "AMST260": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "AMST290": {
+   "text": "DSHS or DSHU, DVUP, SCIS",
+   "term": "202605"
+  },
+  "AMST298J": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AMST298Q": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST310": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AMST320": {
+   "text": "DSHU or DSSP, DVUP",
+   "term": "202608"
+  },
+  "AMST323": {
+   "text": "DSHS, DVUP",
+   "term": "202508"
+  },
+  "AMST324": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "AMST328W": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "AMST418N": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "AMST425": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "AMST450": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "AMST498J": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "ANSC250": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANSC255": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ANSC340": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANSC359": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ANSC435": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ANTH210": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "ANTH221": {
+   "text": "DSSP",
+   "term": "202605"
+  },
+  "ANTH222": {
+   "text": "DSNL, DVUP",
+   "term": "202608"
+  },
+  "ANTH240": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "ANTH242": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "ANTH260": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "ANTH263": {
+   "text": "DSHS, DVUP",
+   "term": "202605"
+  },
+  "ANTH264": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202605"
+  },
+  "ANTH265": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "ANTH266": {
+   "text": "DSHS, DVCC, SCIS",
+   "term": "202608"
+  },
+  "ANTH305": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "ANTH310": {
+   "text": "DSSP, DVUP",
+   "term": "202605"
+  },
+  "ANTH323": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "ANTH341": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANTH357": {
+   "text": "DSHS, DVUP",
+   "term": "202605"
+  },
+  "ANTH407": {
+   "text": "DSSP",
+   "term": "202512"
+  },
+  "ANTH447": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANTH451": {
+   "text": "DSSP",
+   "term": "202508"
+  },
+  "ANTH464": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ANTH466": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANTH467": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ANTH496": {
+   "text": "DSSP, DVUP",
+   "term": "202605"
+  },
+  "AOSC123": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "AOSC200": {
+   "text": "DSNL (if taken with AOSC201) or DSNS, SCIS",
+   "term": "202608"
+  },
+  "AOSC375": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ARAB190": {
+   "text": "DSHU",
+   "term": "202605"
+  },
+  "ARAB322": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "ARAB410": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "ARCH170": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARCH171": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARCH225": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ARCH226": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARCH230": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "ARCH270": {
+   "text": "DSSP, SCIS",
+   "term": "202508"
+  },
+  "ARCH271": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARCH272": {
+   "text": "DSNS or DSSP, SCIS",
+   "term": "202601"
+  },
+  "ARCH386": {
+   "text": "DSSP",
+   "term": "202605"
+  },
+  "ARCH402": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ARCH403": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "ARCH420": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "AREC200": {
+   "text": "DSNS or DSSP, SCIS",
+   "term": "202608"
+  },
+  "AREC210": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "AREC240": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "AREC241": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "AREC250": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "AREC254": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "AREC260": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "AREC280": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "AREC306": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "AREC345": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "AREC365": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "AREC445": {
+   "text": "DVUP",
+   "term": "202508"
+  },
+  "ARHU230": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARHU240": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARHU264": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ARHU270": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ARHU271": {
+   "text": "DSSP",
+   "term": "202605"
+  },
+  "ARHU275": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ARHU298L": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARHU320": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ARHU340": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARHU375": {
+   "text": "DSSP",
+   "term": "202508"
+  },
+  "ARHU380": {
+   "text": "DSHU or DSSP, SCIS",
+   "term": "202601"
+  },
+  "ARHU386": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARTH200": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ARTH201": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ARTH255": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "ARTH260": {
+   "text": "DSHU or DSSP, SCIS",
+   "term": "202608"
+  },
+  "ARTH261": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "ARTH262": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ARTH265": {
+   "text": "DSHU, SCIS",
+   "term": "202508"
+  },
+  "ARTH290": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "ARTH292": {
+   "text": "DSHU, DVUP",
+   "term": "202605"
+  },
+  "ARTH301": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ARTH303": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ARTH305": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "ARTH313": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "ARTH324": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ARTH330": {
+   "text": "DSHU",
+   "term": "202512"
+  },
+  "ARTH335": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARTH337": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ARTH351": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARTH362": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ARTH386": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARTH392": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARTT100": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARTT110": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ARTT150": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ARTT260": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "ASTR100": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ASTR101": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "ASTR120": {
+   "text": "DSNS",
+   "term": "202508"
+  },
+  "ASTR121": {
+   "text": "DSNL",
+   "term": "202601"
+  },
+  "ASTR230": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "ASTR300": {
+   "text": "DSNS",
+   "term": "202601"
+  },
+  "ASTR310": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ASTR315": {
+   "text": "DSNL or DSSP",
+   "term": "202601"
+  },
+  "ASTR330": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ASTR340": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ASTR350": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ASTR380": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "BIOM301": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "BMGT161": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT207": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT230": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "BMGT262": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT271": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "BMGT289A": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "BMGT289B": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT289D": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT289E": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT289I": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "BMGT461": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "BMGT495": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "BSCI103": {
+   "text": "DSNL",
+   "term": "202601"
+  },
+  "BSCI120": {
+   "text": "DSNS",
+   "term": "202601"
+  },
+  "BSCI126": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "BSCI135": {
+   "text": "DSNL, SCIS",
+   "term": "202608"
+  },
+  "BSCI145": {
+   "text": "DSNL, SCIS",
+   "term": "202512"
+  },
+  "BSCI151": {
+   "text": "DSNS or DSSP, DVUP, SCIS",
+   "term": "202608"
+  },
+  "BSCI160": {
+   "text": "DSNL (if taken with BSCI180) or DSNS",
+   "term": "202608"
+  },
+  "BSCI170": {
+   "text": "DSNL (if taken with BSCI180) or DSNS",
+   "term": "202608"
+  },
+  "BSCI201": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "BSCI213": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "BSCI223": {
+   "text": "DSNL, SCIS",
+   "term": "202608"
+  },
+  "BSCI283": {
+   "text": "DSNL, SCIS",
+   "term": "202608"
+  },
+  "BSCI416": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "BSCI417": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "BSCI455": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "BSOS355": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "BSST200": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "BSST240": {
+   "text": "DSNL (if taken with BSST241) or DSNS",
+   "term": "202608"
+  },
+  "BSST334": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "BSST335": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "BSST340": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "CCJS100": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "CCJS105": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "CCJS200": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "CCJS225": {
+   "text": "DSHS or DSSP, SCIS",
+   "term": "202608"
+  },
+  "CCJS300": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CCJS325": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "CCJS370": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "CHBE102": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "CHEM131": {
+   "text": "DSNL (if taken with CHEM132) or DSNS",
+   "term": "202608"
+  },
+  "CHEM135": {
+   "text": "DSNL (if taken with CHEM136) or DSNS",
+   "term": "202608"
+  },
+  "CHEM146": {
+   "text": "DSNL (if taken with CHEM177) or DSNS",
+   "term": "202608"
+  },
+  "CHEM298Q": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CHIN202": {
+   "text": "DVCC",
+   "term": "202508"
+  },
+  "CHIN204": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "CHIN307": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CHIN315": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CHIN425": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "CHSE205": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "CHSE376": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "CINE245": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CINE280": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CINE282": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "CINE283": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "CINE332": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CINE337": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CINE420": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "CINE429Q": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "CLAS170": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "CLAS180": {
+   "text": "DSHS or DSHU",
+   "term": "202508"
+  },
+  "CLAS274": {
+   "text": "DSHU, SCIS",
+   "term": "202508"
+  },
+  "CLAS276": {
+   "text": "DSHS or DSHU, SCIS",
+   "term": "202601"
+  },
+  "CLAS277": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "CLAS305": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "CLAS310": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "CLAS312": {
+   "text": "DSHS or DSHU",
+   "term": "202608"
+  },
+  "CLAS320": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "CLAS331": {
+   "text": "DSHS or DSHU",
+   "term": "202601"
+  },
+  "CLAS340": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "CMLT235": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CMLT270": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CMLT275": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CMLT277": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CMLT280": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "CMNS211": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CMSC115": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "CMSC122": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CMSC125": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CMSC298Q": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "COMM107": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "COMM200": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "COMM296": {
+   "text": "DSHU, SCIS",
+   "term": "202508"
+  },
+  "COMM324": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "COMM382": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "COMM385": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "COMM386": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CPBE225": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "CPCV230": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPET101": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "CPGH200": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "CPJT230": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPJT240": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPJT250": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPMS225": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "CPPL100": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "CPSA240": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPSA250": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPSA260": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "CPSN101": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "CPSP110": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "CPSP210": {
+   "text": "DSSP, DVCC, SCIS",
+   "term": "202601"
+  },
+  "CPSP220": {
+   "text": "DSHS, DVCC",
+   "term": "202608"
+  },
+  "CPSS220": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "CPSS225": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "CPSS240": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "CPSS340": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "DANC109": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "DANC200": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "DATA100": {
+   "text": "FSAR, FSMA",
+   "term": "202608"
+  },
+  "ECON111": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "ECON175": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "ECON185": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "ECON200": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "ECON201": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "ECON230": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "EDCP210": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "EDCP220": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "EDCP230": {
+   "text": "DSHS or DSSP",
+   "term": "202601"
+  },
+  "EDCP489": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "EDDI110": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "EDDI300": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "EDHD201": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD210": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD220": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "EDHD221": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "EDHD228": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "EDHD230": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "EDHD231": {
+   "text": "DSHS, SCIS",
+   "term": "202508"
+  },
+  "EDHD241": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "EDHD251": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "EDHD306": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "EDHD310": {
+   "text": "DSHS, SCIS",
+   "term": "202605"
+  },
+  "EDHD320": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD400": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD405": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "EDHD411": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD412": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD413": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDHD421": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "EDHD440": {
+   "text": "DSHS",
+   "term": "202508"
+  },
+  "EDHD460": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "EDSP210": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "EDSP211": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "EDSP220": {
+   "text": "DSSP, DVCC",
+   "term": "202608"
+  },
+  "EDSP310": {
+   "text": "DSHS, DVUP",
+   "term": "202508"
+  },
+  "EDSP311": {
+   "text": "DSSP, DVUP",
+   "term": "202608"
+  },
+  "EDSP376": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "EDSP416": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "EDSP452": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "EDSP470": {
+   "text": "DVUP",
+   "term": "202605"
+  },
+  "EDUC388": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENED215": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "ENEE200": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "ENES100": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENES138": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "ENES140": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENES192": {
+   "text": "DSSP",
+   "term": "202508"
+  },
+  "ENES197": {
+   "text": "DSSP, SCIS",
+   "term": "202605"
+  },
+  "ENES200": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "ENES210": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "ENES213": {
+   "text": "DVCC",
+   "term": "202508"
+  },
+  "ENES215": {
+   "text": "DVCC",
+   "term": "202508"
+  },
+  "ENES240": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "ENES250": {
+   "text": "DSNS, SCIS",
+   "term": "202605"
+  },
+  "ENES256": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "ENES275": {
+   "text": "DSHS, SCIS",
+   "term": "202605"
+  },
+  "ENES317": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENES472": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "ENGL101": {
+   "text": "FSAW",
+   "term": "202608"
+  },
+  "ENGL120": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "ENGL125": {
+   "text": "DSHU or DSSP, SCIS",
+   "term": "202601"
+  },
+  "ENGL126": {
+   "text": "DSHU or DSSP, SCIS",
+   "term": "202608"
+  },
+  "ENGL133": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "ENGL134": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202508"
+  },
+  "ENGL140": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "ENGL143": {
+   "text": "DSHU, SCIS",
+   "term": "202508"
+  },
+  "ENGL154": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "ENGL201": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL222": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL234": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL235": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL241": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ENGL243": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL244": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL245": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL246": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ENGL250": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL251": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL254": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL255": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL256": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL257": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL262": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL264": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ENGL265": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL271": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL272": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL273": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL275": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL282": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ENGL289I": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "ENGL289J": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ENGL289Q": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ENGL290": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL291": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL292": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "ENGL293": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL294": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL295": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "ENGL296": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL297": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL316": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "ENGL359F": {
+   "text": "DSHU, DVUP",
+   "term": "202605"
+  },
+  "ENGL361": {
+   "text": "DSHU or DSSP",
+   "term": "202601"
+  },
+  "ENGL362": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "ENGL381": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL388C": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "ENGL388M": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ENGL388P": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL388V": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL388W": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENGL390": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL391": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL392": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL393": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL394": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL395": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398A": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398B": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398C": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398E": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398G": {
+   "text": "FSPW",
+   "term": "202605"
+  },
+  "ENGL398L": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398N": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398R": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENGL398V": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "ENMA201": {
+   "text": "DSNS, SCIS",
+   "term": "202601"
+  },
+  "ENME299Q": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "ENSP101": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ENSP102": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "ENSP250": {
+   "text": "DSNS, SCIS",
+   "term": "202601"
+  },
+  "ENSP400": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENST115": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "ENST200": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "ENST220": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "ENST231": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "ENST233": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "ENST283": {
+   "text": "DSSP",
+   "term": "202605"
+  },
+  "ENST472": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "ENST486": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "EPIB300": {
+   "text": "FSAR",
+   "term": "202605"
+  },
+  "EPIB315": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "FGSM398": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "FIRE120": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "FIRE298": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "FMSC110": {
+   "text": "DSHS, DVCC",
+   "term": "202608"
+  },
+  "FMSC170": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "FMSC190": {
+   "text": "DSHS, SCIS",
+   "term": "202605"
+  },
+  "FMSC260": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "FMSC265": {
+   "text": "DVUP",
+   "term": "202605"
+  },
+  "FMSC270": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "FMSC302": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "FMSC330": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "FMSC332": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "FMSC341": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "FMSC381": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "FMSC460": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "FREN242": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "FREN243": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "FREN250": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "FREN313": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "FREN351": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "FREN413": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "FREN480": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "GBHL101": {
+   "text": "DVUP",
+   "term": "202605"
+  },
+  "GBHL497": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "GEMS101": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GEMS202": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GEMS497": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GEOG110": {
+   "text": "DSHS, DVUP",
+   "term": "202512"
+  },
+  "GEOG130": {
+   "text": "DSHS or DSSP",
+   "term": "202605"
+  },
+  "GEOG140": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "GEOG156": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GEOG170": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "GEOG172": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "GEOG201": {
+   "text": "DSNL (if taken with GEOG211)",
+   "term": "202608"
+  },
+  "GEOG202": {
+   "text": "DSHS, DVCC",
+   "term": "202608"
+  },
+  "GEOG306": {
+   "text": "FSAR",
+   "term": "202605"
+  },
+  "GEOG330": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "GEOL100": {
+   "text": "DSNL (if taken with GEOL110) or DSNS",
+   "term": "202608"
+  },
+  "GEOL104": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "GEOL120": {
+   "text": "DSNL (if taken with GEOL110) or DSNS",
+   "term": "202608"
+  },
+  "GEOL123": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "GEOL124": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "GEOL200": {
+   "text": "DSNS, SCIS",
+   "term": "202508"
+  },
+  "GEOL204": {
+   "text": "DSNS, SCIS",
+   "term": "202601"
+  },
+  "GEOL212": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "GEOL375": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "GEOL394": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GERS150": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "GERS255": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "GERS322": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "GERS436": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "GFPL100": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "GLBC200": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "GREK301": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "GVPT170": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "GVPT200": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "GVPT201": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GVPT202": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "GVPT203": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "GVPT204": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "GVPT210": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202508"
+  },
+  "GVPT241": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GVPT273": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "GVPT282": {
+   "text": "DSHS, DVUP",
+   "term": "202605"
+  },
+  "GVPT356": {
+   "text": "DSSP, DVCC",
+   "term": "202608"
+  },
+  "GVPT368C": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HACS200": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HACS208A": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HACS208E": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "HACS208P": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HACS287": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HBUS100": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "HBUS105": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "HBUS200": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "HDCC105": {
+   "text": "DSSP, DVUP, SCIS",
+   "term": "202608"
+  },
+  "HDCC106": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "HEBR298B": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HEBR298O": {
+   "text": "DSHU, DVCC",
+   "term": "202512"
+  },
+  "HEBR313": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HEBR314": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "HESI202": {
+   "text": "DSHS, SCIS",
+   "term": "202508"
+  },
+  "HESI421": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "HESI422": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "HESI423": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "HESI424": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "HESP120": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "HESP214": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HGLO101": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HHUM105": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HHUM106": {
+   "text": "DSHU or DSSP",
+   "term": "202601"
+  },
+  "HHUM205": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "HHUM206": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "HISP200": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "HIST106": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST110": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HIST111": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST113": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST120": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HIST122": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST123": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST131": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HIST132": {
+   "text": "DSHU, SCIS",
+   "term": "202508"
+  },
+  "HIST134": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "HIST135": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "HIST143": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HIST147": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HIST187": {
+   "text": "DSHS or DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "HIST200": {
+   "text": "DSHS or DSHU",
+   "term": "202608"
+  },
+  "HIST201": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202608"
+  },
+  "HIST205": {
+   "text": "DSHS or DSHU",
+   "term": "202608"
+  },
+  "HIST210": {
+   "text": "DSHS, DVUP",
+   "term": "202605"
+  },
+  "HIST211": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST215": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST219I": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "HIST219X": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HIST220": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST221": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST222": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST224": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST225": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HIST226": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST227": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HIST234": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST235": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HIST236": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST237": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST245": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST246": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HIST247": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST250": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST251": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HIST254": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "HIST255": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HIST261": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST266": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST270": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "HIST281": {
+   "text": "DSHS or DSHU, SCIS",
+   "term": "202508"
+  },
+  "HIST284": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HIST285": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HIST287": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202601"
+  },
+  "HIST289A": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202508"
+  },
+  "HIST289R": {
+   "text": "DSHU, SCIS",
+   "term": "202601"
+  },
+  "HIST289T": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "HIST289V": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HIST328W": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "HIST363": {
+   "text": "DSHS or DSHU",
+   "term": "202608"
+  },
+  "HIST373": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "HIST376": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HIST381": {
+   "text": "DSHS",
+   "term": "202508"
+  },
+  "HIST396": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "HIST401": {
+   "text": "DVUP",
+   "term": "202508"
+  },
+  "HIST403": {
+   "text": "DSHS or DSHU",
+   "term": "202608"
+  },
+  "HIST407": {
+   "text": "DSHS or DSHU",
+   "term": "202508"
+  },
+  "HLSC280": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HLTH212": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "HLTH230": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HLTH234": {
+   "text": "DSHS, DVCC, SCIS",
+   "term": "202608"
+  },
+  "HLTH264": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HLTH285": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "HLTH292": {
+   "text": "DSSP",
+   "term": "202508"
+  },
+  "HLTH391": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HLTH420": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "HLTH460": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "HNUH218C": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HNUH218R": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "HNUH228C": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "HNUH228R": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "HNUH229I": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "HNUH229P": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "HNUH238C": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "HNUH239I": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "HNUH239T": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HNUH248D": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "HNUH248R": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "HNUH249T": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HNUH258C": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "HNUH258Q": {
+   "text": "DSHS, DVCC",
+   "term": "202608"
+  },
+  "HNUH258R": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HNUH259P": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HNUH259T": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "HNUH268C": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "HNUH268R": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "HNUH269P": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "HNUH278C": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HNUH278R": {
+   "text": "DSSP, DVUP",
+   "term": "202608"
+  },
+  "HNUH288C": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "HNUH288O": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "HNUH288R": {
+   "text": "DVUP",
+   "term": "202601"
+  },
+  "HNUH398P": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "HONR368A": {
+   "text": "FSPW",
+   "term": "202608"
+  },
+  "HONR379W": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "IDEA459": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "IMDM150": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "IMMR200": {
+   "text": "DSHS, DVUP",
+   "term": "202508"
+  },
+  "IMMR394": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "IMMR400": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INAG100": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "INAG110": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "INAG123": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "INAG242": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INAG252": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INAG272": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "INST104": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "INST123": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INST151": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INST152": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INST153": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "INST155": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "INST156": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INST161": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "INST201": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "INST204": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "INST301": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "INST327": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "INST466": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "ISRL187": {
+   "text": "DSHS or DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "ISRL283": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "ISRL342": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "ISRL344": {
+   "text": "DSHS",
+   "term": "202508"
+  },
+  "ISRL372": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "ITAL207": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "ITAL411": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "ITAL441": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "JAPN315": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "JAPN424": {
+   "text": "DVUP",
+   "term": "202508"
+  },
+  "JOUR130": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "JOUR150": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "JOUR175": {
+   "text": "DSSP, DVUP",
+   "term": "202608"
+  },
+  "JOUR281": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "JOUR282": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "JOUR283": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "JOUR284": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "JOUR289I": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "JOUR325": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "JOUR353": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "JOUR355": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "JOUR367": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "JOUR405": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "JOUR453": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "JOUR456": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "JWST141": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "JWST171": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "JWST187": {
+   "text": "DSHS or DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "JWST225": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "JWST230": {
+   "text": "DSHS or DSHU, SCIS",
+   "term": "202508"
+  },
+  "JWST233": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202601"
+  },
+  "JWST262": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "JWST274": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "JWST285": {
+   "text": "DSHU, DVCC",
+   "term": "202512"
+  },
+  "JWST289E": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "JWST319P": {
+   "text": "DSHU or DSSP, SCIS",
+   "term": "202601"
+  },
+  "JWST319Y": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "JWST332": {
+   "text": "DSHS",
+   "term": "202508"
+  },
+  "JWST333": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "JWST372": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "JWST374": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "JWST430": {
+   "text": "DSHU or DSSP",
+   "term": "202508"
+  },
+  "KNES225": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "KNES226": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "KNES246": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "KNES260": {
+   "text": "DSNS or DSSP",
+   "term": "202608"
+  },
+  "KNES285": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "KNES286": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "KNES287": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "KNES334": {
+   "text": "DSSP, DVUP",
+   "term": "202605"
+  },
+  "KNES350": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "KNES354": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "KNES477": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "KNES485": {
+   "text": "DVUP",
+   "term": "202601"
+  },
+  "LACS234": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202608"
+  },
+  "LACS235": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202601"
+  },
+  "LACS250": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "LACS251": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "LACS348E": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "LARC121": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "LARC151": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "LARC152": {
+   "text": "DSSP, SCIS",
+   "term": "202601"
+  },
+  "LARC160": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "LARC162": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202601"
+  },
+  "LARC263": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "LARC330": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "LEAD217": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "LGBT200": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "LGBT265": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "LGBT327": {
+   "text": "DSHU, DVUP",
+   "term": "202605"
+  },
+  "LGBT386": {
+   "text": "DSSP, DVCC",
+   "term": "202508"
+  },
+  "LING200": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "LING240": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "LING260": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "LING262": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "LING272": {
+   "text": "DSNS, SCIS",
+   "term": "202601"
+  },
+  "LING320": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "MATH107": {
+   "text": "FSMA",
+   "term": "202608"
+  },
+  "MATH113": {
+   "text": "FSMA",
+   "term": "202608"
+  },
+  "MATH115": {
+   "text": "FSMA",
+   "term": "202608"
+  },
+  "MATH120": {
+   "text": "FSAR, FSMA",
+   "term": "202608"
+  },
+  "MATH135": {
+   "text": "FSAR, FSMA",
+   "term": "202608"
+  },
+  "MATH140": {
+   "text": "FSAR, FSMA",
+   "term": "202608"
+  },
+  "MLAW100": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "MLAW150": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "MLAW304": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "MLSC220": {
+   "text": "DSSP",
+   "term": "202605"
+  },
+  "MLSC250": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "MUED420": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "MUED433": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "MUSC140": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "MUSC204": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "MUSC205": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "MUSC210": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "MUSC215": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "MUSC220": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "MUSC260": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "MUSC289I": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202601"
+  },
+  "MUSC448E": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "NAVY100": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "NAVY200": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "NAVY400": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "NEUR200": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "NEUR405": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "NFSC100": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "NFSC112": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "NFSC220": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "NFSC422": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "NFSC423": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "NFSC470": {
+   "text": "DSSP, DVCC",
+   "term": "202601"
+  },
+  "NFSC490": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PEER312": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "PEER322": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "PERS251": {
+   "text": "DSHS",
+   "term": "202601"
+  },
+  "PERS280": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PERS283": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "PERS353": {
+   "text": "DSHU",
+   "term": "202508"
+  },
+  "PERS371": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PERS385": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "PHIL100": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL101": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL121": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "PHIL140": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL170": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "PHIL202": {
+   "text": "DSHS or DSHU, SCIS",
+   "term": "202608"
+  },
+  "PHIL203": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "PHIL204": {
+   "text": "DSHU, SCIS",
+   "term": "202605"
+  },
+  "PHIL205": {
+   "text": "DSHU, SCIS",
+   "term": "202605"
+  },
+  "PHIL210": {
+   "text": "DSHU",
+   "term": "202605"
+  },
+  "PHIL211": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PHIL220": {
+   "text": "DSHU or DSSP",
+   "term": "202608"
+  },
+  "PHIL236": {
+   "text": "DSHU",
+   "term": "202512"
+  },
+  "PHIL245": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL250": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL271": {
+   "text": "FSAR",
+   "term": "202601"
+  },
+  "PHIL310": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHIL320": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "PHIL344": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "PHPE308Y": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PHSC430": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202601"
+  },
+  "PHSC450": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "PHSC497": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PHYS102": {
+   "text": "DSNL (if taken with PHYS103)",
+   "term": "202608"
+  },
+  "PHYS105": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "PHYS106": {
+   "text": "DSNL (if taken with PHYS107)",
+   "term": "202601"
+  },
+  "PHYS115": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "PHYS121": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "PHYS122": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "PHYS141": {
+   "text": "DSNL",
+   "term": "202605"
+  },
+  "PHYS142": {
+   "text": "DSNL",
+   "term": "202605"
+  },
+  "PHYS161": {
+   "text": "DSNL (if taken with PHYS275) or DSNS",
+   "term": "202608"
+  },
+  "PHYS171": {
+   "text": "DSNL (if taken with PHYS275) or DSNS",
+   "term": "202608"
+  },
+  "PHYS235": {
+   "text": "DSHS or DSNS, SCIS",
+   "term": "202608"
+  },
+  "PHYS260": {
+   "text": "DSNL (if taken with PHYS261)",
+   "term": "202608"
+  },
+  "PHYS270": {
+   "text": "DSNL (if taken with PHYS271)",
+   "term": "202608"
+  },
+  "PHYS272": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "PHYS299Q": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "PHYS375": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PHYS407": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PLCY100": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "PLCY101": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "PLCY170": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "PLCY201": {
+   "text": "DSHS or DSSP, SCIS",
+   "term": "202608"
+  },
+  "PLCY214": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "PLCY240": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "PLCY288P": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "PLCY302": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "PLCY380": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "PLSC110": {
+   "text": "DSNL (if taken with PLSC111) or DSNS",
+   "term": "202605"
+  },
+  "PLSC112": {
+   "text": "DSNL (if taken with PLSC113) or DSNS",
+   "term": "202608"
+  },
+  "PLSC115": {
+   "text": "DSNS, SCIS",
+   "term": "202608"
+  },
+  "PLSC203": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "PLSC205": {
+   "text": "DSNL",
+   "term": "202608"
+  },
+  "PLSC303": {
+   "text": "DSNS",
+   "term": "202601"
+  },
+  "PLSC460": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "PORT234": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202508"
+  },
+  "PORT235": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202601"
+  },
+  "PORT332": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "PORT410": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "PSYC100": {
+   "text": "DSHS or DSNS",
+   "term": "202608"
+  },
+  "PSYC200": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "PSYC202": {
+   "text": "DSNS",
+   "term": "202605"
+  },
+  "PSYC221": {
+   "text": "DSHS or DSSP",
+   "term": "202608"
+  },
+  "PSYC234": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "PSYC237": {
+   "text": "DSHS or DSSP, SCIS",
+   "term": "202605"
+  },
+  "PSYC300": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "PSYC304": {
+   "text": "DSNS",
+   "term": "202608"
+  },
+  "PSYC336": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "PSYC354": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "RDEV250": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "RELS120": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "RELS170": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "RELS171": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "RELS219K": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "RELS225": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "RELS230": {
+   "text": "DSHS or DSHU, SCIS",
+   "term": "202508"
+  },
+  "RELS264": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "RELS271": {
+   "text": "DSHU, DVCC, SCIS",
+   "term": "202601"
+  },
+  "RELS273": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "RELS274": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "RELS289C": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202508"
+  },
+  "RELS430": {
+   "text": "DSHU or DSSP",
+   "term": "202508"
+  },
+  "SLLC200": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "SLLC286": {
+   "text": "DSHU, SCIS",
+   "term": "202608"
+  },
+  "SLLC305": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "SOCY100": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "SOCY105": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "SOCY200": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "SOCY201": {
+   "text": "FSAR",
+   "term": "202608"
+  },
+  "SOCY202": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "SOCY223": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "SOCY224": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "SOCY227": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "SOCY230": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "SOCY237": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "SOCY241": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "SOCY245": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "SOCY322": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "SOCY335": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "SOCY340": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "SPAN207": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "SPAN234": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202608"
+  },
+  "SPAN235": {
+   "text": "DSHS or DSHU, DVUP",
+   "term": "202601"
+  },
+  "SPAN303": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "SPAN331": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "SPAN332": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "SPAN333": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "SPAN361": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "SPAN362": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "SPAN363": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "SPAN388W": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "SPAN422": {
+   "text": "DVCC",
+   "term": "202508"
+  },
+  "STAT100": {
+   "text": "FSAR, FSMA",
+   "term": "202608"
+  },
+  "TDPS240": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TDPS358A": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "THET110": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "THET120": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "THET222": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "THET251": {
+   "text": "DSHU, DVUP, SCIS",
+   "term": "202608"
+  },
+  "THET285": {
+   "text": "FSOC",
+   "term": "202608"
+  },
+  "THET287": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "THET293": {
+   "text": "DSHU or DSSP, DVUP",
+   "term": "202608"
+  },
+  "THET294": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "THET328W": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "THET340": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLPL102": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLPL200": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "TLPL206": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "TLPL210": {
+   "text": "DSHS, SCIS",
+   "term": "202605"
+  },
+  "TLPL250": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "TLPL252": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "TLPL253": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "TLPL254": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "TLPL267": {
+   "text": "DSHS, SCIS",
+   "term": "202608"
+  },
+  "TLPL285": {
+   "text": "DSSP, SCIS",
+   "term": "202605"
+  },
+  "TLPL287": {
+   "text": "DSHS, SCIS",
+   "term": "202601"
+  },
+  "TLPL360": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "TLPL401": {
+   "text": "DSSP, DVCC",
+   "term": "202608"
+  },
+  "TLPL413": {
+   "text": "DSSP",
+   "term": "202508"
+  },
+  "TLPL414": {
+   "text": "DSHS",
+   "term": "202608"
+  },
+  "TLPL420": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLPL435": {
+   "text": "DSSP",
+   "term": "202601"
+  },
+  "TLPL440": {
+   "text": "DVUP",
+   "term": "202608"
+  },
+  "TLPL441": {
+   "text": "DVCC",
+   "term": "202601"
+  },
+  "TLPL443": {
+   "text": "DVCC",
+   "term": "202608"
+  },
+  "TLPL445": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLPL451": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLPL457": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "TLPL471": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "TLTC310": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "URSP250": {
+   "text": "DSSP, SCIS",
+   "term": "202608"
+  },
+  "URSP372": {
+   "text": "DVUP",
+   "term": "202601"
+  },
+  "WGSS105": {
+   "text": "DSHU, DVUP",
+   "term": "202605"
+  },
+  "WGSS115": {
+   "text": "DSSP, DVUP",
+   "term": "202601"
+  },
+  "WGSS200": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "WGSS205": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "WGSS210": {
+   "text": "DSHS, DVUP",
+   "term": "202605"
+  },
+  "WGSS211": {
+   "text": "DSHS, DVUP",
+   "term": "202608"
+  },
+  "WGSS230": {
+   "text": "DSHU",
+   "term": "202601"
+  },
+  "WGSS250": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "WGSS255": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "WGSS265": {
+   "text": "DSHS, DVUP",
+   "term": "202601"
+  },
+  "WGSS271": {
+   "text": "DSHU",
+   "term": "202608"
+  },
+  "WGSS275": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "WGSS280": {
+   "text": "DSHU, DVUP",
+   "term": "202508"
+  },
+  "WGSS290": {
+   "text": "DSHS, DVUP, SCIS",
+   "term": "202608"
+  },
+  "WGSS291": {
+   "text": "DSSP",
+   "term": "202608"
+  },
+  "WGSS305": {
+   "text": "DSHU, DVUP",
+   "term": "202608"
+  },
+  "WGSS315": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "WGSS320": {
+   "text": "DSHU, DVUP",
+   "term": "202601"
+  },
+  "WGSS336": {
+   "text": "DSHS",
+   "term": "202608"
+  }
+ }
+}

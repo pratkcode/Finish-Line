@@ -6,10 +6,12 @@ import { ErrorState } from "@/components/ui/States";
 import {
   formatCredits,
   getCourse,
+  getDepartments,
   getDependents,
   getPrerequisiteTree,
   getSession,
   type CourseDetail as Course,
+  type Department,
   type Dependent,
   type PrerequisiteTree,
 } from "@/lib/api";
@@ -20,7 +22,13 @@ export type SelectedCourse = { course: Course; dependents: Dependent[]; tree: Pr
 
 export default function CourseBrowser() {
   const [search, setSearch] = useState("");
-  const { results: courses, error: listError } = useCourseSearch(search, { allWhenEmpty: true });
+  const [department, setDepartment] = useState("");
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const {
+    results: courses,
+    total,
+    error: listError,
+  } = useCourseSearch(search, { allWhenEmpty: true, department });
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [selected, setSelected] = useState<SelectedCourse | null>(null);
   const [detailError, setDetailError] = useState<string | null>(null);
@@ -32,6 +40,9 @@ export default function CourseBrowser() {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
     if (code) queueMicrotask(() => setSelectedCode(code.toUpperCase()));
+    getDepartments()
+      .then(setDepartments)
+      .catch(() => {});
     const id = readSessionId();
     if (id) {
       getSession(id)
@@ -82,13 +93,31 @@ export default function CourseBrowser() {
           placeholder="Search by code or name"
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:ring-1 focus:ring-red-700 focus:outline-none"
         />
+        <label htmlFor="course-department" className="sr-only">
+          Department
+        </label>
+        <select
+          id="course-department"
+          value={department}
+          onChange={(e) => setDepartment(e.target.value)}
+          className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:outline-none"
+        >
+          <option value="">All departments</option>
+          {departments.map((d) => (
+            <option key={d.code} value={d.code}>
+              {d.code}: {d.name} ({d.course_count})
+            </option>
+          ))}
+        </select>
 
         <p className="mt-3 text-xs text-slate-500" aria-live="polite">
           {courses === null
             ? listError
               ? "Search unavailable"
               : "Loading…"
-            : `${courses.length} ${courses.length === 1 ? "course" : "courses"}`}
+            : courses.length < total
+              ? `Showing ${courses.length} of ${total.toLocaleString()} courses. Search or pick a department to narrow it down.`
+              : `${total.toLocaleString()} ${total === 1 ? "course" : "courses"}`}
         </p>
 
         {listError ? (

@@ -1,6 +1,6 @@
 """Prerequisite checks for a student's completed courses.
 
-Prerequisites are stored as groups (see database/schema.sql): every group must
+Prerequisites are stored as groups (see database/migrations/): every group must
 be satisfied, and any one option in a group satisfies it. A group's timing says
 whether its course must be done before ('before'), may also be taken the same
 semester ('before_or_concurrent'), or must be taken the same semester
@@ -19,7 +19,7 @@ from app.evaluator import meets_grade
 @dataclass
 class PrereqGraph:
     courses: dict[str, dict]  # code -> {code, name, credits_min, credits_max,
-    #                                    prerequisites_complete, prerequisite_text}
+    #   prerequisites_complete, prerequisite_text, prerequisite_status, in_current_catalog}
     groups: dict[str, list[dict]]  # code -> [{timing, min_grade, options: [code, ...]}]
 
 
@@ -29,7 +29,8 @@ def load_graph(conn, university_id: int) -> PrereqGraph:
         for row in conn.execute(
             """
             SELECT code, name, credits_min, credits_max, prerequisites_complete,
-                   prerequisite_text, corequisite_text
+                   prerequisite_text, corequisite_text, prerequisite_status,
+                   in_current_catalog
             FROM courses WHERE university_id = %s
             """,
             (university_id,),

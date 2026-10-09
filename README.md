@@ -21,7 +21,7 @@
 - **Prerequisites and dependencies:** for any course, whether the student can take it now, which prerequisites are missing, the full prerequisite chain, and which courses it unlocks.
 - **Graduation plan:** an automatically generated semester-by-semester plan. It respects prerequisites, the student's credit limit, and catalog restrictions such as "must have earned 90 credits".
 - **What-if planning:** move, add, or remove courses. Everything that depends on them is re-planned, the projected graduation updates, and broken rules show as warnings. Changes are previewed until you save them.
-- **Course search:** all 106 courses in the dataset by code or name, with Gen Ed tags, restrictions, and prerequisites.
+- **Course search:** the full UMD undergraduate catalog (5,457 courses in 202 departments), by code, name, or department. Each course shows its Gen Ed tags, restrictions, and prerequisites, plus how far each detail is verified.
 - **No accounts:** a student's profile is a planning session stored in PostgreSQL and remembered by the browser.
 
 ## Technology
@@ -31,7 +31,7 @@
 | Frontend | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 |
 | Backend | Python 3.13, FastAPI, Pydantic, psycopg 3 with a connection pool |
 | Database | PostgreSQL 17 |
-| Tests | pytest (126 tests): pure unit tests of the engines plus API tests against the seeded database |
+| Tests | pytest (147 tests): pure unit tests of the engines and parsers, plus API tests against the migrated database |
 
 ## Architecture
 
@@ -57,7 +57,7 @@
                                ▼
  PostgreSQL
  ─────────────────────────────────────────────────────────────────────
-  Catalog      courses · prerequisite_groups · prerequisite_options
+  Catalog      departments · courses · prerequisite_groups · prerequisite_options
                course_gen_ed · course_restrictions · course_exclusions
   Degree       universities · programs · requirements
                requirement_courses · requirement_course_filters
@@ -93,10 +93,13 @@ backend/
     restrictions.py      enrollment rules                 (pure)
   tests/                 pytest suite
 database/
-  schema.sql             all tables (re-runnable)
-  data/*.json            curated catalog data
-  build_seed.py          validates the JSON and generates seed.sql
-  seed.sql               generated
+  migrations/            schema migrations (001 initial, 002 multi-department catalog)
+  migrate.py             applies migrations, then syncs data (preserves student records)
+  importer/              fetch_catalog.py (official catalog + Testudo), rules.py (strict parsers)
+  data/catalog/          imported catalog: courses, departments, Gen Ed tags
+  data/*.json            hand-curated INST prerequisites/restrictions, degree requirements
+  build_seed.py          validates the data and generates seed.sql
+  seed.sql               generated, idempotent data sync
 frontend/
   src/app/               pages: /, /dashboard, /graduation-plan, /progress, /courses, /requirements, /profile
   src/components/        page components; plan/ (timeline), ui/ (states, progress bar)
@@ -107,7 +110,8 @@ docs/screenshots/
 ## Database design
 
 ```
-universities ─┬─< programs ─────< planning_sessions ─┬─< session_courses >── courses
+universities ─┬─< departments
+              ├─< programs ─────< planning_sessions ─┬─< session_courses >── courses
               │                                       └─< plan_overrides  >── courses
               ├─< courses ─┬─< prerequisite_groups ─< prerequisite_options >── courses
               │            ├─< course_gen_ed
@@ -185,20 +189,41 @@ The planner works in two phases.
 
 ## Data sources and accuracy
 
-- **Courses and prerequisites:** UMD Undergraduate Catalog 2026–2027. This covers all 83 undergraduate INST courses and the 23 other courses their prerequisites name. Prerequisite rules were curated by hand from the official text, with the text kept for display.
-- **Major requirements:** the catalog, plus the InfoSci program site for elective rules and cognate course lists.
-- **General Education and university rules:** the catalog.
-- **Gen Ed tags:** Testudo's Schedule of Classes (three recent terms).
-- **Validation:** `build_seed.py` refuses to build if a prerequisite, restriction number, program name or course code doesn't appear in the official text.
-- **Nothing is guessed.** Rules that can't be expressed as courses are kept as text and flagged rather than invented, e.g. "MATH115 or higher", math placement, permission. That covers 15 INST courses, and the UI points to the official wording.
+Every course and requirement comes from an official UMD source, and each detail records how far it's verified.
+
+| Data | Source | Coverage (2026–2027) |
+| --- | --- | --- |
+| Courses: code, title, credits, department, description, prerequisite and restriction wording, cross-listings, "formerly", repeat rules | Undergraduate Catalog, approved courses for every department | **5,457 courses, 202 departments** |
+| Gen Ed tags | Testudo Schedule of Classes Gen Ed listings, Fall 2025 – Fall 2026 | **913 courses tagged**; the rest are marked `none_found` |
+| Major requirements | Catalog, plus the InfoSci program site for elective rules and cognate lists | Information Science |
+| Gen Ed and university rules | Catalog | All |
+
+**Prerequisites** carry a `prerequisite_status`:
+
+| Status | Courses | Meaning | Used by checks and the planner? |
+| --- | --- | --- | --- |
+| `curated` | 51 | INST prerequisites reviewed by hand | Yes |
+| `parsed` | 1,064 | The whole catalog sentence matched a strict pattern ("X and Y", "Minimum grade of C- in X", "1 course … from (X, Y)", …) | Yes |
+| `partial` | 364 | The course part parsed; the sentence also allows a non-course option ("or permission of instructor") | Course part only, with a warning |
+| `unstructured` | 1,155 | Wording that can't be read reliably (placement, "two English courses", mixed and/or) | **No.** Shown as text, flagged "couldn't be verified" |
+| `none` | 2,823 | No prerequisite listed | Yes |
+
+**Verification rules:**
+- **Prerequisites aren't guessed.** A sentence that only partly matches a pattern, that names a course outside the catalog, or that offers a course alternative after "; or" is kept as text (`database/importer/rules.py`, unit-tested).
+- **Conditional Gen Ed tags are stored but not counted.** 18 tags such as "DSNL (if taken with BSCI180)" depend on a second course, which Finish Line can't check yet.
+- **Testudo section variants aren't imported.** 125 codes like INST204S or PHYS171H aren't separate catalog courses.
+- **Restrictions:** 114 are structured (62 hand-curated, 52 parsed: credit standing and "must not have completed"). The other 1,974 are kept as text, and the planner won't auto-pick those courses.
+- **Credit overlaps:** "Credit only granted for" pairs are read from the catalog for every department.
+- **Validation:** `build_seed.py` refuses to build if a curated prerequisite, restriction number, program name or course code isn't in the official text.
 
 ## API
 
 | Method | Path | Purpose |
 | --- | --- | --- |
 | GET | `/api/health` | API and database status |
-| GET | `/api/courses?search=` | Search courses by code or name |
-| GET | `/api/courses/{code}` | Course detail: Gen Ed, restrictions, prerequisites |
+| GET | `/api/courses?search=&department=&limit=` | Search the catalog; codes starting with the search come first. Total in `X-Total-Count` |
+| GET | `/api/courses/departments` | Departments and course counts |
+| GET | `/api/courses/{code}` | Course detail: department, catalog details, Gen Ed (counted and conditional), restrictions, prerequisites, and verification status |
 | GET | `/api/courses/{code}/prerequisites` | Prerequisite groups |
 | GET | `/api/courses/{code}/prerequisite-tree` | Every level of prerequisites |
 | GET | `/api/courses/{code}/dependents` | Courses it unlocks |
@@ -224,19 +249,21 @@ Interactive docs: http://localhost:8000/docs. Errors use FastAPI's `{"detail": "
 **Prerequisites:** Node.js 20+, Python 3.11+, PostgreSQL 15+. On macOS: `brew install postgresql@17 && brew services start postgresql@17`.
 
 ```bash
-# 1. Database
-createdb finish_line
-psql -d finish_line -f database/schema.sql
-psql -d finish_line -f database/seed.sql
-
-# 2. Backend → http://localhost:8000
+# 1. Backend dependencies
 cd backend
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 cp .env.example .env              # DATABASE_URL, CORS_ORIGINS
-uvicorn app.main:app --reload --port 8000
+cd ..
 
-# 3. Frontend → http://localhost:3000
+# 2. Database: create it, then apply migrations and sync the catalog
+createdb finish_line
+backend/.venv/bin/python database/migrate.py
+
+# 3. Backend → http://localhost:8000
+cd backend && uvicorn app.main:app --reload --port 8000
+
+# 4. Frontend → http://localhost:3000
 cd frontend
 npm install
 cp .env.example .env.local        # NEXT_PUBLIC_API_URL
@@ -245,7 +272,18 @@ npm run dev
 
 Open http://localhost:3000, choose **Start Planning**, add a few completed courses, then open the **Dashboard** and the **Graduation Plan**.
 
-To change catalog or degree data, edit `database/data/*.json`, then run `python3 database/build_seed.py` and re-run both SQL files. Re-running `schema.sql` resets all planning sessions.
+**Updating data safely.** `migrate.py` is safe to run any time:
+- **Migrations:** it applies any new migrations once each.
+- **Courses:** updated by code. They're never deleted, so student records and course IDs survive, and a course that drops out of the catalog is only marked `in_current_catalog = false`.
+- **Derived tables:** prerequisites, Gen Ed tags, restrictions and requirement mappings are rebuilt.
+
+To refresh from UMD's sites, or after editing `database/data/*.json`:
+
+```bash
+backend/.venv/bin/python database/importer/fetch_catalog.py   # re-download catalog + Gen Ed (optional)
+python3 database/build_seed.py                                  # validate and generate seed.sql
+backend/.venv/bin/python database/migrate.py                    # apply
+```
 
 ### Tests
 
@@ -253,7 +291,7 @@ To change catalog or degree data, edit `database/data/*.json`, then run `python3
 cd backend && pytest
 ```
 
-The suite has 126 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
+The suite has 147 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
 
 | Area | Where |
 | --- | --- |
@@ -265,12 +303,15 @@ The suite has 126 tests. The engine tests use small made-up degrees, and the API
 | Schedule generation and what-if overrides | `test_planner.py` |
 | Earliest graduation (credit-bound, chain-bound, standing-delayed) | `test_planner.py` |
 | Sessions, dashboard, search, 503 handling | `test_sessions_api.py`, `test_dashboard.py`, `test_api.py` |
+| Catalog parsers: what is structured, what is left as text | `test_catalog_rules.py` |
+| Planning with INST + non-INST courses; only verified data counts; sync preserves students | `test_multi_department.py` |
 
 ## Known limitations
 
 - **Scope:** one university and one program. The schema supports more, but only UMD Information Science data exists.
 - **Course offerings and seats aren't known.** The planner assumes every course runs every Fall and Spring, and doesn't use Winter or Summer.
-- **Limited catalog:** only 106 courses are in the database. Gen Ed areas without a matching course in the database (writing, oral communication, lab science) become 3-credit "Choose a course" slots.
+- **Unverified data:** 1,155 courses have prerequisites that are only available as text, and 1,974 restrictions are text only. These are shown but not checked; the planner avoids them where it can and flags them where it can't.
+- **Gen Ed coverage:** tags come from five recent terms. A course approved for Gen Ed but not offered in those terms shows `none_found` and doesn't count. Conditional lab tags aren't counted yet.
 - **Not checked:** GPA, residency, permissions, and "or higher" math prerequisites are shown but not enforced.
 - **Greedy, not optimal:** course choice is greedy. The schedule's length is checked against a lower bound, but the planner isn't an optimal solver.
 - **No accounts:** anyone holding a session ID can edit that plan, and sessions don't expire. There's no rate limiting.
@@ -278,7 +319,8 @@ The suite has 126 tests. The engine tests use small made-up degrees, and the API
 ## Future improvements
 
 - **Offering-aware scheduling:** import historical Testudo offerings so courses are only planned in terms they're usually taught, with Summer and Winter as options.
-- **Full catalog import:** an automated, repeatable catalog and Schedule of Classes import, covering all departments and every year's catalog.
+- **Older catalog years:** import past catalogs so students can follow the requirements of the year they entered.
+- **More structured prerequisites:** review the 1,155 text-only prerequisites (starting with Gen Ed courses), and model placement and "if taken with" conditions.
 - **Accounts:** sign-in so plans persist across devices, with session expiry and rate limiting.
 - **More programs:** start with the other College of Information majors, using the same tables.
 - **Smarter optimization:** an ILP/CP-SAT formulation, so "earliest graduation" is provably optimal and can balance workload or preferred courses.

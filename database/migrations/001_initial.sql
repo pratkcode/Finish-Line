@@ -1,20 +1,7 @@
--- Finish Line schema.
--- Safe to re-run: drops and recreates all tables.
+-- 001: initial schema (single-department catalog, degree requirements, planning sessions).
+-- Existing databases created from the old schema.sql are recorded as having applied this.
 
-DROP TABLE IF EXISTS plan_overrides;
-DROP TABLE IF EXISTS session_courses;
-DROP TABLE IF EXISTS planning_sessions;
-DROP TABLE IF EXISTS requirement_course_filters;
-DROP TABLE IF EXISTS requirement_courses;
-DROP TABLE IF EXISTS requirements;
-DROP TABLE IF EXISTS course_exclusions;
-DROP TABLE IF EXISTS course_restrictions;
-DROP TABLE IF EXISTS course_gen_ed;
-DROP TABLE IF EXISTS prerequisite_options;
-DROP TABLE IF EXISTS prerequisite_groups;
-DROP TABLE IF EXISTS courses;
-DROP TABLE IF EXISTS programs;
-DROP TABLE IF EXISTS universities;
+
 
 CREATE TABLE universities (
     id   SERIAL PRIMARY KEY,
