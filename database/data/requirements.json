@@ -1,0 +1,221 @@
+{
+  "_format": {
+    "rule": {
+      "all_courses": "Every course in 'courses' is required.",
+      "min_courses": "At least 'min_courses' eligible courses.",
+      "min_credits": "At least 'min_credits' credits from eligible courses.",
+      "all_children": "Every child requirement must be met.",
+      "any_child": "Any one child requirement must be met.",
+      "course_list": "Lists courses but the source states no required number, so it is shown, not evaluated.",
+      "not_tracked": "Cannot be checked from a list of courses (GPA, residency, ...)."
+    },
+    "eligible courses": "Courses in 'courses', plus courses matching any of 'filters'. A min_credits/min_courses rule with neither counts every course.",
+    "filters": "Each filter matches on subject, course number range, and/or Gen Ed tag (all given fields must match).",
+    "min_grade / allocation_group": "Inherited by children unless overridden. Within one allocation group a course counts toward only one requirement.",
+    "sources": {
+      "catalog_major": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/information-science-major/",
+      "catalog_gened": "https://academiccatalog.umd.edu/undergraduate/general-education-requirements/",
+      "catalog_degree": "https://academiccatalog.umd.edu/undergraduate/registration-academic-requirements-regulations/degree-information/",
+      "program_site": "https://ischool.umd.edu/academics/bachelors-programs/bachelor-of-science-in-information-science-college-park/curriculum-cognate-areas/"
+    },
+    "retrieved": "2026-10-08 (UMD Undergraduate Catalog 2026-2027)"
+  },
+
+  "university": [
+    {
+      "key": "umd.degree",
+      "name": "University Degree Requirements",
+      "category": "university",
+      "rule": "all_children",
+      "source": "catalog_degree",
+      "children": [
+        {
+          "key": "umd.degree.total_credits",
+          "name": "120 total credits",
+          "rule": "min_credits",
+          "min_credits": 120,
+          "description": "No bachelor's degree is awarded with fewer than 120 credits."
+        },
+        {
+          "key": "umd.degree.upper_level",
+          "name": "15 upper-level credits",
+          "rule": "min_credits",
+          "min_credits": 15,
+          "filters": [{ "min_number": 300 }],
+          "description": "At least 15 credits in courses numbered 300 or above, including at least 12 credits in the major field."
+        },
+        {
+          "key": "umd.degree.residency",
+          "name": "30 credits in residence",
+          "rule": "not_tracked",
+          "description": "At least 30 credits must be taken at UMD, normally the final 30."
+        },
+        {
+          "key": "umd.degree.gpa",
+          "name": "Cumulative GPA of 2.0",
+          "rule": "not_tracked",
+          "description": "A minimum cumulative 2.0 GPA is required for graduation."
+        },
+        {
+          "key": "umd.degree.major_gpa",
+          "name": "GPA of 2.0 in major courses",
+          "rule": "not_tracked",
+          "description": "A minimum 2.0 GPA across all courses used to satisfy major requirements."
+        }
+      ]
+    },
+    {
+      "key": "umd.gened",
+      "name": "General Education",
+      "category": "general_education",
+      "rule": "all_children",
+      "source": "catalog_gened",
+      "description": "Gen Ed courses may also count toward major requirements and may not be taken Pass-Fail.",
+      "children": [
+        {
+          "key": "umd.gened.fundamental",
+          "name": "Fundamental Studies",
+          "rule": "all_children",
+          "allocation_group": "gened_fs_ds",
+          "children": [
+            { "key": "umd.gened.fsaw", "name": "Academic Writing", "rule": "min_courses", "min_courses": 1, "min_grade": "C-", "filters": [{ "gen_ed": "FSAW" }], "description": "Must be attempted by 30 credits and completed by 60 credits." },
+            { "key": "umd.gened.fspw", "name": "Professional Writing", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "FSPW" }] },
+            { "key": "umd.gened.fsoc", "name": "Oral Communication", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "FSOC" }] },
+            { "key": "umd.gened.fsma", "name": "Mathematics", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "FSMA" }], "description": "Must be attempted by 30 credits and completed by 60 credits." },
+            { "key": "umd.gened.fsar", "name": "Analytic Reasoning", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "FSAR" }] }
+          ]
+        },
+        {
+          "key": "umd.gened.distributive",
+          "name": "Distributive Studies",
+          "rule": "all_children",
+          "allocation_group": "gened_fs_ds",
+          "children": [
+            { "key": "umd.gened.dshs", "name": "History and Social Sciences", "rule": "min_courses", "min_courses": 2, "filters": [{ "gen_ed": "DSHS" }] },
+            { "key": "umd.gened.dshu", "name": "Humanities", "rule": "min_courses", "min_courses": 2, "filters": [{ "gen_ed": "DSHU" }] },
+            {
+              "key": "umd.gened.natural_sciences",
+              "name": "Natural Sciences",
+              "rule": "all_children",
+              "description": "Two courses, one of which must include a lab.",
+              "children": [
+                { "key": "umd.gened.dsnl", "name": "Natural Science with lab", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "DSNL" }] },
+                { "key": "umd.gened.dsns", "name": "Second Natural Science course", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "DSNS" }, { "gen_ed": "DSNL" }] }
+              ]
+            },
+            { "key": "umd.gened.dssp", "name": "Scholarship in Practice", "rule": "min_courses", "min_courses": 2, "filters": [{ "gen_ed": "DSSP" }], "description": "One of the two must be outside the student's major requirements (not checked yet)." }
+          ]
+        },
+        {
+          "key": "umd.gened.big_question",
+          "name": "Big Question",
+          "rule": "min_courses",
+          "min_courses": 2,
+          "allocation_group": "gened_big_question",
+          "filters": [{ "gen_ed": "SCIS" }],
+          "description": "Two of the eight Distributive Studies courses must be Big Question courses."
+        },
+        {
+          "key": "umd.gened.diversity",
+          "name": "Diversity",
+          "rule": "any_child",
+          "allocation_group": "gened_diversity",
+          "description": "Diversity courses may also count in a Distributive Studies category.",
+          "children": [
+            { "key": "umd.gened.diversity.two_ups", "name": "Two Understanding Plural Societies courses", "rule": "min_courses", "min_courses": 2, "filters": [{ "gen_ed": "DVUP" }] },
+            {
+              "key": "umd.gened.diversity.ups_cc",
+              "name": "One Understanding Plural Societies and one Cultural Competence course",
+              "rule": "all_children",
+              "children": [
+                { "key": "umd.gened.diversity.ups_cc.ups", "name": "Understanding Plural Societies", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "DVUP" }] },
+                { "key": "umd.gened.diversity.ups_cc.cc", "name": "Cultural Competence", "rule": "min_courses", "min_courses": 1, "filters": [{ "gen_ed": "DVCC" }] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "program": [
+    {
+      "key": "infosci.major",
+      "name": "Information Science Major",
+      "category": "major",
+      "rule": "all_children",
+      "min_grade": "C-",
+      "allocation_group": "major",
+      "source": "catalog_major",
+      "description": "Students must earn a C- or better in all major requirements. 57 credits total.",
+      "children": [
+        {
+          "key": "infosci.benchmark",
+          "name": "Benchmark Courses",
+          "category": "major_benchmark",
+          "rule": "all_courses",
+          "courses": ["MATH115", "PSYC100", "STAT100", "INST126"],
+          "description": "MATH115 (or higher). Other courses exist that fulfill the INST126 requirement; check with an advisor."
+        },
+        {
+          "key": "infosci.core",
+          "name": "Major Core Requirements",
+          "category": "major_core",
+          "rule": "all_courses",
+          "courses": ["INST201", "INST311", "INST314", "INST326", "INST327", "INST335", "INST346", "INST352", "INST362", "INST490"]
+        },
+        {
+          "key": "infosci.electives",
+          "name": "Major Electives",
+          "category": "major_elective",
+          "rule": "min_credits",
+          "min_credits": 15,
+          "filters": [{ "subject": "INST", "min_number": 300, "max_number": 499 }],
+          "source": "program_site",
+          "description": "15 credits (five courses) of upper-level (300-400 level) INST electives. Courses used for the core don't count again. Non-INST upper-level courses may count through the program's elective proposal form (not tracked)."
+        },
+        {
+          "key": "infosci.cognates",
+          "name": "Cognate Areas (optional)",
+          "category": "major_cognate",
+          "rule": "any_child",
+          "optional": true,
+          "allocation_group": null,
+          "source": "program_site",
+          "description": "Instead of general electives, students may focus their major electives in one cognate area. Cognate courses are also INST electives, so they count toward Major Electives too.",
+          "children": [
+            {
+              "key": "infosci.cognate.cybersecurity",
+              "name": "Cybersecurity and Privacy",
+              "rule": "min_courses",
+              "min_courses": 5,
+              "courses": ["INST364", "INST366", "INST464", "INST466", "INST467"],
+              "description": "Complete 5 courses from the list. The program site also lists INST365 (Ethical Hacking), which is not in the current catalog, so it is omitted."
+            },
+            {
+              "key": "infosci.cognate.data_science",
+              "name": "Data Science",
+              "rule": "course_list",
+              "courses": ["INST354", "INST377", "INST410", "INST414", "INST447", "INST462"],
+              "description": "The program site lists these courses but does not state how many are required."
+            },
+            {
+              "key": "infosci.cognate.digital_curation",
+              "name": "Digital Curation",
+              "rule": "course_list",
+              "courses": ["INST341", "INST441", "INST442", "INST443"],
+              "description": "The program site lists these courses but does not state how many are required."
+            },
+            {
+              "key": "infosci.cognate.health_information",
+              "name": "Health Information",
+              "rule": "course_list",
+              "courses": ["INST402", "INST452"],
+              "description": "The program site also lists INST408A (Consumer Health Informatics), a topic of INST408 Special Topics, which is omitted. No required number is stated."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

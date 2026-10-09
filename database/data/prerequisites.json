@@ -1,0 +1,243 @@
+{
+  "_format": {
+    "groups": "Every group must be satisfied. Within a group, any one listed course satisfies it.",
+    "timing": "before (default) = completed earlier; before_or_concurrent = completed earlier or taken the same semester; concurrent = taken the same semester (corequisite).",
+    "min_grade": "Minimum grade required, or null if the catalog states none.",
+    "complete": "true when the groups capture the whole official prerequisite text; false when part of it (placement, permission, 'or higher', unclear wording) could not be represented as courses.",
+    "scope": "Structured for INST courses only. Other courses keep their official prerequisite text in courses.json.",
+    "aliases": "The catalog's INST entries still cite AASP101/AASP210; the AAAS catalog lists AAAS101/AAAS210 as 'Formerly: AASP101/AASP210', so the AAAS codes are used here."
+  },
+  "courses": {
+    "INST126": { "complete": false, "note": "Math placement requirement is not a course.", "groups": [] },
+    "INST127": { "complete": true, "groups": [
+      { "options": ["INST126"], "timing": "concurrent", "min_grade": null }
+    ]},
+    "INST228": { "complete": false, "note": "INST398F (a special-topics section) is not a catalog course and is omitted.", "groups": [
+      { "options": ["TLTC333", "INST227", "INST372"], "timing": "before_or_concurrent", "min_grade": null }
+    ]},
+    "INST308": { "complete": false, "note": "'MATH115 or higher' is stored as MATH115 only.", "groups": [
+      { "options": ["MATH115"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105", "BSOS233"], "min_grade": "C-" }
+    ]},
+    "INST309": { "complete": true, "groups": [
+      { "options": ["INST301"], "min_grade": null }
+    ]},
+    "INST311": { "complete": true, "groups": [
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST314": { "complete": false, "note": "'MATH115 (or higher)' is stored as MATH115 only.", "groups": [
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["MATH115"], "min_grade": "C-" }
+    ]},
+    "INST326": { "complete": true, "groups": [
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" }
+    ]},
+    "INST327": { "complete": true, "groups": [
+      { "options": ["INST126", "BSOS233", "GEOG276"], "min_grade": "C-" }
+    ]},
+    "INST335": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["PSYC100"], "min_grade": "C-" }
+    ]},
+    "INST341": { "complete": true, "groups": [
+      { "options": ["INST311"], "timing": "before_or_concurrent", "min_grade": "C-" }
+    ]},
+    "INST346": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["INST326"], "min_grade": "C-" },
+      { "options": ["INST327"], "min_grade": "C-" }
+    ]},
+    "INST347": { "complete": true, "groups": [
+      { "options": ["INST346"], "min_grade": "C-" }
+    ]},
+    "INST352": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["INST311"], "min_grade": "C-" }
+    ]},
+    "INST354": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["INST314"], "min_grade": "C-" },
+      { "options": ["PSYC100"], "min_grade": "C-" }
+    ]},
+    "INST362": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["INST326"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" }
+    ]},
+    "INST364": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["INST327"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["MATH115"], "min_grade": "C-" },
+      { "options": ["PSYC100"], "min_grade": "C-" }
+    ]},
+    "INST366": { "complete": true, "groups": [
+      { "options": ["INST126", "GEOG276", "BSOS233"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["AAAS101", "ANTH210", "ANTH260", "ECON200", "ECON201", "GEOG202", "GVPT170", "PSYC100", "SOCY100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST367": { "complete": true, "groups": [
+      { "options": ["INST380"], "min_grade": "C-" }
+    ]},
+    "INST371": { "complete": true, "groups": [
+      { "options": ["INST201"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST377": { "complete": false, "note": "'MATH115 (or higher)' is stored as MATH115 only.", "groups": [
+      { "options": ["INST201", "INST301", "BSOS233"], "min_grade": "C-" },
+      { "options": ["INST327"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["MATH115"], "min_grade": "C-" }
+    ]},
+    "INST380": { "complete": true, "groups": [
+      { "options": ["INST201"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST381": { "complete": true, "groups": [
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["INST201"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" }
+    ]},
+    "INST389": { "complete": false, "note": "'MATH115 or higher' is stored as MATH115 only.", "groups": [
+      { "options": ["MATH115"], "min_grade": "C-" },
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105", "BSOS233"], "min_grade": "C-" }
+    ]},
+    "INST398": { "complete": false, "note": "'STAT100 or MATH115 or higher' is stored as STAT100 or MATH115.", "groups": [
+      { "options": ["STAT100", "MATH115"], "min_grade": "C-" },
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105", "BSOS233"], "min_grade": "C-" }
+    ]},
+    "INST401": { "complete": true, "groups": [
+      { "options": ["INST362", "INST367"], "min_grade": "C-" }
+    ]},
+    "INST402": { "complete": true, "groups": [
+      { "options": ["INST362", "INST367"], "min_grade": "C-" }
+    ]},
+    "INST403": { "complete": false, "note": "Requires permission of the Philip Merrill College of Journalism; no course prerequisites.", "groups": [] },
+    "INST405": { "complete": false, "note": "'Minimum grade of C- in INST126, STAT100 or INST201' is ambiguous (all three or any one), so it is omitted.", "groups": [
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST406": { "complete": false, "note": "The Professional Writing General Education requirement is not a single course.", "groups": [
+      { "options": ["INST380"], "min_grade": "C-" }
+    ]},
+    "INST408": { "complete": false, "note": "'STAT100, MATH115 or higher' is stored as STAT100 or MATH115.", "groups": [
+      { "options": ["STAT100", "MATH115"], "min_grade": "C-" },
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105", "BSOS233"], "min_grade": "C-" }
+    ]},
+    "INST410": { "complete": false, "note": "'MATH115 or higher' is stored as MATH115 only.", "groups": [
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["MATH115"], "min_grade": "C-" }
+    ]},
+    "INST414": { "complete": false, "note": "'MATH115 (or higher)' is stored as MATH115 only.", "groups": [
+      { "options": ["MATH115"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["INST201", "INST301", "BSOS233"], "min_grade": "C-" },
+      { "options": ["AAAS101", "ANTH210", "ANTH260", "ECON200", "ECON201", "GEOG202", "GVPT170", "PSYC100", "SOCY100"], "min_grade": "C-" },
+      { "options": ["BSOS233", "INST314"], "min_grade": "C-" }
+    ]},
+    "INST420": { "complete": false, "note": "'or other upper-level statistics course' cannot be listed.", "groups": [
+      { "options": ["EPIB315", "INST314"], "min_grade": "C-" }
+    ]},
+    "INST422": { "complete": true, "groups": [
+      { "options": ["INST201"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST437": { "complete": true, "groups": [
+      { "options": ["INST352"], "min_grade": null }
+    ]},
+    "INST441": { "complete": true, "groups": [
+      { "options": ["INST341", "INST380"], "min_grade": "C-" }
+    ]},
+    "INST442": { "complete": true, "groups": [
+      { "options": ["INST341", "INST380"], "timing": "before_or_concurrent", "min_grade": "C-" }
+    ]},
+    "INST443": { "complete": true, "groups": [
+      { "options": ["INST341", "INST380"], "timing": "before_or_concurrent", "min_grade": "C-" }
+    ]},
+    "INST447": { "complete": true, "groups": [
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["INST327"], "min_grade": "C-" },
+      { "options": ["INST201", "INST301", "BSOS233"], "min_grade": "C-" },
+      { "options": ["AAAS101", "ANTH210", "ANTH260", "ECON200", "ECON201", "GEOG202", "GVPT170", "PSYC100", "SOCY100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["AAAS210", "ECON230", "GEOG306", "GVPT201", "INST314", "PSYC200", "SOCY201"], "min_grade": "C-" },
+      { "options": ["BSOS326", "INST326"], "min_grade": "C-" }
+    ]},
+    "INST450": { "complete": true, "groups": [
+      { "options": ["INST327"], "min_grade": null }
+    ]},
+    "INST451": { "complete": true, "groups": [
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["INST201", "INST301"], "min_grade": "C-" }
+    ]},
+    "INST452": { "complete": false, "note": "'STAT100 or MATH115 or higher' is stored as STAT100 or MATH115.", "groups": [
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["PSYC100", "BSOS233"], "min_grade": "C-" },
+      { "options": ["STAT100", "MATH115"], "min_grade": "C-" }
+    ]},
+    "INST454": { "complete": true, "groups": [
+      { "options": ["INST104"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["INST204"], "min_grade": "C-" },
+      { "options": ["INST380"], "min_grade": "C-" },
+      { "options": ["INST367"], "timing": "before_or_concurrent", "min_grade": null }
+    ]},
+    "INST462": { "complete": true, "groups": [
+      { "options": ["STAT100"], "min_grade": "C-" },
+      { "options": ["INST201", "INST301", "BSOS233"], "min_grade": "C-" },
+      { "options": ["INST126", "GEOG276"], "min_grade": "C-" },
+      { "options": ["AAAS101", "ANTH210", "ANTH260", "ECON200", "ECON201", "GEOG202", "GVPT170", "PSYC100", "SOCY100", "SOCY105"], "min_grade": "C-" },
+      { "options": ["BSOS233", "INST314"], "min_grade": "C-" }
+    ]},
+    "INST464": { "complete": true, "groups": [
+      { "options": ["INST201"], "min_grade": "C-" },
+      { "options": ["INST126"], "min_grade": "C-" },
+      { "options": ["MATH115"], "min_grade": "C-" },
+      { "options": ["PSYC100"], "min_grade": "C-" },
+      { "options": ["INST364"], "min_grade": "C-" }
+    ]},
+    "INST466": { "complete": true, "groups": [
+      { "options": ["INST201", "INST301"], "min_grade": "C-" },
+      { "options": ["PSYC100", "SOCY105"], "min_grade": "C-" }
+    ]},
+    "INST467": { "complete": true, "groups": [
+      { "options": ["INST364"], "timing": "before_or_concurrent", "min_grade": "C-" }
+    ]},
+    "INST480": { "complete": true, "groups": [
+      { "options": ["INST204"], "timing": "before_or_concurrent", "min_grade": null }
+    ]},
+    "INST490": { "complete": true, "groups": [
+      { "options": ["INST311"], "min_grade": "C-" },
+      { "options": ["INST314"], "min_grade": "C-" },
+      { "options": ["INST326"], "min_grade": "C-" },
+      { "options": ["INST327"], "min_grade": "C-" },
+      { "options": ["INST335"], "min_grade": "C-" },
+      { "options": ["INST346"], "min_grade": "C-" },
+      { "options": ["INST352"], "min_grade": "C-" },
+      { "options": ["INST362"], "min_grade": "C-" }
+    ]},
+    "INST491": { "complete": true, "groups": [
+      { "options": ["INST204"], "min_grade": "C-" },
+      { "options": ["INST367"], "min_grade": "C-" },
+      { "options": ["INST380"], "min_grade": "C-" },
+      { "options": ["INST406"], "min_grade": "C-" },
+      { "options": ["INST454"], "min_grade": "C-" },
+      { "options": ["INST466"], "min_grade": "C-" }
+    ]}
+  }
+}
