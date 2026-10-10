@@ -14,7 +14,7 @@ UNVERIFIED = "umd-computer-science"
 @pytest.fixture
 def session():
     data = client.post("/api/sessions", json={
-        "program_slug": INFOSCI, "current_term": "Fall 2026", "max_credits_per_term": 15}).json()
+        "program_slug": INFOSCI, "current_term": "Spring 2026", "max_credits_per_term": 15}).json()
     for code in ["ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST201", "SOCY105"]:
         client.post(f"/api/sessions/{data['id']}/courses", json={"code": code, "grade": "B"})
     yield data
@@ -52,8 +52,8 @@ def test_adding_courses_increases_totals(session):
     assert add(session, "INST326", "Fall 2026").status_code == 201
     plan = add(session, "INST327", "Fall 2026").json()
     assert term_credits(plan) == {"Fall 2026": 6}
-    assert plan["credits"] == {"completed": 21, "planned": 6, "total": 27, "required": 120,
-                               "remaining": 93}
+    assert plan["credits"] == {"completed": 21, "in_progress": 0, "planned": 6, "total": 27,
+                               "required": 120, "remaining": 93, "unverified": 0}
 
 
 def test_removing_a_course_decreases_totals_immediately(session):
@@ -127,8 +127,8 @@ def test_duplicates_and_invalid_courses_are_rejected(session):
     assert add(session, "INST326", "Spring 2027").status_code == 409  # already planned
     assert add(session, "INST201", "Spring 2027").status_code == 409  # already completed
     assert add(session, "ZZZZ999", "Fall 2026").status_code == 404
-    assert add(session, "INST327", "Spring 2026").status_code == 422  # before the current term
-    assert add(session, "INST327", "Summer 2027").status_code == 422  # Fall/Spring only
+    assert add(session, "INST327", "Spring 2026").status_code == 422  # before the plan starts
+    assert add(session, "INST327", "Winter 2027").status_code == 422  # not a plan term
     assert client.delete(url(session, "/courses/INST327")).status_code == 404
     assert client.patch(url(session, "/courses/INST327"), json={"term": "Fall 2027"}).status_code == 404
 

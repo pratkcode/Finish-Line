@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import HistoryTimeline from "@/components/plan/HistoryTimeline";
+import PlanSettings from "@/components/plan/PlanSettings";
 import PlanSummary from "@/components/plan/PlanSummary";
 import RecommendationPanel from "@/components/plan/RecommendationPanel";
 import TermCard, { type PlanActions } from "@/components/plan/TermCard";
@@ -13,10 +15,14 @@ import {
   getPlan,
   getRecommendation,
   getSession,
+  nextTerm,
   removePlannedCourse,
+  termOrder,
   updatePlannedCourse,
+  updateSession,
   type PlannedTerm,
   type Recommendation,
+  type SessionChanges,
   type StudentPlan,
 } from "@/lib/api";
 import { useSessionData } from "@/lib/useSessionData";
@@ -24,16 +30,6 @@ import { useSessionData } from "@/lib/useSessionData";
 async function loadPlan(id: string) {
   const [plan, session] = await Promise.all([getPlan(id), getSession(id)]);
   return { plan, completed: new Set(session.courses.map((c) => c.code)) };
-}
-
-function nextTerm(term: string): string {
-  const [season, year] = term.split(" ");
-  return season === "Fall" ? `Spring ${Number(year) + 1}` : `Fall ${year}`;
-}
-
-function termOrder(term: string): number {
-  const [season, year] = term.split(" ");
-  return Number(year) * 2 + (season === "Fall" ? 1 : 0);
 }
 
 export default function GraduationPlanView() {
@@ -72,6 +68,15 @@ export default function GraduationPlanView() {
     setCredits: (code, credits) => run(() => updatePlannedCourse(sessionId, code, { credits })),
   };
 
+  // Plan settings live on the session; save them, then reload the plan.
+  async function saveSettings(changes: SessionChanges) {
+    await run(async () => {
+      await updateSession(sessionId, changes);
+      return getPlan(sessionId);
+    });
+    setRecommendation(null);
+  }
+
   async function recommend() {
     setBusy(true);
     try {
@@ -91,16 +96,19 @@ export default function GraduationPlanView() {
     setRecommendation(null);
   }
 
-  // Every semester from the current one through one past the last planned (or
-  // added) semester, so there's always somewhere to add a course.
-  const furthest = [...plan.terms.map((t) => t.term), ...extraTerms, plan.current_term].sort(
-    (a, b) => termOrder(a) - termOrder(b),
-  ).at(-1)!;
-  const terms: PlannedTerm[] = [];
-  for (let t = plan.current_term; termOrder(t) <= termOrder(furthest) + 1; t = nextTerm(t)) {
-    terms.push(plan.terms.find((p) => p.term === t) ?? { term: t, credits: 0, warnings: [], courses: [] });
-  }
-  const termChoices = [...terms.map((t) => t.term), nextTerm(terms.at(-1)!.term)];
+  // Future semesters: from the plan's first semester through the last planned
+  // one (or the target) plus one, as the API lists them, plus any the
+  // student added. There's always somewhere to add a course.
+  const seasons = plan.include_summer ? ["Spring", "Summer", "Fall"] : ["Spring", "Fall"];
+  const limitFor = (term: string) =>
+    term.startsWith("Summer") ? (plan.max_summer_credits ?? plan.max_credits_per_term) : plan.max_credits_per_term;
+  const termNames = [...new Set([...plan.planning_terms, ...extraTerms])]
+    .filter((t) => termOrder(t) >= termOrder(plan.plan_start_term))
+    .sort((a, b) => termOrder(a) - termOrder(b));
+  const terms: PlannedTerm[] = termNames.map(
+    (t) => plan.terms.find((p) => p.term === t) ?? { term: t, credits: 0, limit: limitFor(t), warnings: [], courses: [] },
+  );
+  const termChoices = [...termNames, nextTerm(termNames.at(-1)!, seasons)];
   const termOf = new Map<string, string>();
   plan.terms.forEach((t) => t.courses.forEach((c) => termOf.set(c.code, t.term)));
   const lastPlanned = plan.terms.at(-1)?.term;
@@ -123,6 +131,8 @@ export default function GraduationPlanView() {
       )}
 
       <PlanSummary plan={plan} />
+
+      <PlanSettings plan={plan} busy={busy} onSave={saveSettings} />
 
       <section className="flex flex-wrap items-center gap-3">
         <button
@@ -188,15 +198,19 @@ export default function GraduationPlanView() {
         </p>
       )}
 
+      <HistoryTimeline history={plan.history} currentTerm={plan.current_term} />
+
       <section>
-        <h2 className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">Semesters</h2>
+        <h2 className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">
+          Planned semesters <span className="font-normal normal-case">(from {plan.plan_start_term})</span>
+        </h2>
         <ol className="relative space-y-4 border-l-2 border-slate-200 pl-5 sm:pl-6">
           {terms.map((t) => (
             <TermCard
               key={t.term}
               term={t}
               isLast={t.term === lastPlanned}
-              maxCredits={plan.max_credits_per_term}
+              maxCredits={t.limit}
               termChoices={termChoices}
               termOf={termOf}
               completed={completed}
@@ -207,7 +221,7 @@ export default function GraduationPlanView() {
         </ol>
         <button
           type="button"
-          onClick={() => setExtraTerms([...extraTerms, nextTerm(terms.at(-1)!.term)])}
+          onClick={() => setExtraTerms([...extraTerms, nextTerm(termNames.at(-1)!, seasons)])}
           className="mt-3 ml-5 text-sm font-medium text-slate-600 hover:text-slate-900 sm:ml-6"
         >
           + Add a semester
@@ -236,13 +250,17 @@ export default function GraduationPlanView() {
 
       <footer className="space-y-2 border-t border-slate-200 pt-6 text-sm text-slate-500">
         <p>
-          Finish Line is a planning tool, not an official UMD schedule or degree audit. It doesn&apos;t know which
-          semesters courses are offered. Confirm your plan with an advisor.
+          Finish Line is a planning tool, not an official UMD schedule or degree audit. Offering notes come from
+          recent Testudo schedules and don&apos;t guarantee future sections. Confirm your plan with an advisor.
         </p>
         {plan.not_checked.length > 0 && <p>Not checked: {plan.not_checked.map((n) => n.name).join(", ")}.</p>}
         <p>
+          <Link href="/history" className="underline hover:text-slate-700">
+            Edit your academic history
+          </Link>
+          {" · "}
           <Link href="/profile" className="underline hover:text-slate-700">
-            Edit completed courses, major, and credit limit
+            Edit major and credit limit
           </Link>
         </p>
       </footer>

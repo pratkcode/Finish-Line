@@ -8,7 +8,7 @@ const COMPLETED = ["ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST2
 async function startSession(page: Page, request: APIRequestContext, program = "umd-information-science") {
   const session = await (
     await request.post(`${API}/api/sessions`, {
-      data: { program_slug: program, current_term: "Fall 2026", max_credits_per_term: 15 },
+      data: { program_slug: program, current_term: "Spring 2026", max_credits_per_term: 15 },
     })
   ).json();
   for (const code of COMPLETED) {

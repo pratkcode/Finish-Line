@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import CompletedCourses from "@/components/CompletedCourses";
 import UnverifiedMajorNote from "@/components/UnverifiedMajorNote";
@@ -201,9 +202,18 @@ export default function ProfileEditor() {
             />
           </Field>
 
+          <Field label="Academic standing" hint="As you'd describe it, e.g. Good standing. For your reference only.">
+            <TextInput
+              key={session.academic_standing ?? ""}
+              value={session.academic_standing}
+              placeholder="e.g. Good standing"
+              onSave={(value) => save({ academic_standing: value })}
+            />
+          </Field>
+
           <Field
             label="Total completed credits"
-            hint="Include AP, transfer, and other credit. Your course list below is used to check it."
+            hint="Include AP, transfer, and other credit. Only credits recorded as courses or verified transfer credit count."
           >
             <NumberInput
               key={session.credits.reported ?? "none"}
@@ -254,12 +264,41 @@ function CreditSummary({ session }: { session: PlanSession }) {
       )}
       {unmatched > 0 && (
         <p className="mt-3 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-700">
-          You entered {reported} total credits. {unmatched} of those aren&apos;t matched to a
-          course yet (AP, transfer, or courses you haven&apos;t added). Add courses below so they
-          can count toward specific requirements.
+          You entered {reported} total credits. {unmatched} of those aren&apos;t recorded as courses
+          yet, so they aren&apos;t counted. Add UMD courses below, and transfer, AP, or other credit
+          in your{" "}
+          <Link href="/history" className="underline">
+            academic history
+          </Link>
+          .
         </p>
       )}
     </section>
+  );
+}
+
+function TextInput({
+  value,
+  placeholder,
+  onSave,
+}: {
+  value: string | null;
+  placeholder?: string;
+  onSave: (value: string | null) => void;
+}) {
+  // Callers pass key={value}, so a new saved value resets the draft.
+  const [draft, setDraft] = useState(value ?? "");
+  return (
+    <input
+      type="text"
+      maxLength={100}
+      value={draft}
+      placeholder={placeholder}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={() => (draft.trim() || null) !== value && onSave(draft.trim() || null)}
+      onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+      className={inputClass}
+    />
   );
 }
 

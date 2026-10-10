@@ -27,9 +27,17 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
             UMD schedule. Add it to your plan, then change anything you like.
           </p>
           <p className="mt-1">
-            Would graduate: <span className="font-semibold">{recommendation.projected_graduation ?? "can't tell yet"}</span>
+            Starts {recommendation.start_term} · would graduate:{" "}
+            <span className="font-semibold" data-testid="recommended-graduation">
+              {recommendation.projected_graduation ?? "can't tell yet"}
+            </span>
             {" · "}adds {additions.length} {additions.length === 1 ? "course" : "courses"} ({credits} credits)
           </p>
+          {recommendation.target && (
+            <p className={recommendation.target.meets === false ? "mt-1 font-medium text-red-800" : "mt-1"}>
+              {recommendation.target.message}
+            </p>
+          )}
         </div>
         <div className="flex gap-2">
           <button
@@ -55,17 +63,25 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
         {[...byTerm.entries()].map(([term, courses]) => (
           <li key={term} className="rounded-lg bg-white/70 p-3">
             <p className="font-semibold">{term}</p>
-            <ul className="mt-1 space-y-0.5">
+            <ul className="mt-1 space-y-1.5">
               {courses.map((c, i) => (
-                <li key={`${c.code ?? c.name}-${i}`} className={c.code ? "" : "text-amber-800 italic"}>
-                  {c.code ? (
-                    <>
-                      <span className="font-medium">{c.code}</span> {c.name}
-                    </>
-                  ) : (
-                    <>{c.name} (you choose)</>
-                  )}{" "}
-                  <span className="text-amber-700">· {c.credits} cr</span>
+                <li key={`${c.code ?? c.name}-${i}`} data-recommended={c.code ?? undefined}>
+                  <span className={c.code ? "" : "text-amber-800 italic"}>
+                    {c.code ? (
+                      <>
+                        <span className="font-medium">{c.code}</span> {c.name}
+                      </>
+                    ) : (
+                      <>{c.name} (you choose)</>
+                    )}{" "}
+                    <span className="text-amber-700">· {c.credits} cr</span>
+                  </span>
+                  {c.reasons.length > 0 && (
+                    <span className="block text-xs text-slate-700">Why: {c.reasons.join("; ")}</span>
+                  )}
+                  {c.uncertain.length > 0 && c.code && (
+                    <span className="block text-xs text-amber-800">Check: {c.uncertain.join(" ")}</span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -77,6 +93,16 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
           Italic lines are requirements where you pick the course. They aren&apos;t added; search for a course in
           that semester when you&apos;re ready.
         </p>
+      )}
+      {recommendation.assumptions.length > 0 && (
+        <details className="mt-2 text-xs">
+          <summary className="cursor-pointer">Assumptions</summary>
+          <ul className="mt-1 list-disc pl-5">
+            {recommendation.assumptions.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+        </details>
       )}
       {recommendation.unscheduled.length > 0 && (
         <p className="mt-2 text-xs">Couldn&apos;t place: {recommendation.unscheduled.join("; ")}</p>

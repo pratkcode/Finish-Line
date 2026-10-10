@@ -9,7 +9,8 @@ Sources (official UMD sites only):
     https://app.testudo.umd.edu/soc/gen-ed/<term>/<category>
 
 Writes departments.json, courses.json, gen_ed.json and programs.json (the
-undergraduate majors listed in the catalog). Nothing is inferred:
+undergraduate majors listed in the catalog). With --offerings it also writes
+offerings.json: the terms in which each course had sections on Testudo. Nothing is inferred:
 fields are copied from the pages, and courses or tags that can't be parsed
 are reported, not guessed. Uses only the Python standard library.
 """
@@ -28,6 +29,7 @@ from pathlib import Path
 CATALOG = "https://academiccatalog.umd.edu/undergraduate/approved-courses/"
 PROGRAMS = "https://academiccatalog.umd.edu/undergraduate/programs/"
 TESTUDO = "https://app.testudo.umd.edu/soc/gen-ed/{term}/{tag}"
+OFFERINGS = "https://app.testudo.umd.edu/soc/{term}/{department}"
 CATALOG_YEAR = "2026-2027"
 # Fall 2025 through Fall 2026 (Testudo term ids: year + month).
 GEN_ED_TERMS = ["202508", "202512", "202601", "202605", "202608"]
@@ -127,6 +129,8 @@ def parse_gen_ed(page_html: str) -> dict[str, str]:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache", type=Path, help="Directory to cache downloaded pages")
+    parser.add_argument("--offerings", action="store_true",
+                        help="Also download which terms each course was offered (slow: ~1,000 pages)")
     args = parser.parse_args()
     if args.cache:
         args.cache.mkdir(parents=True, exist_ok=True)
@@ -185,6 +189,27 @@ def main():
         {"source": "https://app.testudo.umd.edu/soc/gen-ed/", "terms": GEN_ED_TERMS,
          "retrieved": retrieved, "skipped_codes_not_in_catalog": not_in_catalog,
          "courses": gen_ed}, indent=1, ensure_ascii=False))
+
+    if args.offerings:
+        def department_offerings(pair):
+            term, department = pair
+            page = fetch(OFFERINGS.format(term=term, department=department), args.cache)
+            return term, set(re.findall(r'course-id">([A-Z]{4}\d{3}[A-Z]?)<', page))
+
+        offered: dict[str, set[str]] = {}
+        pairs = [(term, dept) for term in GEN_ED_TERMS for dept in sorted(departments)]
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            for term, codes in pool.map(department_offerings, pairs):
+                for code in codes:
+                    if code in courses:
+                        offered.setdefault(code, set()).add(term)
+        (OUT / "offerings.json").write_text(json.dumps(
+            {"source": "https://app.testudo.umd.edu/soc/", "terms": GEN_ED_TERMS,
+             "retrieved": retrieved,
+             "note": "A course is listed for a term when Testudo showed it with sections that term.",
+             "courses": {code: sorted(terms) for code, terms in sorted(offered.items())}},
+            indent=1))
+        print(f"{len(offered)} courses offered at least once in {', '.join(GEN_ED_TERMS)}")
 
     for problem in problems:
         print("PROBLEM:", problem, file=sys.stderr)

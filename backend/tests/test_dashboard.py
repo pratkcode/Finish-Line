@@ -10,7 +10,7 @@ client = TestClient(app)
 def test_summary_for_a_student():
     session = client.post("/api/sessions", json={
         "program_slug": "umd-information-science", "reported_credits": 61,
-        "current_term": "Fall 2026", "max_credits_per_term": 15}).json()
+        "current_term": "Spring 2026", "max_credits_per_term": 15}).json()
     try:
         for code in ["MATH115", "PSYC100", "STAT100", "INST126", "INST201"]:
             client.post(f"/api/sessions/{session['id']}/courses", json={"code": code, "grade": "B"})
@@ -27,8 +27,9 @@ def test_summary_for_a_student():
 
     assert summary["program"]["name"] == "Information Science"
     assert summary["completed_courses"] == 5
-    assert summary["credits"] == {"earned": 61, "from_courses": 15, "unverified": 46,
-                                  "required": 120, "remaining": 59}
+    # The reported total (61) isn't counted until the credits are recorded.
+    assert summary["credits"] == {"earned": 15, "from_courses": 15, "in_progress": 0,
+                                  "unverified": 46, "required": 120, "remaining": 105}
     # The summary agrees with the detailed endpoints.
     complete = len(progress["completed_requirements"])
     total = complete + len(progress["remaining_requirements"])

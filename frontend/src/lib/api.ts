@@ -220,7 +220,11 @@ export type CompletedCourse = {
   credits_min: number;
   credits_max: number;
   grade: string | null;
+  status: CourseStatus;
+  academic_term_id: number | null; // the UMD semester it was taken in, if recorded
 };
+
+export type CourseStatus = "completed" | "in_progress";
 
 export type PlanSession = {
   id: string;
@@ -229,10 +233,16 @@ export type PlanSession = {
   university: string;
   current_term: string | null;
   max_credits_per_term: number;
+  plan_start_term: string | null; // null: the semester after current_term
+  target_graduation_term: string | null;
+  academic_standing: string | null;
+  include_summer: boolean;
+  max_summer_credits: number | null;
   courses: CompletedCourse[];
   credits: {
     // Calculated from the course list; the number to use.
     completed: number;
+    in_progress: number;
     // What the student typed in, if anything.
     reported: number | null;
     // Reported credits not backed by a listed course.
@@ -246,6 +256,11 @@ export type SessionChanges = Partial<{
   reported_credits: number | null;
   current_term: string | null;
   max_credits_per_term: number;
+  plan_start_term: string | null;
+  target_graduation_term: string | null;
+  academic_standing: string | null;
+  include_summer: boolean;
+  max_summer_credits: number | null;
 }>;
 
 export function createSession(changes: SessionChanges & { program_slug: string }) {
@@ -264,14 +279,18 @@ export function deleteSession(id: string) {
   return send<void>("DELETE", `/api/sessions/${id}`);
 }
 
-export function addCompletedCourse(id: string, code: string) {
-  return send<PlanSession>("POST", `/api/sessions/${id}/courses`, { code });
+export function addCompletedCourse(
+  id: string,
+  code: string,
+  extra: { status?: CourseStatus; academic_term_id?: number | null; grade?: string | null } = {},
+) {
+  return send<PlanSession>("POST", `/api/sessions/${id}/courses`, { code, ...extra });
 }
 
 export function updateCompletedCourse(
   id: string,
   code: string,
-  changes: { grade?: string | null; credits?: number },
+  changes: { grade?: string | null; credits?: number; status?: CourseStatus; academic_term_id?: number | null },
 ) {
   return send<PlanSession>("PATCH", `/api/sessions/${id}/courses/${code}`, changes);
 }
@@ -299,18 +318,26 @@ export type RequirementSummary = {
   candidate_courses: CandidateCourse[]; // capped; see candidate_count
   candidate_count: number;
   options: string[];
+  fulfilled: boolean; // met by a verified fulfillment (transfer evaluation, waiver, ...)
+  in_progress_courses: string[]; // courses being taken now that would count here
 };
+
+export type PendingItem = { kind: string; description: string; credits: number; reason: string };
 
 export type DegreeProgress = {
   session_id: string;
   program: Program;
   credits: {
+    earned: number; // all completed credit recorded, verified or not
+    applicable: number; // what counts toward the degree
     from_courses: number;
-    unverified: number;
-    counted: number;
+    credit_block: number; // verified transfer credit without a UMD equivalent
+    unverified: number; // recorded or reported but not counted until verified
+    in_progress: number;
     required: number | null;
     remaining: number | null;
   };
+  pending: PendingItem[];
   completed_requirements: RequirementSummary[];
   remaining_requirements: RequirementSummary[];
   untracked_requirements: RequirementSummary[];
@@ -383,6 +410,7 @@ export type PlannedCourse = {
 export type PlannedTerm = {
   term: string;
   credits: number; // sum of this semester's courses
+  limit: number; // credit limit for this semester
   warnings: string[];
   courses: PlannedCourse[];
 };
@@ -390,16 +418,25 @@ export type PlannedTerm = {
 export type StudentPlan = {
   program_name: string;
   requirements_verified: boolean;
-  current_term: string; // earliest semester courses can be planned in
+  current_term: string;
+  plan_start_term: string; // first semester of the future plan
+  include_summer: boolean;
   max_credits_per_term: number;
+  max_summer_credits: number | null;
+  target_graduation_term: string | null;
+  history: HistoryTerm[]; // past and current semesters
+  planning_terms: string[]; // future semesters to show
   projected_graduation: string | null;
   graduation_note: string;
+  target: TargetCheck | null;
   credits: {
     completed: number;
+    in_progress: number;
     planned: number;
     total: number;
     required: number | null;
     remaining: number | null;
+    unverified: number;
   };
   terms: PlannedTerm[];
   warnings: { term: string; code: string | null; message: string }[];
@@ -419,12 +456,18 @@ export type RecommendedCourse = {
   credits: number;
   term: string;
   satisfies: RequirementRef[];
+  reasons: string[]; // why it's recommended
+  uncertain: string[]; // what couldn't be verified
 };
+
+export type TargetCheck = { term: string; meets: boolean | null; message: string };
 
 export type Recommendation = {
   disclaimer: string;
+  start_term: string;
   projected_graduation: string | null;
   graduation_note: string;
+  target: TargetCheck | null;
   additions: RecommendedCourse[];
   slots: RecommendedCourse[];
   unscheduled: string[];
@@ -515,11 +558,14 @@ export type DashboardSummary = {
   session_id: string;
   program: Program;
   current_term: string | null;
+  plan_start_term: string;
   max_credits_per_term: number;
   completed_courses: number;
+  in_progress_courses: number;
   credits: {
-    earned: number;
+    earned: number; // counts toward the degree
     from_courses: number;
+    in_progress: number;
     unverified: number;
     required: number | null;
     remaining: number | null;
@@ -542,3 +588,163 @@ export function getDashboard(sessionId: string) {
 }
 
 export const GRADES = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "P"];
+
+// --- Academic history -------------------------------------------------------------
+
+export type HistoryCourse = {
+  code: string;
+  name: string;
+  credits: number;
+  credits_min: number;
+  credits_max: number;
+  grade: string | null;
+  status: CourseStatus;
+};
+
+export type TransferVerification = "student_reported" | "umd_verified";
+export type FulfillmentVerification = "student_reported" | "umd_verified" | "approved_exception";
+export type FulfillmentMethod =
+  | "transfer_credit"
+  | "exam_credit"
+  | "waiver"
+  | "substitution"
+  | "associate_degree"
+  | "other";
+
+export type TransferCredit = {
+  id: number;
+  academic_term_id: number | null;
+  institution: string;
+  kind: "course" | "credits"; // "credits": doesn't map to one course
+  external_code: string | null;
+  title: string | null;
+  credits: number;
+  grade: string | null;
+  status: CourseStatus;
+  equivalent_code: string | null;
+  equivalent_name: string | null;
+  verification: TransferVerification;
+  verification_note: string | null;
+  counted: boolean;
+};
+
+export type HistoryTerm = {
+  id: number;
+  term: string;
+  institution: string;
+  at_umd: boolean;
+  period: "past" | "current" | "future";
+  courses: HistoryCourse[];
+  transfers: TransferCredit[];
+};
+
+export type Fulfillment = {
+  id: number;
+  requirement_key: string;
+  requirement_name: string;
+  method: FulfillmentMethod;
+  verification: FulfillmentVerification;
+  note: string | null;
+  transfer_credit_id: number | null;
+  counted: boolean;
+};
+
+export type AcademicHistory = {
+  current_term: string;
+  terms: HistoryTerm[];
+  unassigned_courses: HistoryCourse[];
+  unassigned_transfers: TransferCredit[];
+  fulfillments: Fulfillment[];
+  requirement_options: { key: string; name: string; path: string[]; category: string }[];
+  summary: {
+    earned_credits: number;
+    applicable_credits: number;
+    in_progress_credits: number;
+    pending: PendingItem[];
+  };
+};
+
+export type TransferInput = {
+  academic_term_id?: number | null;
+  institution?: string | null;
+  kind?: "course" | "credits";
+  external_code?: string | null;
+  title?: string | null;
+  credits?: number;
+  grade?: string | null;
+  status?: CourseStatus;
+  equivalent_code?: string | null;
+  verification?: TransferVerification;
+  verification_note?: string | null;
+};
+
+const historyPath = (sessionId: string, rest = "") => `/api/sessions/${sessionId}${rest}`;
+
+export function getHistory(sessionId: string) {
+  return get<AcademicHistory>(historyPath(sessionId, "/history"));
+}
+
+export function addHistoryTerm(sessionId: string, term: { term: string; institution?: string | null; at_umd: boolean }) {
+  return send<AcademicHistory>("POST", historyPath(sessionId, "/history/terms"), term);
+}
+
+export function updateHistoryTerm(sessionId: string, id: number, changes: { term?: string; institution?: string }) {
+  return send<AcademicHistory>("PATCH", historyPath(sessionId, `/history/terms/${id}`), changes);
+}
+
+export function removeHistoryTerm(sessionId: string, id: number) {
+  return send<AcademicHistory>("DELETE", historyPath(sessionId, `/history/terms/${id}`));
+}
+
+export function addTransfer(sessionId: string, transfer: TransferInput) {
+  return send<AcademicHistory>("POST", historyPath(sessionId, "/transfer-credits"), transfer);
+}
+
+export function updateTransfer(sessionId: string, id: number, changes: TransferInput) {
+  return send<AcademicHistory>("PATCH", historyPath(sessionId, `/transfer-credits/${id}`), changes);
+}
+
+export function removeTransfer(sessionId: string, id: number) {
+  return send<AcademicHistory>("DELETE", historyPath(sessionId, `/transfer-credits/${id}`));
+}
+
+export function addFulfillment(
+  sessionId: string,
+  fulfillment: { requirement_key: string; method: FulfillmentMethod; verification: FulfillmentVerification; note?: string | null },
+) {
+  return send<AcademicHistory>("POST", historyPath(sessionId, "/fulfillments"), fulfillment);
+}
+
+export function updateFulfillment(
+  sessionId: string,
+  id: number,
+  changes: { method?: FulfillmentMethod; verification?: FulfillmentVerification; note?: string | null },
+) {
+  return send<AcademicHistory>("PATCH", historyPath(sessionId, `/fulfillments/${id}`), changes);
+}
+
+export function removeFulfillment(sessionId: string, id: number) {
+  return send<AcademicHistory>("DELETE", historyPath(sessionId, `/fulfillments/${id}`));
+}
+
+// --- Terms ------------------------------------------------------------------------
+
+export const SEASONS = ["Winter", "Spring", "Summer", "Fall"] as const;
+
+export function termOrder(term: string): number {
+  const [season, year] = term.split(" ");
+  return Number(year) * 4 + SEASONS.indexOf(season as (typeof SEASONS)[number]);
+}
+
+export function nextTerm(term: string, seasons: readonly string[] = ["Spring", "Fall"]): string {
+  let value = termOrder(term) + 1;
+  while (!seasons.includes(SEASONS[value % 4])) value += 1;
+  return `${SEASONS[value % 4]} ${Math.floor(value / 4)}`;
+}
+
+/** Terms from `first` to `last`, inclusive, using the given seasons. */
+export function termRange(first: string, last: string, seasons: readonly string[]): string[] {
+  const out: string[] = [];
+  for (let t = first; termOrder(t) <= termOrder(last) && out.length < 60; t = nextTerm(t, seasons)) out.push(t);
+  return out;
+}

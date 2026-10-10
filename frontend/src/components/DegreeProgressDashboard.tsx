@@ -88,22 +88,23 @@ function OverallProgress({
   done: number;
   tracked: number;
 }) {
-  const { from_courses, unverified, counted, required, remaining } = data.credits;
-  const total = required ?? counted;
+  const { from_courses, credit_block, unverified, in_progress, applicable, required, remaining } = data.credits;
+  const total = required ?? applicable;
   return (
     <section className="grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2">
       <div className="bg-white p-5">
-        <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Credits</p>
-        <p className="mt-1.5 text-3xl font-bold tracking-tight">
-          {counted} <span className="text-xl font-medium text-slate-400">/ {total}</span>
+        <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Credits that count</p>
+        <p className="mt-1.5 text-3xl font-bold tracking-tight" data-testid="applicable-credits">
+          {applicable} <span className="text-xl font-medium text-slate-400">/ {total}</span>
         </p>
         <div className="mt-3">
           <ProgressBar
             label="Credits toward degree"
             max={total}
             segments={[
-              { value: from_courses, className: "bg-red-700", label: "From completed courses" },
-              { value: unverified, className: "bg-red-300", label: "Reported, not matched to courses" },
+              { value: from_courses, className: "bg-red-700", label: "From completed and verified courses" },
+              { value: credit_block, className: "bg-red-500", label: "Verified transfer credit without a UMD equivalent" },
+              { value: in_progress, className: "bg-amber-300", label: "In progress (not counted yet)" },
             ]}
           />
         </div>
@@ -112,14 +113,41 @@ function OverallProgress({
             <span className="h-2 w-2 rounded-full bg-red-700" />
             {from_courses} from courses
           </li>
-          {unverified > 0 && (
+          {credit_block > 0 && (
             <li className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-red-300" />
-              {unverified} reported, not matched
+              <span className="h-2 w-2 rounded-full bg-red-500" />
+              {credit_block} verified transfer (no UMD equivalent)
+            </li>
+          )}
+          {in_progress > 0 && (
+            <li className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-amber-300" />
+              {in_progress} in progress
             </li>
           )}
           {remaining !== null && <li>{remaining} remaining</li>}
         </ul>
+        {unverified > 0 && (
+          <p className="mt-2 text-sm text-amber-800">
+            {unverified} more credits are recorded or reported but not counted until verified.{" "}
+            <Link href="/history" className="underline">
+              Academic history
+            </Link>
+          </p>
+        )}
+        {data.pending.length > 0 && (
+          <details className="mt-2 text-sm text-slate-600">
+            <summary className="cursor-pointer">Pending verification ({data.pending.length})</summary>
+            <ul className="mt-1 list-disc pl-5">
+              {data.pending.map((p, i) => (
+                <li key={i}>
+                  {p.description}
+                  {p.credits ? ` (${p.credits} cr)` : ""}: {p.reason}
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
       </div>
       <div className="bg-white p-5">
         <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Requirements</p>
@@ -251,6 +279,14 @@ function UnitRow({ unit, byCode }: { unit: RequirementSummary; byCode: Eligibili
             <span className="font-normal text-slate-400"> · Not tracked yet</span>
           )}
         </p>
+        {unit.fulfilled && (
+          <p className="mt-0.5 text-sm text-emerald-700">Met by a verified fulfillment (see Academic history)</p>
+        )}
+        {unit.status !== "complete" && unit.in_progress_courses.length > 0 && (
+          <p className="mt-0.5 text-sm text-amber-800">
+            In progress: {unit.in_progress_courses.join(", ")} (counts once completed)
+          </p>
+        )}
 
         {unit.status !== "complete" && unit.options.length > 0 && (
           <p className="mt-0.5 text-sm text-slate-500">

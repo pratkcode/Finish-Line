@@ -8,7 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.planner import Rules, build_plan, next_term
+from app.planner import Calendar, Rules, build_plan, next_term
 from app.prerequisites import PrereqGraph
 
 
@@ -304,8 +304,9 @@ def test_real_recommendation_is_valid(max_credits):
     assert where["INST326"] < where["INST346"]
     assert all(where[c] < where["INST490"] for c in ["INST346", "INST352", "INST362"])
 
-    # INST490 needs 90 earned credits before its term (61 to start).
-    earned = 61
+    # INST490 needs 90 earned credits before its term. Only the 18 recorded
+    # credits count; the rest of the reported 61 is unverified.
+    earned = 18
     for i, t in enumerate(terms):
         if i == where["INST490"]:
             assert earned >= 90
@@ -329,10 +330,11 @@ def test_moving_a_course_reschedules_its_dependents():
     assert courses_by_term(graph_plan({})) == [["A"], ["B"], ["C"]]
     # What if A waits until Spring 2027?
     result = graph_plan({"A": "Spring 2027"})
-    assert courses_by_term(result) == [[], ["A"], ["B"], ["C"]]
+    assert courses_by_term(result) == [["A"], ["B"], ["C"]]
+    assert [t["term"] for t in result["terms"]] == ["Spring 2027", "Fall 2027", "Spring 2028"]
     assert result["projected_graduation"] == "Spring 2028"
     assert result["warnings"] == []
-    a = result["terms"][1]["courses"][0]
+    a = result["terms"][0]["courses"][0]
     assert a["pinned"] is True
 
 
@@ -451,3 +453,44 @@ def test_start_in_spring():
     result = plan(tree, graph, start="Spring 2027")
     assert [t["term"] for t in result["terms"]] == ["Spring 2027", "Fall 2027"]
     assert result["projected_graduation"] == "Fall 2027"
+
+
+# --- Seasons, offerings and Summer ------------------------------------------------------
+
+def test_courses_are_placed_in_seasons_they_were_offered():
+    graph = make_graph({"A": 3, "B": 3}, {"B": [["A"]]})
+    tree = [req("core", "all_courses", ["A", "B"], graph=graph)]
+    # B has only had Fall sections.
+    result = build_plan(tree, graph, rules(), {}, 0, "Spring 2027", 9, None, frozenset(),
+                        frozenset(), {"A": {"Spring", "Fall"}, "B": {"Fall"}})
+    assert [(t["term"], [c["code"] for c in t["courses"]]) for t in result["terms"]] == [
+        ("Spring 2027", ["A"]), ("Fall 2027", ["B"])]
+    assert any("Testudo" in n for n in result["terms"][1]["courses"][0]["notes"])
+
+
+def test_course_without_recent_sections_is_flagged():
+    graph = make_graph({"A": 3}, {})
+    tree = [req("core", "all_courses", ["A"], graph=graph)]
+    result = build_plan(tree, graph, rules(), {}, 0, "Spring 2027", 9, None, frozenset(),
+                        frozenset(), {})
+    [course] = result["terms"][0]["courses"]
+    assert any("No sections" in u for u in course["uncertain"])
+
+
+def test_summer_terms_are_used_only_when_included():
+    graph = make_graph({"A": 3, "B": 3, "C": 3}, {"B": [["A"]], "C": [["B"]]})
+    tree = [req("core", "all_courses", ["A", "B", "C"], graph=graph)]
+    without = build_plan(tree, graph, rules(), {}, 0, "Spring 2027", Calendar(9))
+    assert [t["term"] for t in without["terms"]] == ["Spring 2027", "Fall 2027", "Spring 2028"]
+    with_summer = build_plan(tree, graph, rules(), {}, 0, "Spring 2027", Calendar(9, 3))
+    assert [t["term"] for t in with_summer["terms"]] == ["Spring 2027", "Summer 2027",
+                                                         "Fall 2027"]
+
+
+def test_fulfilled_requirements_need_no_courses():
+    graph = make_graph({"A": 3, "B": 3}, {})
+    tree = [req("core", "all_courses", ["A"], graph=graph),
+            req("other", "all_courses", ["B"], graph=graph)]
+    result = build_plan(tree, graph, rules(), {}, 0, "Spring 2027", 9, None, frozenset(),
+                        frozenset({"other"}))
+    assert [c["code"] for t in result["terms"] for c in t["courses"]] == ["A"]

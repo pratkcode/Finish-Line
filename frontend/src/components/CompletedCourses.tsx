@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   addCompletedCourse,
@@ -35,7 +36,15 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
 
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-6">
-      <h2 className="text-lg font-semibold">Completed courses</h2>
+      <h2 className="text-lg font-semibold">UMD courses</h2>
+      <p className="mt-1 text-sm text-slate-500">
+        Add courses you&apos;ve completed at UMD. To record which semester, courses you&apos;re taking now, or credit
+        from other schools, use{" "}
+        <Link href="/history" className="underline">
+          Academic history
+        </Link>
+        .
+      </p>
 
       <label htmlFor="completed-search" className="mt-4 block text-sm font-medium text-slate-700">
         Search by code or name
@@ -87,9 +96,15 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
             key={course.code}
             className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg bg-slate-50 px-4 py-2 text-sm"
           >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">
-              ✓
-            </span>
+            {course.status === "in_progress" ? (
+              <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-900">
+                In progress
+              </span>
+            ) : (
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">
+                ✓
+              </span>
+            )}
             <span className="min-w-0 flex-1">
               <span className="font-medium">{course.code}</span> – {course.name} –{" "}
               {course.credits} {course.credits === 1 ? "credit" : "credits"}
@@ -116,7 +131,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
               </select>
             )}
 
-            <select
+            {course.status === "completed" && <select
               aria-label={`Grade for ${course.code}`}
               value={course.grade ?? ""}
               onChange={(e) =>
@@ -132,7 +147,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
               {GRADES.map((g) => (
                 <option key={g}>{g}</option>
               ))}
-            </select>
+            </select>}
 
             <button
               type="button"

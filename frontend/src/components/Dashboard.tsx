@@ -104,7 +104,10 @@ function StudentCard({ d }: { d: DashboardSummary }) {
       <dl className="grid flex-1 gap-x-8 gap-y-3 sm:grid-cols-3">
         <Field label="Major">{d.program.name}</Field>
         <Field label="University">{d.program.university}</Field>
-        <Field label="Current semester">{d.current_term ?? "Not set"}</Field>
+        <Field label="Current semester">
+          {d.current_term ?? "Not set"}
+          <span className="block text-xs font-normal text-slate-500">Plan starts {d.plan_start_term}</span>
+        </Field>
       </dl>
       <Link
         href="/profile"
@@ -117,21 +120,23 @@ function StudentCard({ d }: { d: DashboardSummary }) {
 }
 
 function CreditsStat({ d }: { d: DashboardSummary }) {
-  const { earned, from_courses, unverified, required } = d.credits;
+  const { earned, from_courses, in_progress, unverified, required } = d.credits;
   return (
-    <Stat label="Credits" value={`${earned} / ${required ?? "?"}`}>
+    <Stat label="Credits that count" value={`${earned} / ${required ?? "?"}`}>
       <ProgressBar
         label="Credits toward degree"
         max={required ?? earned}
         segments={[
-          { value: from_courses, className: "bg-red-700", label: "From completed courses" },
-          { value: unverified, className: "bg-red-300", label: "Reported, not matched to courses" },
+          { value: earned, className: "bg-red-700", label: "Completed and verified" },
+          { value: in_progress, className: "bg-amber-300", label: "In progress (not counted yet)" },
         ]}
         size="sm"
       />
       <span className="mt-2 block">
         {from_courses} from {d.completed_courses} courses
-        {unverified > 0 && ` · ${unverified} reported`}
+        {earned > from_courses && ` · ${earned - from_courses} verified transfer`}
+        {in_progress > 0 && ` · ${in_progress} in progress`}
+        {unverified > 0 && ` · ${unverified} not verified`}
       </span>
     </Stat>
   );

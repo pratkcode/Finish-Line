@@ -32,8 +32,10 @@ def test_create_session(session):
     assert session["current_term"] == "Fall 2026"
     assert session["max_credits_per_term"] == 15
     assert session["courses"] == []
-    assert session["credits"] == {"completed": 0, "reported": 61, "unmatched": 61,
-                                  "reported_too_low": False}
+    assert session["credits"] == {"completed": 0, "in_progress": 0, "reported": 61,
+                                  "unmatched": 61, "reported_too_low": False}
+    assert session["plan_start_term"] is None  # defaults to the semester after current_term
+    assert session["include_summer"] is False
 
 
 def test_add_and_list_course(session):
@@ -42,7 +44,8 @@ def test_add_and_list_course(session):
     course = response.json()["courses"][0]
     assert course == {"code": "INST326",
                       "name": "Object-Oriented Programming for Information Science",
-                      "credits": 3, "credits_min": 3, "credits_max": 3, "grade": None}
+                      "credits": 3, "credits_min": 3, "credits_max": 3, "grade": None,
+                      "status": "completed", "academic_term_id": None}
 
     listed = client.get(url(session, "/courses")).json()
     assert [c["code"] for c in listed] == ["INST326"]

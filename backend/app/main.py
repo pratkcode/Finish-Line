@@ -11,6 +11,7 @@ from app.db import UNAVAILABLE_ERRORS, check_database, close_pool
 from app.degree_progress import router as degree_progress_router
 from app.eligibility import router as eligibility_router
 from app.graduation_plan import router as graduation_plan_router
+from app.history import router as history_router
 from app.requirements import router as requirements_router
 from app.sessions import router as sessions_router
 
@@ -50,6 +51,7 @@ app.include_router(degree_progress_router)
 app.include_router(eligibility_router)
 app.include_router(graduation_plan_router)
 app.include_router(dashboard_router)
+app.include_router(history_router)
 
 
 @app.get("/api/health")

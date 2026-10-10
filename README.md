@@ -16,11 +16,12 @@
 
 ## Features
 
-- **Dashboard:** the student's program, credits (61 / 120), projected graduation, requirement completion, next semester's courses, and links to every tool.
+- **Dashboard:** the student's program, credits that count toward 120 (plus in-progress and unverified credit, shown separately), projected graduation, requirement completion, next semester's courses, and links to every tool.
 - **Degree progress:** every university, General Education, and major requirement, marked complete, in progress, not started, or not tracked yet. Each remaining requirement lists the courses that can still fill it, with their prerequisite status.
 - **Prerequisites and dependencies:** for any course, whether the student can take it now, which prerequisites are missing, the full prerequisite chain, and which courses it unlocks.
-- **Your own semester plan:** add, move, and remove courses in any Fall or Spring semester. Credits per semester and in total come from the saved plan. Every change is checked against prerequisites, the credit limit, credit-standing restrictions, and degree requirements, and problems show as warnings.
-- **Optional recommendations:** generate a recommended plan built around the courses you've already planned. It respects prerequisites, the credit limit, and restrictions such as "must have earned 90 credits". Nothing is added until you accept it, and accepted courses stay editable.
+- **Academic history:** semesters at UMD and at other schools, courses in progress, transfer credit (with or without a UMD equivalent, or credit that doesn't map to one course), Gen Ed or other requirements met another way (transfer evaluation, exam, waiver, substitution, associate degree), academic standing, and expected graduation. Every item is marked reported by the student, verified by UMD, or an approved exception, and only verified or approved items count. Students don't have to have started at UMD.
+- **Your own semester plan:** past semesters show as history, the current one as in progress, and the future plan starts at the semester the student chooses (Fall, Spring, or Summer). Add, move, and remove courses in any of them. Credits per semester and in total come from the saved plan. Every change is checked against prerequisites, the credit limit, credit-standing restrictions, and degree requirements, and problems show as warnings.
+- **Optional recommendations:** generate a recommended plan built around the courses you've already planned and your academic history. It respects prerequisites, the credit limits (including a separate Summer limit), restrictions such as "must have earned 90 credits", recent Testudo offering seasons, and your target graduation. Each course says why it's recommended and what couldn't be verified. Nothing is added until you accept it, and accepted courses stay editable.
 - **Majors:** choose from the 103 College Park majors in the catalog. Information Science and Technology and Information Design have verified requirements; for the others Finish Line says so and doesn't make up a plan. Switching majors keeps completed and planned courses and rechecks them.
 - **Course search:** the full UMD undergraduate catalog (5,457 courses in 202 departments), by code, name, or department. Each course shows its Gen Ed tags, restrictions, and prerequisites, plus how far each detail is verified.
 - **No accounts:** a student's profile is a planning session stored in PostgreSQL and remembered by the browser.
@@ -112,9 +113,13 @@ docs/screenshots/
 
 ```
 universities ─┬─< departments
-              ├─< programs ─────< planning_sessions ─┬─< session_courses >── courses
+              ├─< programs ─────< planning_sessions ─┬─< academic_terms (UMD or another school)
+              │                                       ├─< session_courses >── courses  (completed / in progress)
+              │                                       ├─< transfer_credits >── courses (optional equivalent)
+              │                                       ├─< requirement_fulfillments (verified or approved)
               │                                       └─< planned_courses >── courses
-              ├─< courses ─┬─< prerequisite_groups ─< prerequisite_options >── courses
+              ├─< courses ─┬─< course_offerings >── offering_terms (Testudo terms checked)
+              │            ├─< prerequisite_groups ─< prerequisite_options >── courses
               │            ├─< course_gen_ed
               │            ├── course_restrictions
               │            └─< course_exclusions >── courses
@@ -179,8 +184,16 @@ The planner works in two phases.
 - **Build a directed graph:** chosen courses are nodes, and each unmet prerequisite group adds an edge from one planned option to the course.
 - **Topological sort:** Kahn's algorithm orders the graph and detects cycles.
 - **Critical path:** each course gets a priority equal to the length of the longest chain that starts at it.
-- **List scheduling:** each Fall and Spring takes ready courses up to the credit limit, longest chain first and then required before elective. A course is ready when its "before" prerequisites are in earlier terms, its same-semester prerequisites are in this term or earlier, and the student has the earned credits its restriction needs.
+- **List scheduling:** each Fall and Spring (and Summer, if the student includes it) takes ready courses up to the credit limit, longest chain first and then required before elective. A course is ready when its "before" prerequisites are in earlier terms, its same-semester prerequisites are in this term or earlier, the student has the earned credits its restriction needs, and (when offering history exists) the course had sections in that season recently.
 - **Earliest graduation:** the plan is compared with a lower bound, `max(⌈credits ÷ limit⌉, longest chain)`. When they match, the date is reported as the earliest possible under the stated assumptions. Otherwise the note explains the delay, e.g. credit standing.
+
+**One student record.** `student_record.py` decides what counts, and the degree audit, plan, recommendations, eligibility, and dashboard all use it:
+- Completed UMD courses count (an F earns no credit). In-progress courses don't count yet, but plans treat them as done by the next semester.
+- Transfer credit verified by UMD counts: as the UMD course when an equivalent is recorded, otherwise toward total credits only. A transfer that duplicates a UMD course counts once.
+- Student-reported transfer credit, reported fulfillments, and a reported credit total that isn't recorded as courses are shown as pending, never counted.
+- A requirement met by a verified fulfillment (e.g. Gen Ed through an associate degree) is complete along with everything under it, so nothing is counted twice.
+
+**Timeline.** The current semester comes from the profile. The plan starts at the student's chosen semester, or the one after the current semester. Nothing about semesters is hard-coded: terms are compared as `year × 4 + season` (Winter, Spring, Summer, Fall).
 
 **The student's plan comes first.** The planner only runs when the student asks for a recommendation:
 - **Built around the student's plan:** courses already in it are fixed in their semesters, and the planner fills in around them.
@@ -232,9 +245,13 @@ Every course and requirement comes from an official UMD source, and each detail 
 | GET | `/api/programs/{slug}/requirements` | Requirement tree with eligible courses |
 | POST | `/api/programs/{slug}/progress` | Evaluate any course list (stateless) |
 | POST | `/api/sessions` | Create a planning session |
-| GET / PATCH / DELETE | `/api/sessions/{id}` | Profile: program, semester, credit limit, reported credits |
-| GET / POST | `/api/sessions/{id}/courses` | Completed courses |
-| PATCH / DELETE | `/api/sessions/{id}/courses/{code}` | Change grade or credits, or remove |
+| GET / PATCH / DELETE | `/api/sessions/{id}` | Profile: program, current semester, plan start, target graduation, standing, credit limits, Summer, reported credits |
+| GET / POST | `/api/sessions/{id}/courses` | UMD courses (`status` completed or in_progress, optional `academic_term_id`) |
+| PATCH / DELETE | `/api/sessions/{id}/courses/{code}` | Change grade, credits, status or semester, or remove |
+| GET | `/api/sessions/{id}/history` | Semesters, courses, transfer credit, fulfillments, and what counts |
+| POST / PATCH / DELETE | `/api/sessions/{id}/history/terms[/{id}]` | Semesters at UMD or another school |
+| POST / PATCH / DELETE | `/api/sessions/{id}/transfer-credits[/{id}]` | Transfer, exam, or other credit |
+| POST / PATCH / DELETE | `/api/sessions/{id}/fulfillments[/{id}]` | Requirements met another way |
 | GET | `/api/sessions/{id}/summary` | Dashboard summary |
 | GET | `/api/sessions/{id}/progress` | Completed / remaining requirements and credits |
 | GET | `/api/sessions/{id}/eligibility` | Available vs. blocked remaining courses |
@@ -294,7 +311,7 @@ backend/.venv/bin/python database/migrate.py                    # apply
 cd backend && pytest
 ```
 
-The suite has 161 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
+The suite has 179 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
 
 | Area | Where |
 | --- | --- |
@@ -308,9 +325,11 @@ The suite has 161 tests. The engine tests use small made-up degrees, and the API
 | Earliest graduation (credit-bound, chain-bound, standing-delayed) | `test_planner.py` |
 | Sessions, dashboard, search, 503 handling | `test_sessions_api.py`, `test_dashboard.py`, `test_api.py` |
 | Catalog parsers: what is structured, what is left as text | `test_catalog_rules.py` |
+| Academic history: first-year, transfer with Gen Ed verified, partial transfer, several schools, in-progress courses, unmapped credit, plan starts in Fall/Spring/Summer, target graduation, Summer offering warnings | `test_academic_history.py` |
+| Season- and offering-aware scheduling, verified fulfillments | `test_planner.py` |
 | Planning with INST + non-INST courses; only verified data counts; sync preserves students | `test_multi_department.py` |
 
-Browser tests drive the real UI in Chrome: switching majors, building a plan, adding, moving and removing courses with credit checks, reloading, duplicates, prerequisite warnings, and recommendations. They start the backend and frontend themselves, or reuse running ones:
+Browser tests drive the real UI in Chrome: switching majors, building a plan, adding, moving and removing courses with credit checks, reloading, duplicates, prerequisite warnings, recommendations, recording semesters at two schools, verifying transfer credit and Gen Ed, in-progress courses on the timeline, choosing the plan's first semester (including Summer), and target graduation. They start the backend and frontend themselves, or reuse running ones:
 
 ```bash
 cd frontend && npm run test:e2e
@@ -319,7 +338,8 @@ cd frontend && npm run test:e2e
 ## Known limitations
 
 - **Majors:** all 103 College Park majors can be selected, but only Information Science and Technology and Information Design have verified requirements. Others show university and Gen Ed progress only.
-- **Course offerings and seats aren't known.** The planner assumes every course runs every Fall and Spring, and doesn't use Winter or Summer.
+- **Offerings are recent history, not a schedule.** Offering seasons come from Testudo sections in Fall 2025 – Fall 2026 (`fetch_catalog.py --offerings`). A course without recent sections is flagged, not assumed unavailable, and seats and times aren't known. Winter terms can be recorded in history but aren't planned.
+- **Transfer equivalencies aren't looked up.** Finish Line has no access to UMD's transfer credit database; students enter equivalents and mark them verified themselves. "Verified" means the student says UMD has evaluated it.
 - **Unverified data:** 1,155 courses have prerequisites that are only available as text, and 1,974 restrictions are text only. These are shown but not checked; the planner avoids them where it can and flags them where it can't.
 - **Gen Ed coverage:** tags come from five recent terms. A course approved for Gen Ed but not offered in those terms shows `none_found` and doesn't count. Conditional lab tags aren't counted yet.
 - **Not checked:** GPA, residency, permissions, and "or higher" math prerequisites are shown but not enforced.
@@ -328,7 +348,7 @@ cd frontend && npm run test:e2e
 
 ## Future improvements
 
-- **Offering-aware scheduling:** import historical Testudo offerings so courses are only planned in terms they're usually taught, with Summer and Winter as options.
+- **Longer offering history:** import more past Testudo terms, and Winter planning.
 - **Older catalog years:** import past catalogs so students can follow the requirements of the year they entered.
 - **More structured prerequisites:** review the 1,155 text-only prerequisites (starting with Gen Ed courses), and model placement and "if taken with" conditions.
 - **Accounts:** sign-in so plans persist across devices, with session expiry and rate limiting.

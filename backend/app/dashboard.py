@@ -16,9 +16,10 @@ router = APIRouter(prefix="/api/sessions", tags=["dashboard"])
 
 
 class CreditTotals(BaseModel):
-    earned: int  # from courses plus reported credits
+    earned: int  # completed credit that counts toward the degree
     from_courses: int
-    unverified: int  # reported but not matched to a course
+    in_progress: int  # being taken now; not counted yet
+    unverified: int  # recorded but not counted until verified
     required: int | None
     remaining: int | None
 
@@ -53,8 +54,10 @@ class DashboardSummary(BaseModel):
     session_id: UUID
     program: Program
     current_term: str | None
+    plan_start_term: str
     max_credits_per_term: int
     completed_courses: int
+    in_progress_courses: int
     credits: CreditTotals
     requirements: RequirementTotals
     graduation: GraduationSummary
@@ -83,9 +86,12 @@ def get_summary(session_id: UUID):
         "session_id": session_id,
         "program": progress["program"],
         "current_term": session["current_term"],
+        "plan_start_term": plan["plan_start_term"],
         "max_credits_per_term": session["max_credits_per_term"],
-        "completed_courses": len(session["courses"]),
-        "credits": {"earned": credits["counted"], "from_courses": credits["from_courses"],
+        "completed_courses": len(context["record"].completed),
+        "in_progress_courses": len(context["record"].in_progress),
+        "credits": {"earned": credits["applicable"], "from_courses": credits["from_courses"],
+                    "in_progress": credits["in_progress"],
                     "unverified": credits["unverified"], "required": credits["required"],
                     "remaining": credits["remaining"]},
         "requirements": {"complete": complete, "remaining": remaining,

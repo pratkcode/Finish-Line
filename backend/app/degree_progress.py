@@ -22,12 +22,14 @@ from app.requirements import (
     load_requirements,
 )
 from app.sessions import load_session
+from app.student_record import load_student_record, taken_courses
 
 router = APIRouter(prefix="/api/sessions", tags=["degree progress"])
 
-# Stand-in "course" for reported credits that aren't matched to a listed course
-# (AP, transfer, ...). It only counts toward requirements where any course counts.
-REPORTED = "REPORTED"
+# Stand-in "course" for verified credit that doesn't map to a specific UMD
+# course (e.g. transfer elective credit). It only counts toward requirements
+# where any course counts, such as the 120-credit total.
+REPORTED = "TRANSFER-CREDIT"
 
 
 class CandidateCourse(BaseModel):
@@ -37,6 +39,8 @@ class CandidateCourse(BaseModel):
     credits_max: int
     # Set when the student took the course but the grade was too low to count.
     earned_grade: str | None = None
+    # Set when you reported transfer credit for this course that UMD hasn't verified.
+    pending_transfer: str | None = None
 
 
 class RequirementSummary(BaseModel):
@@ -56,14 +60,26 @@ class RequirementSummary(BaseModel):
     candidate_count: int
     # "Complete one of" requirements list their options here.
     options: list[str]
+    fulfilled: bool  # met by a verified transfer evaluation, waiver, ... (not courses)
+    in_progress_courses: list[str]  # courses you're taking that will count when finished
 
 
 class CreditSummary(BaseModel):
-    from_courses: int  # credits of completed courses in the plan
-    unverified: int  # reported credits not matched to a course (AP, transfer, ...)
-    counted: int  # from_courses + unverified
+    earned: int  # all completed credit recorded, verified or not
+    applicable: int  # completed credit that counts toward the degree
+    from_courses: int  # part of applicable: UMD courses and verified course equivalents
+    credit_block: int  # part of applicable: verified credit without a specific course
+    unverified: int  # recorded but not counted (student-reported, pending verification)
+    in_progress: int  # credits you're taking now (not counted yet)
     required: int | None  # degree total, from the requirement data
-    remaining: int | None
+    remaining: int | None  # required - applicable
+
+
+class PendingItem(BaseModel):
+    kind: str
+    description: str
+    credits: int
+    reason: str
 
 
 class DegreeProgress(BaseModel):
@@ -73,6 +89,7 @@ class DegreeProgress(BaseModel):
     completed_requirements: list[RequirementSummary]
     remaining_requirements: list[RequirementSummary]
     untracked_requirements: list[RequirementSummary]
+    pending: list[PendingItem]  # recorded but not counted, and why
     requirements: list[Requirement]  # full tree with progress, for detail views
 
 
@@ -86,23 +103,42 @@ def calculate_degree_progress(conn, session_id: UUID) -> dict:
     session = load_session(conn, session_id)
     program = find_program(conn, session["program_slug"])
     tree, courses = load_requirements(conn, program)
+    record = load_student_record(conn, session_id, session)
 
-    taken = {
-        c["code"]: {"code": c["code"], "name": c["name"], "credits": c["credits"],
-                    "grade": c["grade"]}
-        for c in session["courses"]
-    }
-    add_reported_credits(tree, taken, session["credits"]["unmatched"])
-    results = evaluate(tree, taken)
+    taken = taken_courses(record, courses)
+    add_reported_credits(tree, taken, record.credit_block)
+    results = evaluate(tree, taken, record.fulfilled)
     for node in walk(tree):
         node["progress"] = results[node["key"]]
-
     summary = summarize(tree, taken, load_rules(conn, program))
+
+    # Which in-progress courses would count, once finished.
+    with_in_progress = evaluate(tree, {**taken, **taken_courses(record, courses, True)},
+                                record.fulfilled)
+    nodes = {node["key"]: node for node in walk(tree)}
+    units = (summary["completed_requirements"] + summary["remaining_requirements"]
+             + summary["untracked_requirements"])
     verified = {code for code, c in courses.items() if c["verified_prerequisites"]}
-    for unit in (summary["completed_requirements"] + summary["remaining_requirements"]
-                 + summary["untracked_requirements"]):
+    for unit in units:
+        later = applied_codes(nodes[unit["key"]], with_in_progress)
+        unit["in_progress_courses"] = sorted(c for c in later if c in record.in_progress)
+        unit["candidate_courses"] = [c for c in unit["candidate_courses"]
+                                     if c["code"] not in record.in_progress]
+        for c in unit["candidate_courses"]:
+            c["pending_transfer"] = record.reported_equivalents.get(c["code"])
         cap_candidates(unit, verified)
-    return {"session_id": session_id, "program": program, "requirements": tree, **summary}
+
+    credits = summary["credits"]
+    credits |= {"earned": record.earned_credits,
+                "unverified": record.unverified_credits,
+                "in_progress": record.in_progress_credits}
+    return {"session_id": session_id, "program": program, "requirements": tree,
+            "pending": record.pending, **summary}
+
+
+def applied_codes(node: dict, results: dict) -> set[str]:
+    """Courses applied to a requirement (or any requirement under it) in `results`."""
+    return {c["code"] for n in walk([node]) for c in results[n["key"]]["applied_courses"]}
 
 
 MAX_CANDIDATES = 40
@@ -156,16 +192,17 @@ def summarize(tree: list[dict], taken: dict[str, dict], rules: Rules | None = No
         else:
             remaining.append(summary)
 
-    from_courses = sum(c["credits"] for code, c in taken.items() if code != REPORTED)
-    unverified = taken[REPORTED]["credits"] if REPORTED in taken else 0
-    counted = from_courses + unverified
+    from_courses = sum(c["credits"] for code, c in taken.items()
+                       if code != REPORTED and c["grade"] != "F")
+    credit_block = taken[REPORTED]["credits"] if REPORTED in taken else 0
+    counted = from_courses + credit_block
     total = [n["min_credits"] for n in walk(tree) if n.get("any_course") and n["min_credits"]]
     required = max(total) if total else None
     return {
         "credits": {
             "from_courses": from_courses,
-            "unverified": unverified,
-            "counted": counted,
+            "credit_block": credit_block,
+            "applicable": counted,
             "required": required,
             "remaining": max(required - counted, 0) if required is not None else None,
         },
@@ -224,6 +261,8 @@ def summarize_unit(node: dict, path: list[str], taken: dict[str, dict], reserved
         "applied_courses": applied,
         "candidate_courses": candidate_list,
         "options": options,
+        "fulfilled": progress.get("fulfilled", False),
+        "in_progress_courses": [],
     }
 
 

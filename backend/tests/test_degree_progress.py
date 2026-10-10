@@ -77,7 +77,7 @@ def test_paths_and_optional_requirements():
 
 def test_credits_remaining():
     summary = run(sample_tree(), taken(("C1", "A"), ("E1", "A")))
-    assert summary["credits"] == {"from_courses": 6, "unverified": 0, "counted": 6,
+    assert summary["credits"] == {"from_courses": 6, "credit_block": 0, "applicable": 6,
                                   "required": 30, "remaining": 24}
     electives = next(u for u in summary["remaining_requirements"] if u["key"] == "electives")
     assert electives["credits_remaining"] == 3
@@ -111,9 +111,10 @@ def test_missing_grade_counts():
     assert "core" in keys(summary["completed_requirements"])
 
 
-def test_reported_credits_count_only_toward_any_course_requirements():
+def test_credit_block_counts_only_toward_any_course_requirements():
+    # Verified transfer credit without a UMD equivalent.
     summary = run(sample_tree(), taken(("C1", "A")), reported=20)
-    assert summary["credits"]["counted"] == 23
+    assert summary["credits"]["applicable"] == 23
     assert summary["credits"]["remaining"] == 7
     total = next(u for u in summary["remaining_requirements"] if u["key"] == "total")
     assert total["credits_remaining"] == 7
@@ -170,9 +171,11 @@ def unit(units, key):
 def test_progress_for_new_session(session):
     data = progress(session)
     assert data["program"]["slug"] == "umd-information-science"
-    # 61 reported, none matched to courses yet.
-    assert data["credits"] == {"from_courses": 0, "unverified": 61, "counted": 61,
-                               "required": 120, "remaining": 59}
+    # 61 reported, none recorded as courses: shown as unverified, not counted.
+    assert data["credits"] == {"earned": 0, "applicable": 0, "from_courses": 0,
+                               "credit_block": 0, "unverified": 61, "in_progress": 0,
+                               "required": 120, "remaining": 120}
+    assert [p["kind"] for p in data["pending"]] == ["reported_total"]
     assert data["completed_requirements"] == []
     assert "infosci.core" in keys(data["remaining_requirements"])
 
@@ -182,7 +185,9 @@ def test_progress_follows_completed_courses(session):
         ("INST201", "A"), ("INST314", "D"), ("INST354", "A"))
     data = progress(session)
     assert data["credits"]["from_courses"] == 21
-    assert data["credits"]["remaining"] == 59  # 21 from courses + 40 reported = 61
+    # Only recorded courses count; the other 40 reported credits are unverified.
+    assert data["credits"]["remaining"] == 99
+    assert data["credits"]["unverified"] == 40
 
     assert "infosci.benchmark" in keys(data["completed_requirements"])
     core = unit(data["remaining_requirements"], "infosci.core")

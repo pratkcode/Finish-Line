@@ -24,12 +24,16 @@ def meets_grade(grade: str | None, min_grade: str | None) -> bool:
     return LETTER_RANK[grade] >= LETTER_RANK[min_grade]
 
 
-def evaluate(requirements: list[dict], taken: dict[str, dict]) -> list[dict]:
+def evaluate(requirements: list[dict], taken: dict[str, dict],
+             fulfilled: frozenset[str] | set[str] = frozenset()) -> list[dict]:
     """Return a progress dict for every requirement, keyed by requirement key.
 
     `requirements` is a list of root nodes; each node has 'children' and
     'eligible' (course codes that can satisfy it, in display order).
     `taken` maps course code -> {"code", "name", "credits", "grade"}; grade may be None.
+    `fulfilled` holds keys of requirements met some other verified way (a
+    transfer evaluation, waiver, ...): they and everything under them are
+    complete without using any courses.
     """
     # Within an allocation group, try the least flexible courses first, so a
     # course that fits many requirements isn't used up where another would do.
@@ -43,7 +47,7 @@ def evaluate(requirements: list[dict], taken: dict[str, dict]) -> list[dict]:
     results = {}
     used = {}  # allocation group -> set of course codes already counted
     for node in requirements:
-        evaluate_node(node, taken, used, flexibility, results)
+        evaluate_node(node, taken, used, flexibility, results, fulfilled)
     return results
 
 
@@ -53,10 +57,14 @@ def walk(nodes):
         yield from walk(node["children"])
 
 
-def evaluate_node(node, taken, used, flexibility, results) -> dict:
+def evaluate_node(node, taken, used, flexibility, results, fulfilled=frozenset()) -> dict:
+    if node["key"] in fulfilled:
+        for inner in walk([node]):
+            results[inner["key"]] = {**progress("complete", [], inner, 0, 0), "fulfilled": True}
+        return results[node["key"]]
     rule = node["rule"]
     if rule in ("all_children", "any_child"):
-        result = evaluate_group(node, taken, used, flexibility, results)
+        result = evaluate_group(node, taken, used, flexibility, results, fulfilled)
     else:
         result = evaluate_leaf(node, taken, used, flexibility)
     results[node["key"]] = result
@@ -112,9 +120,9 @@ def evaluate_leaf(node, taken, used, flexibility) -> dict:
                     credits_remaining=remaining_credits)
 
 
-def evaluate_group(node, taken, used, flexibility, results) -> dict:
+def evaluate_group(node, taken, used, flexibility, results, fulfilled=frozenset()) -> dict:
     if node["rule"] == "all_children":
-        children = [evaluate_node(child, taken, used, flexibility, results)
+        children = [evaluate_node(child, taken, used, flexibility, results, fulfilled)
                     for child in node["children"]]
         required = [c for c, child in zip(children, node["children"]) if not child["optional"]]
         return progress(combine_statuses([c["status"] for c in required]), [], node)
@@ -124,7 +132,7 @@ def evaluate_group(node, taken, used, flexibility, results) -> dict:
     for child in node["children"]:
         trial_used = copy.deepcopy(used)
         child_results = {}
-        result = evaluate_node(child, taken, trial_used, flexibility, child_results)
+        result = evaluate_node(child, taken, trial_used, flexibility, child_results, fulfilled)
         results.update(child_results)
         score = (result["status"] == "complete", result["fraction"])
         if best is None or score > best[0]:
@@ -179,4 +187,5 @@ def progress(status, applied, node, courses_remaining=None, credits_remaining=No
         "courses_remaining": courses_remaining,
         "credits_remaining": credits_remaining,
         "fraction": round(fraction, 3),
+        "fulfilled": False,  # True when met by a verified fulfillment, not courses
     }

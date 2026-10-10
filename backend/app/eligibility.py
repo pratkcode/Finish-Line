@@ -12,6 +12,7 @@ from app.degree_progress import calculate_degree_progress
 from app.prerequisites import Checker, load_graph
 from app.requirements import find_program
 from app.sessions import load_session
+from app.student_record import load_student_record
 
 router = APIRouter(prefix="/api/sessions", tags=["eligibility"])
 
@@ -66,7 +67,7 @@ def get_eligibility(session_id: UUID):
 def analyze_eligibility(conn, session_id: UUID, progress: dict | None = None) -> dict:
     progress = progress or calculate_degree_progress(conn, session_id)
     session = load_session(conn, session_id)
-    checker = student_checker(conn, session)
+    checker = student_checker(conn, session_id, session)
 
     satisfies: dict[str, list[dict]] = {}
     for unit in progress["remaining_requirements"]:
@@ -101,13 +102,16 @@ def get_course_eligibility(session_id: UUID, course_code: str):
     """Prerequisite status of one course for this student."""
     code = normalize_code(course_code)
     with get_connection() as conn:
-        checker = student_checker(conn, load_session(conn, session_id))
+        checker = student_checker(conn, session_id, load_session(conn, session_id))
     if code not in checker.graph.courses:
         raise HTTPException(status_code=404, detail=f"Course {code} not found")
     return checker.check(code)
 
 
-def student_checker(conn, session: dict) -> Checker:
+def student_checker(conn, session_id: UUID, session: dict) -> Checker:
+    """Prerequisites met by completed UMD courses and verified transfer
+    equivalents. In-progress courses don't count until they're completed."""
     program = find_program(conn, session["program_slug"])
-    completed = {c["code"]: c["grade"] for c in session["courses"]}
+    record = load_student_record(conn, session_id, session)
+    completed = {code: c["grade"] for code, c in record.completed.items()}
     return Checker(load_graph(conn, program["university_id"]), completed)
