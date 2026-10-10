@@ -9,7 +9,7 @@ from app.courses import CourseSummary
 from app.db import get_connection
 from app.degree_progress import calculate_degree_progress
 from app.eligibility import analyze_eligibility
-from app.graduation_plan import load_context, load_overrides, make_plan
+from app.graduation_plan import build_student_plan, load_context
 from app.requirements import Program
 
 router = APIRouter(prefix="/api/sessions", tags=["dashboard"])
@@ -31,10 +31,11 @@ class RequirementTotals(BaseModel):
 
 
 class GraduationSummary(BaseModel):
-    projected: str | None
-    semesters: int
-    warnings: int  # problems caused by the student's own changes
-    has_changes: bool  # the student has edited the generated plan
+    projected: str | None  # from the student's saved plan
+    note: str
+    semesters: int  # semesters with planned courses
+    planned_courses: int
+    warnings: int  # problems in the saved plan
 
 
 class NextTerm(BaseModel):
@@ -68,8 +69,7 @@ def get_summary(session_id: UUID):
         progress = calculate_degree_progress(conn, session_id)
         eligibility = analyze_eligibility(conn, session_id, progress)
         context = load_context(conn, session_id)
-        overrides = load_overrides(conn, session_id)
-    plan = make_plan(context, overrides)
+    plan = build_student_plan(context)
     session = context["session"]
 
     complete = len(progress["completed_requirements"])
@@ -92,11 +92,12 @@ def get_summary(session_id: UUID):
                          "not_tracked": len(progress["untracked_requirements"]),
                          "percent": round(100 * complete / tracked) if tracked else 100},
         "graduation": {"projected": plan["projected_graduation"],
+                       "note": plan["graduation_note"],
                        "semesters": len(plan["terms"]),
-                       "warnings": len(plan["warnings"]),
-                       "has_changes": bool(overrides["pinned"] or overrides["removed"])},
+                       "planned_courses": sum(len(t["courses"]) for t in plan["terms"]),
+                       "warnings": len(plan["warnings"])},
         "next_term": {"term": first["term"], "credits": first["credits"],
-                      "courses": [c["code"] or c["name"] for c in first["courses"]]}
+                      "courses": [c["code"] for c in first["courses"]]}
         if first else None,
         "eligibility": {"available": len(eligibility["available"]),
                         "blocked": len(eligibility["blocked"])},

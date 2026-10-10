@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CompletedCourses from "@/components/CompletedCourses";
+import UnverifiedMajorNote from "@/components/UnverifiedMajorNote";
 import { ErrorState, LoadingState } from "@/components/ui/States";
 import {
   ApiError,
@@ -122,6 +123,7 @@ export default function ProfileEditor() {
 
   const universities = [...new Set(programs.map((p) => p.university))];
   const majors = programs.filter((p) => p.university === session.university);
+  const currentProgram = programs.find((p) => p.slug === session.program_slug);
 
   return (
     <div className="space-y-6">
@@ -145,17 +147,34 @@ export default function ProfileEditor() {
             </select>
           </Field>
 
-          <Field label="Major">
+          <Field
+            label="Major"
+            hint="Changing your major keeps your completed courses and plan, and rechecks them against the new major."
+          >
             <select
+              id="major"
               value={session.program_slug}
               onChange={(e) => save({ program_slug: e.target.value })}
               className={inputClass}
             >
-              {majors.map((p) => (
-                <option key={p.slug} value={p.slug}>
-                  {p.name}
-                </option>
-              ))}
+              <optgroup label="Requirements verified">
+                {majors
+                  .filter((p) => p.requirements_status === "verified")
+                  .map((p) => (
+                    <option key={p.slug} value={p.slug}>
+                      {p.name}
+                    </option>
+                  ))}
+              </optgroup>
+              <optgroup label="Requirements not verified yet">
+                {majors
+                  .filter((p) => p.requirements_status !== "verified")
+                  .map((p) => (
+                    <option key={p.slug} value={p.slug}>
+                      {p.name} (not verified yet)
+                    </option>
+                  ))}
+              </optgroup>
             </select>
           </Field>
 
@@ -197,6 +216,10 @@ export default function ProfileEditor() {
           </Field>
         </div>
       </section>
+
+      {currentProgram && currentProgram.requirements_status !== "verified" && (
+        <UnverifiedMajorNote program={currentProgram} />
+      )}
 
       <CreditSummary session={session} />
 

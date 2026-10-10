@@ -8,7 +8,8 @@ Sources (official UMD sites only):
   - Schedule of Classes (Testudo) Gen Ed listings for recent terms:
     https://app.testudo.umd.edu/soc/gen-ed/<term>/<category>
 
-Writes departments.json, courses.json and gen_ed.json. Nothing is inferred:
+Writes departments.json, courses.json, gen_ed.json and programs.json (the
+undergraduate majors listed in the catalog). Nothing is inferred:
 fields are copied from the pages, and courses or tags that can't be parsed
 are reported, not guessed. Uses only the Python standard library.
 """
@@ -25,6 +26,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 CATALOG = "https://academiccatalog.umd.edu/undergraduate/approved-courses/"
+PROGRAMS = "https://academiccatalog.umd.edu/undergraduate/programs/"
 TESTUDO = "https://app.testudo.umd.edu/soc/gen-ed/{term}/{tag}"
 CATALOG_YEAR = "2026-2027"
 # Fall 2025 through Fall 2026 (Testudo term ids: year + month).
@@ -66,6 +68,18 @@ def parse_departments(index_html: str) -> dict[str, dict]:
         if match:
             departments[match[1]] = {"name": match[2].strip(), "slug": slug}
     return departments
+
+
+def parse_programs(index_html: str) -> list[dict]:
+    """Undergraduate majors at College Park, from the catalog's program index."""
+    programs = {}
+    for path, label in re.findall(r'href="(/undergraduate/colleges-schools/[^"]+-major/)"[^>]*>([^<]+)<',
+                                  index_html):
+        name = re.sub(r"\s+Major$", "", clean(label))
+        slug = "umd-" + path.rstrip("/").split("/")[-1].removesuffix("-major")
+        programs[slug] = {"slug": slug, "name": name,
+                          "catalog_url": "https://academiccatalog.umd.edu" + path}
+    return sorted(programs.values(), key=lambda p: p["name"])
 
 
 def parse_courses(page_html: str, url: str) -> tuple[list[dict], list[str]]:
@@ -119,6 +133,8 @@ def main():
 
     departments = parse_departments(fetch(CATALOG, args.cache))
     print(f"{len(departments)} departments")
+    programs = parse_programs(fetch(PROGRAMS, args.cache))
+    print(f"{len(programs)} majors")
 
     def department_courses(code):
         url = f"{CATALOG}{departments[code]['slug']}/"
@@ -162,6 +178,9 @@ def main():
     (OUT / "courses.json").write_text(json.dumps(
         {"source": CATALOG, "catalog_year": CATALOG_YEAR, "retrieved": retrieved,
          "courses": [courses[c] for c in sorted(courses)]}, indent=1, ensure_ascii=False))
+    (OUT / "programs.json").write_text(json.dumps(
+        {"source": PROGRAMS, "catalog_year": CATALOG_YEAR, "retrieved": retrieved,
+         "programs": programs}, indent=1, ensure_ascii=False))
     (OUT / "gen_ed.json").write_text(json.dumps(
         {"source": "https://app.testudo.umd.edu/soc/gen-ed/", "terms": GEN_ED_TERMS,
          "retrieved": retrieved, "skipped_codes_not_in_catalog": not_in_catalog,

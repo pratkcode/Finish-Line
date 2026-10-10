@@ -3,6 +3,7 @@
 import Link from "next/link";
 import CourseEligibilityItem from "@/components/CourseEligibilityItem";
 import StatusIcon from "@/components/StatusIcon";
+import UnverifiedMajorNote from "@/components/UnverifiedMajorNote";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { ErrorState, LoadingState, NoPlanState } from "@/components/ui/States";
 import {
@@ -52,6 +53,8 @@ export default function DegreeProgressDashboard() {
         {data.program.name}{" "}
         <span className="font-normal text-slate-500">· {data.program.university}</span>
       </p>
+
+      {data.program.requirements_status !== "verified" && <UnverifiedMajorNote program={data.program} />}
 
       <OverallProgress data={data} done={done} tracked={tracked} />
 

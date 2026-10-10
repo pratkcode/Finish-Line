@@ -29,9 +29,15 @@ def progress_for(courses):
 
 
 def test_list_programs():
-    programs = client.get("/api/programs").json()
-    assert {"slug": SLUG, "name": "Information Science",
-            "university": "University of Maryland, College Park"} in programs
+    programs = {p["slug"]: p for p in client.get("/api/programs").json()}
+    assert programs[SLUG]["name"] == "Information Science"
+    assert programs[SLUG]["university"] == "University of Maryland, College Park"
+    assert programs[SLUG]["requirements_status"] == "verified"
+    assert programs["umd-technology-info-design"]["requirements_status"] == "verified"
+    # Every catalog major is listed; most don't have verified requirements yet.
+    assert len(programs) > 100
+    assert programs["umd-computer-science"]["requirements_status"] == "not_available"
+    assert programs["umd-computer-science"]["catalog_url"].startswith("https://academiccatalog.umd.edu/")
 
 
 def test_unknown_program():

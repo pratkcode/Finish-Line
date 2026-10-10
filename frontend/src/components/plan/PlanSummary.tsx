@@ -1,37 +1,30 @@
-import type { GraduationPlan } from "@/lib/api";
+import type { StudentPlan } from "@/lib/api";
 
-type Props = {
-  plan: GraduationPlan;
-  before?: string | null; // graduation in the saved plan, when showing a what-if
-  draft: boolean;
-};
-
-export default function PlanSummary({ plan, before, draft }: Props) {
-  const { remaining, completed, required } = plan.credits;
+// Totals for the saved plan. Every number comes from the API, which computes
+// them from the courses currently saved in the plan.
+export default function PlanSummary({ plan }: { plan: StudentPlan }) {
+  const { completed, planned, remaining, required } = plan.credits;
   const loads = plan.terms.map((t) => t.credits);
-  const changedGraduation = draft && before !== undefined && before !== plan.projected_graduation;
 
   return (
-    <section className="grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-3">
+    <section
+      aria-label="Plan summary"
+      className="grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-3"
+    >
       <Stat label="Projected graduation">
-        <span className={plan.projected_graduation ? "" : "text-slate-400"}>
+        <span data-testid="projected-graduation" className={plan.projected_graduation ? "" : "text-slate-400"}>
           {plan.projected_graduation ?? "Not yet"}
         </span>
-        <Sub>
-          {changedGraduation ? (
-            <>
-              Was {before ?? "not projected"} · <span className="text-amber-700">what-if</span>
-            </>
-          ) : (
-            plan.graduation_note
-          )}
-        </Sub>
+        <Sub>{plan.graduation_note}</Sub>
       </Stat>
 
-      <Stat label="Credits remaining">
-        {remaining}
+      <Stat label="Credits">
+        <span data-testid="planned-credits">{planned}</span>
+        <span className="text-xl font-medium text-slate-400"> planned</span>
         <Sub>
-          {completed} of {required ?? "?"} earned · {plan.credits.planned} planned
+          <span data-testid="completed-credits">{completed}</span> completed ·{" "}
+          <span data-testid="remaining-credits">{remaining ?? "?"}</span> still to plan
+          {required !== null && <> of {required}</>}
         </Sub>
       </Stat>
 
@@ -40,8 +33,8 @@ export default function PlanSummary({ plan, before, draft }: Props) {
           {loads.length ? loads.join(" → ") : "—"}
         </span>
         <Sub>
-          {loads.length} {loads.length === 1 ? "semester" : "semesters"} from {plan.start_term} ·
-          up to {plan.max_credits_per_term} credits each
+          {loads.length} {loads.length === 1 ? "semester" : "semesters"} · up to{" "}
+          {plan.max_credits_per_term} credits each
         </Sub>
       </Stat>
     </section>
@@ -51,7 +44,7 @@ export default function PlanSummary({ plan, before, draft }: Props) {
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="bg-white p-5">
-      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{label}</p>
+      <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">{label}</p>
       <div className="mt-1.5 text-3xl font-bold tracking-tight text-slate-900">{children}</div>
     </div>
   );

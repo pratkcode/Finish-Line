@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import RequirementItem from "@/components/RequirementItem";
 import StatusIcon, { STATUS_LABELS } from "@/components/StatusIcon";
+import UnverifiedMajorNote from "@/components/UnverifiedMajorNote";
 import { ErrorState, LoadingState } from "@/components/ui/States";
 import {
   ApiError,
@@ -91,6 +92,8 @@ export default function RequirementsChecklist() {
         </p>
         <Legend />
       </div>
+
+      {data.program.requirements_status !== "verified" && <UnverifiedMajorNote program={data.program} />}
 
       {data.unrecognized_courses.length > 0 && (
         <p className="rounded-lg bg-slate-100 px-4 py-3 text-sm text-slate-700">

@@ -263,32 +263,42 @@ def test_earliest_possible_note():
 client = TestClient(app)
 
 
+def recommended_terms(rec):
+    """Group a recommendation's additions and slots by term, in order."""
+    terms = {}
+    for c in rec["additions"] + rec["slots"]:
+        terms.setdefault(c["term"], []).append(c)
+    order = sorted(terms, key=lambda t: (int(t.split()[1]), t.startswith("Fall")))
+    return [{"term": t, "courses": terms[t], "credits": sum(c["credits"] for c in terms[t])}
+            for t in order]
+
+
 @pytest.mark.parametrize("max_credits", [12, 15, 18])
-def test_real_plan_is_valid(max_credits):
+def test_real_recommendation_is_valid(max_credits):
     session = client.post("/api/sessions", json={
         "program_slug": "umd-information-science", "reported_credits": 61,
         "current_term": "Fall 2026", "max_credits_per_term": max_credits}).json()
     try:
         for code in ["MATH115", "PSYC100", "STAT100", "INST126", "INST201", "INST327"]:
             client.post(f"/api/sessions/{session['id']}/courses", json={"code": code, "grade": "B"})
-        response = client.get(f"/api/sessions/{session['id']}/plan")
+        response = client.post(f"/api/sessions/{session['id']}/plan/recommendation")
         assert response.status_code == 200
-        result = response.json()
+        rec = response.json()
+        # A recommendation isn't saved.
+        assert client.get(f"/api/sessions/{session['id']}/plan").json()["terms"] == []
     finally:
         client.delete(f"/api/sessions/{session['id']}")
 
-    assert "not an official UMD" in result["disclaimer"]
-    assert result["unscheduled"] == []
-    # At least 120. It can be more: the 43 reported credits aren't matched to
-    # courses, so Gen Ed requirements they may cover are planned again.
-    assert result["credits"]["total"] >= 120
-    assert any("reported credits" in a for a in result["assumptions"])
-    assert result["projected_graduation"] is not None
+    assert "not an official UMD" in rec["disclaimer"]
+    assert rec["unscheduled"] == []
+    assert any("reported credits" in a for a in rec["assumptions"])
+    assert rec["projected_graduation"] is not None
 
-    where = term_index(result)
-    for t in result["terms"]:
+    terms = recommended_terms(rec)
+    where = {c["code"]: i for i, t in enumerate(terms) for c in t["courses"] if c["code"]}
+    for t in terms:
         assert t["credits"] <= max_credits
-    # Core courses are all planned, and prerequisites come first.
+    # Core courses are all recommended, and prerequisites come first.
     for code in ["INST311", "INST314", "INST326", "INST335", "INST346", "INST352", "INST362", "INST490"]:
         assert code in where
     assert where["INST326"] < where["INST346"]
@@ -296,7 +306,7 @@ def test_real_plan_is_valid(max_credits):
 
     # INST490 needs 90 earned credits before its term (61 to start).
     earned = 61
-    for i, t in enumerate(result["terms"]):
+    for i, t in enumerate(terms):
         if i == where["INST490"]:
             assert earned >= 90
         earned += t["credits"]
@@ -385,60 +395,6 @@ def test_credit_standing_warning_for_early_pin():
     result = build_plan(tree, graph, rules({"CAP": {"min_credits": 30}}), {}, 0,
                         "Fall 2026", 9, {"CAP": "Fall 2026"})
     assert result["warnings"][0]["message"].startswith("Requires 30 earned credits")
-
-
-# --- Student changes through the API ---------------------------------------------------
-
-@pytest.fixture
-def real_session():
-    session = client.post("/api/sessions", json={
-        "program_slug": "umd-information-science", "reported_credits": 61,
-        "current_term": "Fall 2026", "max_credits_per_term": 15}).json()
-    for code in ["MATH115", "PSYC100", "STAT100", "INST126", "INST201", "INST327"]:
-        client.post(f"/api/sessions/{session['id']}/courses", json={"code": code, "grade": "B"})
-    yield session
-    client.delete(f"/api/sessions/{session['id']}")
-
-
-def test_what_if_preview_does_not_save(real_session):
-    base = f"/api/sessions/{real_session['id']}/plan"
-    before = client.get(base).json()
-    preview = client.post(f"{base}/preview",
-                          json={"pinned": [{"code": "INST326", "term": "Spring 2027"}]}).json()
-    moved = {m["code"]: m for m in preview["changes"]["moved"]}
-    assert moved["INST326"]["from_term"] == "Fall 2026"
-    assert moved["INST326"]["to_term"] == "Spring 2027"
-    # Courses that need INST326 moved later too.
-    assert moved["INST346"]["to_term"] != "Spring 2027"
-    assert preview["changes"]["graduation_before"] == before["projected_graduation"]
-    # Nothing was saved.
-    assert client.get(base).json()["pinned"] == []
-
-
-def test_saved_changes_persist(real_session):
-    base = f"/api/sessions/{real_session['id']}/plan"
-    response = client.put(f"{base}/overrides", json={
-        "pinned": [{"code": "inst326", "term": "Spring 2027"}], "removed": ["INST330"]})
-    assert response.status_code == 200
-    reloaded = client.get(base).json()
-    assert reloaded["pinned"] == [{"code": "INST326", "term": "Spring 2027"}]
-    assert reloaded["removed"] == ["INST330"]
-    placed = {c["code"]: t["term"] for t in reloaded["terms"] for c in t["courses"] if c["code"]}
-    assert placed["INST326"] == "Spring 2027"
-    assert "INST330" not in placed
-    # Clearing restores the generated plan.
-    client.put(f"{base}/overrides", json={})
-    assert client.get(base).json()["pinned"] == []
-
-
-def test_invalid_changes_rejected(real_session):
-    base = f"/api/sessions/{real_session['id']}/plan/preview"
-    assert client.post(base, json={"pinned": [{"code": "INST326", "term": "Fall 2025"}]}).status_code == 422
-    assert client.post(base, json={"pinned": [{"code": "INST326", "term": "Summer 2027"}]}).status_code == 422
-    assert client.post(base, json={"pinned": [{"code": "INST201", "term": "Spring 2027"}]}).status_code == 409
-    assert client.post(base, json={"pinned": [{"code": "FAKE999", "term": "Spring 2027"}]}).status_code == 404
-    assert client.post(base, json={"pinned": [{"code": "INST326", "term": "Spring 2027"}],
-                                   "removed": ["INST326"]}).status_code == 422
 
 
 # --- Earliest graduation ---------------------------------------------------------------

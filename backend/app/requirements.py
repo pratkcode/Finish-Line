@@ -16,6 +16,10 @@ class Program(BaseModel):
     slug: str
     name: str
     university: str
+    # "verified": Finish Line has this major's requirements from the catalog.
+    # "not_available": the major exists, but its requirements aren't in Finish Line yet.
+    requirements_status: Literal["verified", "not_available"]
+    catalog_url: str | None
 
 
 class CourseFilter(BaseModel):
@@ -85,9 +89,9 @@ def list_programs():
     with get_connection() as conn:
         return conn.execute(
             """
-            SELECT p.slug, p.name, u.name AS university
+            SELECT p.slug, p.name, u.name AS university, p.requirements_status, p.catalog_url
             FROM programs p JOIN universities u ON u.id = p.university_id
-            ORDER BY u.name, p.name
+            ORDER BY u.name, p.requirements_status DESC, p.name
             """
         ).fetchall()
 
@@ -127,7 +131,8 @@ def get_progress(slug: str, body: ProgressRequest):
 def find_program(conn, slug: str) -> dict:
     program = conn.execute(
         """
-        SELECT p.id, p.university_id, p.slug, p.name, u.name AS university
+        SELECT p.id, p.university_id, p.slug, p.name, u.name AS university,
+               p.requirements_status, p.catalog_url
         FROM programs p JOIN universities u ON u.id = p.university_id
         WHERE p.slug = %s
         """,

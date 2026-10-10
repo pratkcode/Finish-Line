@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import UnverifiedMajorNote from "@/components/UnverifiedMajorNote";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { ErrorState, LoadingState, NoPlanState } from "@/components/ui/States";
 import { getDashboard, type DashboardSummary } from "@/lib/api";
@@ -17,13 +18,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <StudentCard d={d} />
+      {d.program.requirements_status !== "verified" && <UnverifiedMajorNote program={d.program} />}
 
       <section aria-label="Summary" className="grid gap-4 sm:grid-cols-3">
         <CreditsStat d={d} />
         <Stat label="Projected graduation" value={d.graduation.projected ?? "Not yet"}>
           {d.graduation.projected
-            ? `${d.graduation.semesters} ${d.graduation.semesters === 1 ? "semester" : "semesters"} from ${d.current_term ?? "now"}`
-            : "Some requirements can't be planned yet"}
+            ? `${d.graduation.semesters} ${d.graduation.semesters === 1 ? "semester" : "semesters"} in your plan`
+            : d.graduation.note}
           {d.graduation.warnings > 0 && (
             <span className="mt-1 block text-red-700">
               ⚠ {d.graduation.warnings} {d.graduation.warnings === 1 ? "problem" : "problems"} in your
@@ -77,9 +79,9 @@ export default function Dashboard() {
           {d.requirements.remaining} requirements left · {d.credits.remaining ?? 0} credits to go
         </ToolCard>
         <ToolCard href="/graduation-plan" title="Graduation Plan">
-          {d.graduation.projected
-            ? `Graduate ${d.graduation.projected} · try what-ifs`
-            : "See what's blocking a graduation date"}
+          {d.graduation.planned_courses
+            ? `${d.graduation.planned_courses} courses planned · ${d.graduation.projected ? `graduate ${d.graduation.projected}` : "not complete yet"}`
+            : "Build your semester plan, or start from a recommendation"}
         </ToolCard>
         <ToolCard
           href={d.top_prerequisite ? `/courses?code=${d.top_prerequisite.code}` : "/courses"}

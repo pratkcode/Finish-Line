@@ -2,7 +2,7 @@
 
 *Your degree. Your plan. Your finish line.*
 
-**A degree planner for UMD Information Science students.** Enter the courses you've completed. Finish Line shows which degree requirements are done, what's left, which courses you can take next, and a semester-by-semester path to the earliest graduation, which you can rearrange with what-ifs.
+**A degree planner for UMD students, starting with Information Science.** Enter the courses you've completed. Finish Line shows which degree requirements are done, what's left, which courses you can take next, and a semester-by-semester path to the earliest graduation, which you can rearrange with what-ifs.
 
 > **Finish Line is a planning tool, not an official UMD degree audit.** Its data comes from the public UMD catalog and Schedule of Classes, and every generated plan is a recommendation. Students should confirm plans with an academic advisor.
 
@@ -19,8 +19,9 @@
 - **Dashboard:** the student's program, credits (61 / 120), projected graduation, requirement completion, next semester's courses, and links to every tool.
 - **Degree progress:** every university, General Education, and major requirement, marked complete, in progress, not started, or not tracked yet. Each remaining requirement lists the courses that can still fill it, with their prerequisite status.
 - **Prerequisites and dependencies:** for any course, whether the student can take it now, which prerequisites are missing, the full prerequisite chain, and which courses it unlocks.
-- **Graduation plan:** an automatically generated semester-by-semester plan. It respects prerequisites, the student's credit limit, and catalog restrictions such as "must have earned 90 credits".
-- **What-if planning:** move, add, or remove courses. Everything that depends on them is re-planned, the projected graduation updates, and broken rules show as warnings. Changes are previewed until you save them.
+- **Your own semester plan:** add, move, and remove courses in any Fall or Spring semester. Credits per semester and in total come from the saved plan. Every change is checked against prerequisites, the credit limit, credit-standing restrictions, and degree requirements, and problems show as warnings.
+- **Optional recommendations:** generate a recommended plan built around the courses you've already planned. It respects prerequisites, the credit limit, and restrictions such as "must have earned 90 credits". Nothing is added until you accept it, and accepted courses stay editable.
+- **Majors:** choose from the 103 College Park majors in the catalog. Information Science and Technology and Information Design have verified requirements; for the others Finish Line says so and doesn't make up a plan. Switching majors keeps completed and planned courses and rechecks them.
 - **Course search:** the full UMD undergraduate catalog (5,457 courses in 202 departments), by code, name, or department. Each course shows its Gen Ed tags, restrictions, and prerequisites, plus how far each detail is verified.
 - **No accounts:** a student's profile is a planning session stored in PostgreSQL and remembered by the browser.
 
@@ -31,7 +32,7 @@
 | Frontend | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 |
 | Backend | Python 3.13, FastAPI, Pydantic, psycopg 3 with a connection pool |
 | Database | PostgreSQL 17 |
-| Tests | pytest (147 tests): pure unit tests of the engines and parsers, plus API tests against the migrated database |
+| Tests | pytest (161 tests) and Playwright browser tests: pure unit tests of the engines and parsers, plus API tests against the migrated database |
 
 ## Architecture
 
@@ -61,7 +62,7 @@
                course_gen_ed · course_restrictions · course_exclusions
   Degree       universities · programs · requirements
                requirement_courses · requirement_course_filters
-  Students     planning_sessions · session_courses · plan_overrides
+  Students     planning_sessions · session_courses · planned_courses
                                ▲
                                │  generated seed.sql
  database/build_seed.py ── validates ── database/data/*.json (curated from the UMD catalog)
@@ -85,7 +86,7 @@ backend/
     sessions.py          planning session (profile + completed courses)
     degree_progress.py   completed / remaining requirements for a session
     eligibility.py       available vs. blocked remaining courses
-    graduation_plan.py   generated plan, what-if preview, saved changes
+    graduation_plan.py   the student's saved plan (add/move/remove), recommendations
     dashboard.py         one-call dashboard summary
     evaluator.py         requirement rule engine          (pure)
     prerequisites.py     prerequisite graph and checks    (pure)
@@ -93,7 +94,7 @@ backend/
     restrictions.py      enrollment rules                 (pure)
   tests/                 pytest suite
 database/
-  migrations/            schema migrations (001 initial, 002 multi-department catalog)
+  migrations/            schema migrations (001 initial, 002 multi-department catalog, 003 student plans + majors)
   migrate.py             applies migrations, then syncs data (preserves student records)
   importer/              fetch_catalog.py (official catalog + Testudo), rules.py (strict parsers)
   data/catalog/          imported catalog: courses, departments, Gen Ed tags
@@ -112,7 +113,7 @@ docs/screenshots/
 ```
 universities ─┬─< departments
               ├─< programs ─────< planning_sessions ─┬─< session_courses >── courses
-              │                                       └─< plan_overrides  >── courses
+              │                                       └─< planned_courses >── courses
               ├─< courses ─┬─< prerequisite_groups ─< prerequisite_options >── courses
               │            ├─< course_gen_ed
               │            ├── course_restrictions
@@ -181,11 +182,11 @@ The planner works in two phases.
 - **List scheduling:** each Fall and Spring takes ready courses up to the credit limit, longest chain first and then required before elective. A course is ready when its "before" prerequisites are in earlier terms, its same-semester prerequisites are in this term or earlier, and the student has the earned credits its restriction needs.
 - **Earliest graduation:** the plan is compared with a lower bound, `max(⌈credits ÷ limit⌉, longest chain)`. When they match, the date is reported as the earliest possible under the stated assumptions. Otherwise the note explains the delay, e.g. credit standing.
 
-**What-if editing** adds *overrides* on top:
-- **Placed courses** (moved or added) are fixed in their semester.
-- **Removed courses** are never chosen, and the planner substitutes where a requirement still needs a course.
-- **Everything else** is re-planned by the same algorithm.
-- **Validation:** a final pass reports anything a placed course breaks (missing prerequisites, credit limit, credit standing) as warnings, instead of hiding it.
+**The student's plan comes first.** The planner only runs when the student asks for a recommendation:
+- **Built around the student's plan:** courses already in it are fixed in their semesters, and the planner fills in around them.
+- **Nothing saved automatically:** the result is shown for review, and accepting it adds exactly the courses shown to `planned_courses`. "Choose a course" slots are listed but never added.
+- **Saved-plan view:** `GET /plan` is computed from the saved rows on every request. Semester credits and total planned credits are sums of those rows; a course is planned at most once, and a retake doesn't add credits twice.
+- **Same validation as the scheduler:** prerequisite order, credit limit, credit standing, restrictions, and whether each course fills a requirement.
 
 ## Data sources and accuracy
 
@@ -227,7 +228,7 @@ Every course and requirement comes from an official UMD source, and each detail 
 | GET | `/api/courses/{code}/prerequisites` | Prerequisite groups |
 | GET | `/api/courses/{code}/prerequisite-tree` | Every level of prerequisites |
 | GET | `/api/courses/{code}/dependents` | Courses it unlocks |
-| GET | `/api/programs` | Programs |
+| GET | `/api/programs` | Majors, with whether their requirements are verified |
 | GET | `/api/programs/{slug}/requirements` | Requirement tree with eligible courses |
 | POST | `/api/programs/{slug}/progress` | Evaluate any course list (stateless) |
 | POST | `/api/sessions` | Create a planning session |
@@ -238,9 +239,11 @@ Every course and requirement comes from an official UMD source, and each detail 
 | GET | `/api/sessions/{id}/progress` | Completed / remaining requirements and credits |
 | GET | `/api/sessions/{id}/eligibility` | Available vs. blocked remaining courses |
 | GET | `/api/sessions/{id}/eligibility/{code}` | One course's prerequisite status |
-| GET | `/api/sessions/{id}/plan` | Generated plan (with saved changes) |
-| POST | `/api/sessions/{id}/plan/preview` | What-if preview, not saved |
-| PUT | `/api/sessions/{id}/plan/overrides` | Save plan changes |
+| GET / DELETE | `/api/sessions/{id}/plan` | The saved plan with credits, warnings, and requirements still needed; or clear it |
+| POST | `/api/sessions/{id}/plan/courses` | Add a course to a semester (`code`, `term`, optional `credits`) |
+| PATCH / DELETE | `/api/sessions/{id}/plan/courses/{code}` | Move a course or change its credits, or remove it |
+| POST | `/api/sessions/{id}/plan/recommendation` | A recommended plan around the saved courses, not saved |
+| POST | `/api/sessions/{id}/plan/recommendation/accept` | Add the reviewed courses to the plan |
 
 Interactive docs: http://localhost:8000/docs. Errors use FastAPI's `{"detail": "..."}` shape. The API returns 404 for unknown courses or sessions, 409 for conflicts, 422 for invalid input, and 503 when the database is down.
 
@@ -291,7 +294,7 @@ backend/.venv/bin/python database/migrate.py                    # apply
 cd backend && pytest
 ```
 
-The suite has 147 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
+The suite has 161 tests. The engine tests use small made-up degrees, and the API tests run against the seeded database.
 
 | Area | Where |
 | --- | --- |
@@ -300,15 +303,22 @@ The suite has 147 tests. The engine tests use small made-up degrees, and the API
 | Prerequisites: none, one, several, alternatives, corequisites, cycles | `test_prerequisites.py` |
 | Multi-level dependency chains | `test_prerequisites.py`, `test_planner.py` |
 | Credit limits (several limits, oversized courses, pins over the limit) | `test_planner.py` |
-| Schedule generation and what-if overrides | `test_planner.py` |
+| Schedule generation and recommendations | `test_planner.py` |
+| Saved plan: add/move/remove credits, duplicates, prerequisite order, reload, switching majors | `test_student_plan.py` |
 | Earliest graduation (credit-bound, chain-bound, standing-delayed) | `test_planner.py` |
 | Sessions, dashboard, search, 503 handling | `test_sessions_api.py`, `test_dashboard.py`, `test_api.py` |
 | Catalog parsers: what is structured, what is left as text | `test_catalog_rules.py` |
 | Planning with INST + non-INST courses; only verified data counts; sync preserves students | `test_multi_department.py` |
 
+Browser tests drive the real UI in Chrome: switching majors, building a plan, adding, moving and removing courses with credit checks, reloading, duplicates, prerequisite warnings, and recommendations. They start the backend and frontend themselves, or reuse running ones:
+
+```bash
+cd frontend && npm run test:e2e
+```
+
 ## Known limitations
 
-- **Scope:** one university and one program. The schema supports more, but only UMD Information Science data exists.
+- **Majors:** all 103 College Park majors can be selected, but only Information Science and Technology and Information Design have verified requirements. Others show university and Gen Ed progress only.
 - **Course offerings and seats aren't known.** The planner assumes every course runs every Fall and Spring, and doesn't use Winter or Summer.
 - **Unverified data:** 1,155 courses have prerequisites that are only available as text, and 1,974 restrictions are text only. These are shown but not checked; the planner avoids them where it can and flags them where it can't.
 - **Gen Ed coverage:** tags come from five recent terms. A course approved for Gen Ed but not offered in those terms shows `none_found` and doesn't count. Conditional lab tags aren't counted yet.

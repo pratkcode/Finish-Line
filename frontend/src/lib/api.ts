@@ -131,6 +131,10 @@ export type Program = {
   slug: string;
   name: string;
   university: string;
+  // "verified": Finish Line has this major's requirements from the UMD catalog.
+  // "not_available": the major exists, but its requirements aren't in Finish Line yet.
+  requirements_status: "verified" | "not_available";
+  catalog_url: string | null;
 };
 
 export type RequirementStatus =
@@ -359,75 +363,106 @@ export function getEligibility(sessionId: string) {
   return get<EligibilityAnalysis>(`/api/sessions/${sessionId}/eligibility`);
 }
 
+// --- The student's saved semester plan -------------------------------------------
+
+export type RequirementRef = { key: string | null; name: string; category: string | null };
+
 export type PlannedCourse = {
-  code: string | null; // null for "choose a course" slots and general electives
+  code: string;
   name: string;
-  credits: number;
-  kind: "course" | "placeholder" | "elective";
-  required: boolean;
-  retake: boolean;
-  satisfies: { key: string | null; name: string; category: string | null }[];
-  prerequisites: string[];
+  credits: number; // credits this course counts for in the plan
+  credits_min: number;
+  credits_max: number;
+  retake: boolean; // completed before with too low a grade; adds no new credits
+  satisfies: RequirementRef[];
+  prerequisites: string[]; // planned courses this depends on
   notes: string[];
-  pinned: boolean; // placed by the student
   warnings: string[]; // rules this placement breaks
 };
 
 export type PlannedTerm = {
   term: string;
-  credits: number;
+  credits: number; // sum of this semester's courses
   warnings: string[];
   courses: PlannedCourse[];
 };
 
-export type Placement = { code: string; term: string };
-
-export type PlanOverrides = {
-  pinned: Placement[]; // courses the student placed in a semester
-  removed: string[]; // courses the student took out
-};
-
-export type GraduationPlan = {
-  disclaimer: string;
-  start_term: string;
+export type StudentPlan = {
+  program_name: string;
+  requirements_verified: boolean;
+  current_term: string; // earliest semester courses can be planned in
   max_credits_per_term: number;
   projected_graduation: string | null;
   graduation_note: string;
-  warnings: { term: string; code: string | null; message: string }[];
-  pinned: Placement[];
-  removed: string[];
   credits: {
-    remaining: number;
     completed: number;
     planned: number;
     total: number;
     required: number | null;
+    remaining: number | null;
   };
   terms: PlannedTerm[];
-  unscheduled: (PlannedCourse & { reason: string })[];
-  unplanned_requirements: { key: string; name: string; reason: string }[];
+  warnings: { term: string; code: string | null; message: string }[];
+  still_needed: {
+    key: string;
+    name: string;
+    path: string[];
+    courses_remaining: number | null;
+    credits_remaining: number | null;
+  }[];
   not_checked: { key: string; name: string }[];
+};
+
+export type RecommendedCourse = {
+  code: string | null; // null for a slot where you choose the course
+  name: string;
+  credits: number;
+  term: string;
+  satisfies: RequirementRef[];
+};
+
+export type Recommendation = {
+  disclaimer: string;
+  projected_graduation: string | null;
+  graduation_note: string;
+  additions: RecommendedCourse[];
+  slots: RecommendedCourse[];
+  unscheduled: string[];
   assumptions: string[];
 };
 
-export type PlanPreview = GraduationPlan & {
-  changes: {
-    graduation_before: string | null;
-    graduation_after: string | null;
-    moved: { code: string; name: string; from_term: string | null; to_term: string | null }[];
-  };
-};
+const planPath = (sessionId: string, rest = "") => `/api/sessions/${sessionId}/plan${rest}`;
 
-export function getGraduationPlan(sessionId: string) {
-  return get<GraduationPlan>(`/api/sessions/${sessionId}/plan`);
+export function getPlan(sessionId: string) {
+  return get<StudentPlan>(planPath(sessionId));
 }
 
-export function previewPlan(sessionId: string, overrides: PlanOverrides) {
-  return send<PlanPreview>("POST", `/api/sessions/${sessionId}/plan/preview`, overrides);
+export function addPlannedCourse(sessionId: string, code: string, term: string, credits?: number) {
+  return send<StudentPlan>("POST", planPath(sessionId, "/courses"), { code, term, credits });
 }
 
-export function savePlanOverrides(sessionId: string, overrides: PlanOverrides) {
-  return send<GraduationPlan>("PUT", `/api/sessions/${sessionId}/plan/overrides`, overrides);
+export function updatePlannedCourse(
+  sessionId: string,
+  code: string,
+  changes: { term?: string; credits?: number },
+) {
+  return send<StudentPlan>("PATCH", planPath(sessionId, `/courses/${code}`), changes);
+}
+
+export function removePlannedCourse(sessionId: string, code: string) {
+  return send<StudentPlan>("DELETE", planPath(sessionId, `/courses/${code}`));
+}
+
+export function clearPlan(sessionId: string) {
+  return send<StudentPlan>("DELETE", planPath(sessionId));
+}
+
+export function getRecommendation(sessionId: string) {
+  return send<Recommendation>("POST", planPath(sessionId, "/recommendation"));
+}
+
+export function acceptRecommendation(sessionId: string, courses: { code: string; term: string }[]) {
+  return send<StudentPlan>("POST", planPath(sessionId, "/recommendation/accept"), { courses });
 }
 
 export type CourseDetailExtras = {
@@ -490,7 +525,13 @@ export type DashboardSummary = {
     remaining: number | null;
   };
   requirements: { complete: number; remaining: number; not_tracked: number; percent: number };
-  graduation: { projected: string | null; semesters: number; warnings: number; has_changes: boolean };
+  graduation: {
+    projected: string | null; // from the saved plan
+    note: string;
+    semesters: number;
+    planned_courses: number;
+    warnings: number;
+  };
   next_term: { term: string; credits: number; courses: string[] } | null;
   eligibility: { available: number; blocked: number };
   top_prerequisite: CourseSummary | null;

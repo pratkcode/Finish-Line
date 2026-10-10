@@ -12,7 +12,7 @@ const FEATURES = [
   },
   {
     title: "Graduation plan",
-    body: "A semester-by-semester path to your earliest graduation, which you can rearrange with what-ifs.",
+    body: "Build your own semester-by-semester plan, or start from a recommended one and edit it.",
   },
 ];
 

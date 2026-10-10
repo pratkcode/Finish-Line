@@ -8,7 +8,7 @@ export default function GraduationPlanPage() {
   return (
     <PageShell
       title="Graduation Plan"
-      description="A recommended path to graduation, generated from your courses. It's a planning tool, not an official UMD schedule."
+      description="Your semester-by-semester plan. Build it yourself or start from a recommendation, then edit it however you like. A planning tool, not an official UMD schedule."
     >
       <GraduationPlanView />
     </PageShell>

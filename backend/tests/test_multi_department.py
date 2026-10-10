@@ -36,6 +36,21 @@ def get(session, path):
     return response.json()
 
 
+def recommend(session):
+    response = client.post(f"/api/sessions/{session['id']}/plan/recommendation")
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+def recommended_terms(rec):
+    terms = {}
+    for c in rec["additions"] + rec["slots"]:
+        terms.setdefault(c["term"], []).append(c)
+    order = sorted(terms, key=lambda t: (int(t.split()[1]), t.startswith("Fall")))
+    return [{"term": t, "courses": terms[t], "credits": sum(c["credits"] for c in terms[t])}
+            for t in order]
+
+
 def requirement(progress, key):
     units = (progress["completed_requirements"] + progress["remaining_requirements"]
              + progress["untracked_requirements"])
@@ -131,10 +146,11 @@ def test_unknown_codes_are_not_counted():
 
 def test_plan_mixes_inst_and_verified_non_inst_courses(session):
     add(session, "ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST201")
-    plan = get(session, "plan")
-    assert plan["unscheduled"] == [] and plan["unplanned_requirements"] == []
-    assert plan["projected_graduation"]
-    planned = [c for t in plan["terms"] for c in t["courses"] if c["code"]]
+    rec = recommend(session)
+    assert rec["unscheduled"] == []
+    assert rec["projected_graduation"]
+    terms = recommended_terms(rec)
+    planned = [c for t in terms for c in t["courses"] if c["code"]]
     codes = [c["code"] for c in planned]
     assert any(c.startswith("INST") for c in codes)
     non_inst = [c for c in planned if not c["code"].startswith("INST")]
@@ -153,8 +169,8 @@ def test_plan_mixes_inst_and_verified_non_inst_courses(session):
                 assert tag in detail["gen_ed"], (course["code"], tag)
 
     # Credit limit and prerequisite order hold across departments.
-    where = {c["code"]: i for i, t in enumerate(plan["terms"]) for c in t["courses"] if c["code"]}
-    for t in plan["terms"]:
+    where = {c["code"]: i for i, t in enumerate(terms) for c in t["courses"] if c["code"]}
+    for t in terms:
         assert t["credits"] <= 15
     for code, index in where.items():
         for group in client.get(f"/api/courses/{code}/prerequisites").json()["groups"]:
@@ -165,15 +181,13 @@ def test_plan_mixes_inst_and_verified_non_inst_courses(session):
 
 def test_planner_never_uses_courses_outside_the_current_catalog(session):
     add(session, "ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST201")
-    first = get(session, "plan")
-    candidates = [c["code"] for t in first["terms"] for c in t["courses"]
-                  if c["code"] and not c["code"].startswith("INST")]
+    candidates = [c["code"] for c in recommend(session)["additions"]
+                  if not c["code"].startswith("INST")]
     retired = candidates[0]
     with get_connection() as conn:
         conn.execute("UPDATE courses SET in_current_catalog = FALSE WHERE code = %s", (retired,))
     try:
-        second = get(session, "plan")
-        assert retired not in [c["code"] for t in second["terms"] for c in t["courses"]]
+        assert retired not in [c["code"] for c in recommend(session)["additions"]]
     finally:
         with get_connection() as conn:
             conn.execute("UPDATE courses SET in_current_catalog = TRUE WHERE code = %s", (retired,))
@@ -182,22 +196,29 @@ def test_planner_never_uses_courses_outside_the_current_catalog(session):
 def test_planner_uses_parsed_credit_standing_for_non_inst_courses(session):
     # ENGL391-398 (Professional Writing) require 60 earned credits.
     add(session, "ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST201")
-    plan = get(session, "plan")
+    rec = recommend(session)
     earned = 18
-    for t in plan["terms"]:
+    found = False
+    for t in recommended_terms(rec):
         for c in t["courses"]:
             if c["code"] and c["code"].startswith("ENGL39"):
                 assert earned >= 60
-                assert "Requires 60 earned credits" in c["notes"]
+                found = True
         earned += t["credits"]
+    assert found
+    # Once accepted into the saved plan, the restriction is shown on the course.
+    accepted = client.post(f"/api/sessions/{session['id']}/plan/recommendation/accept", json={
+        "courses": [{"code": c["code"], "term": c["term"]} for c in rec["additions"]]}).json()
+    english = [c for t in accepted["terms"] for c in t["courses"] if c["code"].startswith("ENGL39")]
+    assert "Requires 60 earned credits" in english[0]["notes"]
 
 
 # --- Data sync keeps student records ---------------------------------------------
 
 def test_sync_preserves_students_and_course_ids(session):
     add(session, "ENGL101", "INST126")
-    client.put(f"/api/sessions/{session['id']}/plan/overrides",
-               json={"pinned": [{"code": "COMM107", "term": "Spring 2027"}], "removed": []})
+    client.post(f"/api/sessions/{session['id']}/plan/courses",
+                json={"code": "COMM107", "term": "Spring 2027"})
     with get_connection() as conn:
         before = conn.execute(
             "SELECT c.code, c.id FROM session_courses s JOIN courses c ON c.id = s.course_id "
@@ -215,4 +236,6 @@ def test_sync_preserves_students_and_course_ids(session):
             "SELECT count(*) - count(DISTINCT code) AS n FROM courses").fetchone()["n"]
     assert before == after
     assert duplicates == 0
-    assert get(session, "plan")["pinned"] == [{"code": "COMM107", "term": "Spring 2027"}]
+    plan = get(session, "plan")
+    assert [(t["term"], [c["code"] for c in t["courses"]]) for t in plan["terms"]] == [
+        ("Spring 2027", ["COMM107"])]

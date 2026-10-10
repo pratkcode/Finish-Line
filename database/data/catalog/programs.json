@@ -1,0 +1,522 @@
+{
+ "source": "https://academiccatalog.umd.edu/undergraduate/programs/",
+ "catalog_year": "2026-2027",
+ "retrieved": "2026-10-10",
+ "programs": [
+  {
+   "slug": "umd-accounting",
+   "name": "Accounting",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/accounting/accounting-major/"
+  },
+  {
+   "slug": "umd-aerospace-engineering",
+   "name": "Aerospace Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/aerospace-engineering/aerospace-engineering-major/"
+  },
+  {
+   "slug": "umd-african-american-africana-studies",
+   "name": "African American and Africana Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/african-american-africana-studies/african-american-africana-studies-major/"
+  },
+  {
+   "slug": "umd-agricultural-science-technology",
+   "name": "Agricultural Science and Technology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/plant-sciences-landscape-architecture/agricultural-science-technology-major/"
+  },
+  {
+   "slug": "umd-agricultural-resource-economics",
+   "name": "Agricultural and Resource Economics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/agricultural-resource-economics/agricultural-resource-economics-major/"
+  },
+  {
+   "slug": "umd-american-studies",
+   "name": "American Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/american-studies/american-studies-major/"
+  },
+  {
+   "slug": "umd-animal-sciences",
+   "name": "Animal Sciences",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/animal-sciences/animal-sciences-major/"
+  },
+  {
+   "slug": "umd-anthropology",
+   "name": "Anthropology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/anthropology/anthropology-major/"
+  },
+  {
+   "slug": "umd-arabic-studies",
+   "name": "Arabic Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/arabic-studies/arabic-studies-major/"
+  },
+  {
+   "slug": "umd-architecture",
+   "name": "Architecture",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/architecture-major/"
+  },
+  {
+   "slug": "umd-art-history",
+   "name": "Art History",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art-history-archaeology/art-history-major/"
+  },
+  {
+   "slug": "umd-artificial-intelligence-computational-structures-ai-systems",
+   "name": "Artificial Intelligence: Computational Structures for AI Systems",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/artificial-intelligence-computational-structures-ai-systems-major/"
+  },
+  {
+   "slug": "umd-astronomy",
+   "name": "Astronomy",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/astronomy/astronomy-major/"
+  },
+  {
+   "slug": "umd-atmospheric-oceanic-science",
+   "name": "Atmospheric and Oceanic Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/atmospheric-oceanic-science/atmospheric-oceanic-science-major/"
+  },
+  {
+   "slug": "umd-biochemistry",
+   "name": "Biochemistry",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/chemistry-biochemistry/biochemistry-major/"
+  },
+  {
+   "slug": "umd-biocomputational-engineering",
+   "name": "Biocomputational Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/bioengineering/biocomputational-engineering-major/"
+  },
+  {
+   "slug": "umd-bioengineering",
+   "name": "Bioengineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/bioengineering/bioengineering-major/"
+  },
+  {
+   "slug": "umd-chemical-biomolecular-engineering",
+   "name": "Chemical Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/chemical-biomolecular-engineering/chemical-biomolecular-engineering-major/"
+  },
+  {
+   "slug": "umd-chemistry",
+   "name": "Chemistry Major (B.A., B.S.)",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/chemistry-biochemistry/chemistry-major/"
+  },
+  {
+   "slug": "umd-chinese",
+   "name": "Chinese",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/chinese/chinese-major/"
+  },
+  {
+   "slug": "umd-cinema-media-studies",
+   "name": "Cinema and Media Studies Major (SLLC)",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/cinema-media-studies-major/"
+  },
+  {
+   "slug": "umd-civil-environmental-engineering",
+   "name": "Civil Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/civil-environmental-engineering/civil-environmental-engineering-major/"
+  },
+  {
+   "slug": "umd-classics",
+   "name": "Classical Languages and Literatures",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/classical-languages-literature/classics-major/"
+  },
+  {
+   "slug": "umd-communication",
+   "name": "Communication",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/communication/communication-major/"
+  },
+  {
+   "slug": "umd-computer-engineering",
+   "name": "Computer Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/electrical-and-computer/computer-engineering-major/"
+  },
+  {
+   "slug": "umd-computer-science",
+   "name": "Computer Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/computer-science-major/"
+  },
+  {
+   "slug": "umd-criminology-criminal-justice",
+   "name": "Criminology and Criminal Justice Major at Shady Grove",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/behavioral-social-sciences/criminology-criminal-justice-major/"
+  },
+  {
+   "slug": "umd-cyber-physical-systems-engineering",
+   "name": "Cyber-Physical Systems Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/electrical-and-computer/cyber-physical-systems-engineering-major/"
+  },
+  {
+   "slug": "umd-dance",
+   "name": "Dance",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/theatre-dance-performance-studies/dance-major/"
+  },
+  {
+   "slug": "umd-early-childhood-special-education",
+   "name": "Early Childhood/Early Childhood Special Education",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/human-development-quantitative-methodology/early-childhood-special-education-major/"
+  },
+  {
+   "slug": "umd-economics",
+   "name": "Economics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/economics/economics-major/"
+  },
+  {
+   "slug": "umd-electrical-engineering",
+   "name": "Electrical Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/electrical-and-computer/electrical-engineering-major/"
+  },
+  {
+   "slug": "umd-elementary-education",
+   "name": "Elementary Education",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/elementary-education-major/"
+  },
+  {
+   "slug": "umd-elementary-middle-special-education",
+   "name": "Elementary/Middle Special Education",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/counseling-higher-special-education/elementary-middle-special-education-major/"
+  },
+  {
+   "slug": "umd-english",
+   "name": "English Language and Literature",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/english-language-literature/english-major/"
+  },
+  {
+   "slug": "umd-environmental-science-policy",
+   "name": "Environmental Science and Policy",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-policy/environmental-science-policy-major/"
+  },
+  {
+   "slug": "umd-environmental-science-technology",
+   "name": "Environmental Science and Technology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-technology/environmental-science-technology-major/"
+  },
+  {
+   "slug": "umd-family-health",
+   "name": "Family Health",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/family-science/family-health-major/"
+  },
+  {
+   "slug": "umd-fermentation-science",
+   "name": "Fermentation Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/nutrition-food-science/fermentation-science-major/"
+  },
+  {
+   "slug": "umd-finance",
+   "name": "Finance",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/finance/finance-major/"
+  },
+  {
+   "slug": "umd-fire-protection-engineering",
+   "name": "Fire Protection Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/fire-protection-engineering/fire-protection-engineering-major/"
+  },
+  {
+   "slug": "umd-french",
+   "name": "French Language and Literature",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/french-language-literature/french-major/"
+  },
+  {
+   "slug": "umd-geographical-sciences",
+   "name": "Geographical Sciences",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/geographical-sciences/geographical-sciences-major/"
+  },
+  {
+   "slug": "umd-geology",
+   "name": "Geology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/geological-environmental-planetary-sciences/geology-major/"
+  },
+  {
+   "slug": "umd-german-studies",
+   "name": "German Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/germanic-studies/german-studies-major/"
+  },
+  {
+   "slug": "umd-global-culture-thought",
+   "name": "Global Culture and Thought",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/global-culture-thought-major/"
+  },
+  {
+   "slug": "umd-global-health",
+   "name": "Global Health",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/global-environmental-occupational-health/global-health-major/"
+  },
+  {
+   "slug": "umd-global-and-foreign-policy",
+   "name": "Global and Foreign Policy",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-policy/global-and-foreign-policy-major/"
+  },
+  {
+   "slug": "umd-government-politics",
+   "name": "Government and Politics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/government-politics/government-politics-major/"
+  },
+  {
+   "slug": "umd-hearing-speech-sciences",
+   "name": "Hearing and Speech Sciences",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/hearing-speech-sciences/hearing-speech-sciences-major/"
+  },
+  {
+   "slug": "umd-history",
+   "name": "History",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/history/history-major/"
+  },
+  {
+   "slug": "umd-human-development",
+   "name": "Human Development",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/human-development-quantitative-methodology/human-development-major/"
+  },
+  {
+   "slug": "umd-human-centered-artificial-intelligence",
+   "name": "Human-Centered Artificial Intelligence",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/philosophy/human-centered-artificial-intelligence-major/"
+  },
+  {
+   "slug": "umd-immersive-media-design",
+   "name": "Immersive Media Design Major (CMSC)",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/immersive-media-design-major/"
+  },
+  {
+   "slug": "umd-information-science",
+   "name": "Information Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/information-science-major/"
+  },
+  {
+   "slug": "umd-information-systems",
+   "name": "Information Systems",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/decision-operations-information-technologies/information-systems-major/"
+  },
+  {
+   "slug": "umd-international-business",
+   "name": "International Business",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/logistics-business-public-policy/international-business-major/"
+  },
+  {
+   "slug": "umd-international-relations",
+   "name": "International Relations",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/government-politics/international-relations-major/"
+  },
+  {
+   "slug": "umd-italian-studies",
+   "name": "Italian Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/italian-studies/italian-studies-major/"
+  },
+  {
+   "slug": "umd-japanese",
+   "name": "Japanese",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/japanese/japanese-major/"
+  },
+  {
+   "slug": "umd-jewish-studies",
+   "name": "Jewish Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/jewish-studies/jewish-studies-major/"
+  },
+  {
+   "slug": "umd-journalism",
+   "name": "Journalism",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/journalism/journalism-major/"
+  },
+  {
+   "slug": "umd-kinesiology",
+   "name": "Kinesiology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/kinesiology/kinesiology-major/"
+  },
+  {
+   "slug": "umd-landscape-architecture",
+   "name": "Landscape Architecture",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/plant-sciences-landscape-architecture/landscape-architecture-major/"
+  },
+  {
+   "slug": "umd-linguistics",
+   "name": "Linguistics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/linguistics/linguistics-major/"
+  },
+  {
+   "slug": "umd-management",
+   "name": "Management",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/management/management-major/"
+  },
+  {
+   "slug": "umd-marketing",
+   "name": "Marketing",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/marketing/marketing-major/"
+  },
+  {
+   "slug": "umd-materials-science-engineering",
+   "name": "Materials Science and Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/materials-science-engineering/materials-science-engineering-major/"
+  },
+  {
+   "slug": "umd-mathematics",
+   "name": "Mathematics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/mathematics/mathematics-major/"
+  },
+  {
+   "slug": "umd-mechanical-engineering",
+   "name": "Mechanical Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/mechanical-engineering/mechanical-engineering-major/"
+  },
+  {
+   "slug": "umd-mechatronics-engineering",
+   "name": "Mechatronics Engineering",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/aerospace-engineering/mechatronics-engineering-major/"
+  },
+  {
+   "slug": "umd-middle-school-education",
+   "name": "Middle School Education",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/middle-school-education-major/"
+  },
+  {
+   "slug": "umd-music",
+   "name": "Music",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/music/music-major/"
+  },
+  {
+   "slug": "umd-neuroscience",
+   "name": "Neuroscience Major (CMNS)",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/biology/neuroscience-major/"
+  },
+  {
+   "slug": "umd-nutrition-food-science",
+   "name": "Nutrition and Food Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/nutrition-food-science/nutrition-food-science-major/"
+  },
+  {
+   "slug": "umd-operations-management-business-analytics",
+   "name": "Operations Management & Business Analytics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/decision-operations-information-technologies/operations-management-business-analytics-major/"
+  },
+  {
+   "slug": "umd-persian-studies",
+   "name": "Persian Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/persian-studies/persian-studies-major/"
+  },
+  {
+   "slug": "umd-philosophy",
+   "name": "Philosophy",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/philosophy/philosophy-major/"
+  },
+  {
+   "slug": "umd-philosophy-politics-economics",
+   "name": "Philosophy, Politics, and Economics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/philosophy/philosophy-politics-economics-major/"
+  },
+  {
+   "slug": "umd-physics",
+   "name": "Physics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/physics/physics-major/"
+  },
+  {
+   "slug": "umd-plant-sciences",
+   "name": "Plant Sciences",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/plant-sciences-landscape-architecture/plant-sciences-major/"
+  },
+  {
+   "slug": "umd-psychology",
+   "name": "Psychology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/psychology/psychology-major/"
+  },
+  {
+   "slug": "umd-public-health-practice",
+   "name": "Public Health Practice",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/behavioral-community-health/public-health-practice-major/"
+  },
+  {
+   "slug": "umd-public-health-science",
+   "name": "Public Health Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/public-health-science/public-health-science-major/"
+  },
+  {
+   "slug": "umd-public-policy",
+   "name": "Public Policy",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-policy/public-policy-major/"
+  },
+  {
+   "slug": "umd-real-estate-built-environment",
+   "name": "Real Estate and the Built Environment",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/real-estate-built-environment-major/"
+  },
+  {
+   "slug": "umd-religions-ancient-middle-east",
+   "name": "Religions of the Ancient Middle East",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/jewish-studies/religions-ancient-middle-east-major/"
+  },
+  {
+   "slug": "umd-romance-languages",
+   "name": "Romance Languages",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/romance-languages/romance-languages-major/"
+  },
+  {
+   "slug": "umd-russian-language-literature",
+   "name": "Russian Language and Literature",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/russian-language-literature/russian-language-literature-major/"
+  },
+  {
+   "slug": "umd-art-education",
+   "name": "Secondary Education Major - Art",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/art-education-major/"
+  },
+  {
+   "slug": "umd-english-education",
+   "name": "Secondary Education Major - English",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/english-education-major/"
+  },
+  {
+   "slug": "umd-mathematics-education",
+   "name": "Secondary Education Major - Mathematics",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/mathematics-education-major/"
+  },
+  {
+   "slug": "umd-science-education",
+   "name": "Secondary Education Major - Science",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/science-education-major/"
+  },
+  {
+   "slug": "umd-social-studies-education",
+   "name": "Secondary Education Major - Social Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/social-studies-education-major/"
+  },
+  {
+   "slug": "umd-world-language-education",
+   "name": "Secondary Education Major - World Language",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/world-language-education-major/"
+  },
+  {
+   "slug": "umd-social-data-science",
+   "name": "Social Data Science Major (INFO)",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/social-data-science-major/"
+  },
+  {
+   "slug": "umd-sociology",
+   "name": "Sociology",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/sociology/sociology-major/"
+  },
+  {
+   "slug": "umd-spanish-language-literatures-culture",
+   "name": "Spanish Language, Literatures, and Culture",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/spanish-language-literatures-culture/spanish-language-literatures-culture-major/"
+  },
+  {
+   "slug": "umd-art",
+   "name": "Studio Art",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art/art-major/"
+  },
+  {
+   "slug": "umd-supply-chain-management",
+   "name": "Supply Chain Management",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/logistics-business-public-policy/supply-chain-management-major/"
+  },
+  {
+   "slug": "umd-technology-info-design",
+   "name": "Technology and Information Design",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/technology-info-design-major/"
+  },
+  {
+   "slug": "umd-theatre",
+   "name": "Theatre",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/theatre-dance-performance-studies/theatre-major/"
+  },
+  {
+   "slug": "umd-womens-gender-sexuality-studies",
+   "name": "Women, Gender, and Sexuality Studies",
+   "catalog_url": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/women-gender-sexuality-studies/womens-gender-sexuality-studies-major/"
+  }
+ ]
+}
