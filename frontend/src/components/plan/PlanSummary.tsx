@@ -52,7 +52,7 @@ export default function PlanSummary({ plan }: { plan: StudentPlan }) {
 
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white p-5">
+    <div className="bg-surface p-5">
       <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">{label}</p>
       <div className="mt-1.5 text-3xl font-bold tracking-tight text-slate-900">{children}</div>
     </div>

@@ -3,7 +3,7 @@ import type { RequirementStatus } from "@/lib/api";
 const STYLES: Record<RequirementStatus, { symbol: string; className: string; label: string }> = {
   complete: { symbol: "✓", className: "bg-emerald-600 text-white", label: "Complete" },
   in_progress: { symbol: "◐", className: "bg-amber-100 text-amber-700", label: "In progress" },
-  not_started: { symbol: "", className: "border-2 border-slate-300 bg-white", label: "Not started" },
+  not_started: { symbol: "", className: "border-2 border-slate-300 bg-surface", label: "Not started" },
   not_tracked: { symbol: "–", className: "bg-slate-100 text-slate-400", label: "Not tracked yet" },
 };
 

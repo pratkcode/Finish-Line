@@ -3,7 +3,7 @@ import type { Program } from "@/lib/api";
 // Shown wherever a page depends on major requirements that Finish Line doesn't have yet.
 export default function UnverifiedMajorNote({ program }: { program: Program }) {
   return (
-    <section role="note" className="rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-700">
+    <section role="note" className="rounded-xl border border-slate-300 bg-surface p-4 text-sm text-slate-700">
       <p className="font-semibold text-slate-900">
         Requirements for {program.name} aren&apos;t verified in Finish Line yet
       </p>

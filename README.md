@@ -24,6 +24,7 @@
 - **Optional recommendations:** generate a recommended plan built around the courses you've already planned and your academic history. It respects prerequisites, the credit limits (including a separate Summer limit), restrictions such as "must have earned 90 credits", recent Testudo offering seasons, and your target graduation. Each course says why it's recommended and what couldn't be verified. Nothing is added until you accept it, and accepted courses stay editable.
 - **Majors:** choose from the 103 College Park majors in the catalog. Information Science and Technology and Information Design have verified requirements; for the others Finish Line says so and doesn't make up a plan. Switching majors keeps completed and planned courses and rechecks them.
 - **Course search:** the full UMD undergraduate catalog (5,457 courses in 202 departments), by code, name, or department. Each course shows its Gen Ed tags, restrictions, and prerequisites, plus how far each detail is verified.
+- **Light and dark mode:** a sun/moon toggle in the header. The first visit follows the operating system; a choice made with the toggle is remembered in the browser. Colors are defined once in `frontend/src/app/globals.css` (see the comment there for how the palette roles work in each theme).
 - **No accounts:** a student's profile is a planning session stored in PostgreSQL and remembered by the browser.
 
 ## Technology
@@ -329,7 +330,7 @@ The suite has 179 tests. The engine tests use small made-up degrees, and the API
 | Season- and offering-aware scheduling, verified fulfillments | `test_planner.py` |
 | Planning with INST + non-INST courses; only verified data counts; sync preserves students | `test_multi_department.py` |
 
-Browser tests drive the real UI in Chrome: switching majors, building a plan, adding, moving and removing courses with credit checks, reloading, duplicates, prerequisite warnings, recommendations, recording semesters at two schools, verifying transfer credit and Gen Ed, in-progress courses on the timeline, choosing the plan's first semester (including Summer), and target graduation. They start the backend and frontend themselves, or reuse running ones:
+Browser tests drive the real UI in Chrome: switching majors, building a plan, adding, moving and removing courses with credit checks, reloading, duplicates, prerequisite warnings, recommendations, recording semesters at two schools, verifying transfer credit and Gen Ed, in-progress courses on the timeline, choosing the plan's first semester (including Summer), target graduation, and the theme (system default, toggle, persistence, no flash, keyboard). Set `E2E_WEB_URL` and `E2E_API_URL` to test other running servers. They start the backend and frontend themselves, or reuse running ones:
 
 ```bash
 cd frontend && npm run test:e2e

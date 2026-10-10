@@ -91,7 +91,7 @@ export default function CourseBrowser() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by code or name"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:ring-1 focus:ring-red-700 focus:outline-none"
+          className="w-full rounded-lg border border-slate-300 bg-surface px-3 py-2 text-sm focus:border-red-700 focus:ring-1 focus:ring-red-700 focus:outline-none"
         />
         <label htmlFor="course-department" className="sr-only">
           Department
@@ -100,7 +100,7 @@ export default function CourseBrowser() {
           id="course-department"
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:outline-none"
+          className="mt-2 w-full rounded-lg border border-slate-300 bg-surface px-3 py-2 text-sm focus:border-red-700 focus:outline-none"
         >
           <option value="">All departments</option>
           {departments.map((d) => (
@@ -123,7 +123,7 @@ export default function CourseBrowser() {
         {listError ? (
           <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{listError}</p>
         ) : (
-          <ul className="mt-2 max-h-80 overflow-y-auto rounded-xl border border-slate-200 bg-white md:max-h-[calc(100vh-15rem)]">
+          <ul className="mt-2 max-h-80 overflow-y-auto rounded-xl border border-slate-200 bg-surface md:max-h-[calc(100vh-15rem)]">
             {courses === null &&
               [0, 1, 2, 3, 4].map((i) => (
                 <li key={i} className="border-b border-slate-100 px-4 py-3 last:border-b-0">
@@ -168,7 +168,7 @@ export default function CourseBrowser() {
       <section
         ref={detailRef}
         aria-live="polite"
-        className="scroll-mt-4 rounded-xl border border-slate-200 bg-white p-6"
+        className="scroll-mt-4 rounded-xl border border-slate-200 bg-surface p-6"
       >
         {detailError ? (
           <ErrorState message={detailError} onRetry={() => selectedCode && selectCourse(selectedCode)} />

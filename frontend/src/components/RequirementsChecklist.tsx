@@ -9,8 +9,8 @@ import { ErrorState, LoadingState } from "@/components/ui/States";
 import {
   ApiError,
   getPrograms,
+  getDegreeProgress,
   getProgress,
-  getSession,
   type ProgressResponse,
   type RequirementStatus,
 } from "@/lib/api";
@@ -30,9 +30,13 @@ async function loadRequirements(): Promise<Loaded> {
   const id = readSessionId();
   if (id) {
     try {
-      const session = await getSession(id);
-      const courses = session.courses.map(({ code, grade, credits }) => ({ code, grade, credits }));
-      return { data: await getProgress(session.program_slug, courses), hasProfile: true };
+      // The same student record as Degree Progress: completed courses,
+      // verified transfer credit and fulfillments; in-progress courses don't count yet.
+      const progress = await getDegreeProgress(id);
+      return {
+        data: { program: progress.program, requirements: progress.requirements, unrecognized_courses: [] },
+        hasProfile: true,
+      };
     } catch (err) {
       if (!(err instanceof ApiError && err.status === 404)) throw err;
     }
@@ -76,7 +80,7 @@ export default function RequirementsChecklist() {
   return (
     <div className="space-y-6">
       {!hasProfile && (
-        <p className="rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm text-slate-700">
+        <p className="rounded-xl border border-slate-200 bg-surface px-5 py-4 text-sm text-slate-700">
           Showing the requirements with no courses completed.{" "}
           <Link href="/profile" className="font-medium text-red-700 hover:underline">
             Add your courses
@@ -102,7 +106,7 @@ export default function RequirementsChecklist() {
       )}
 
       {data.requirements.map((requirement) => (
-        <section key={requirement.key} className="rounded-xl border border-slate-200 bg-white p-6">
+        <section key={requirement.key} className="rounded-xl border border-slate-200 bg-surface p-6">
           <p className="mb-3 text-xs font-semibold tracking-wider text-slate-400 uppercase">
             {CATEGORY_LABELS[requirement.category] ?? requirement.category}
           </p>

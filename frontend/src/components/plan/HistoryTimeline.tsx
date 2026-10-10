@@ -11,7 +11,7 @@ export default function HistoryTimeline({ history, currentTerm }: { history: His
     <section aria-label="Academic history">
       <h2 className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">History</h2>
       {history.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-3 text-sm text-slate-600">
+        <p className="rounded-xl border border-dashed border-slate-300 bg-surface px-5 py-3 text-sm text-slate-600">
           No semesters recorded yet.{" "}
           <Link href="/history" className="underline">
             Add your past semesters and current courses

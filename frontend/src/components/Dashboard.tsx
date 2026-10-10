@@ -47,7 +47,7 @@ export default function Dashboard() {
       </section>
 
       {d.next_term && (
-        <section className="rounded-xl border border-slate-200 bg-white p-5">
+        <section className="rounded-xl border border-slate-200 bg-surface p-5">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="font-semibold text-slate-900">Up next: {d.next_term.term}</h2>
             <span className="text-sm text-slate-500">
@@ -100,7 +100,7 @@ export default function Dashboard() {
 
 function StudentCard({ d }: { d: DashboardSummary }) {
   return (
-    <section className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+    <section className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
       <dl className="grid flex-1 gap-x-8 gap-y-3 sm:grid-cols-3">
         <Field label="Major">{d.program.name}</Field>
         <Field label="University">{d.program.university}</Field>
@@ -127,7 +127,7 @@ function CreditsStat({ d }: { d: DashboardSummary }) {
         label="Credits toward degree"
         max={required ?? earned}
         segments={[
-          { value: earned, className: "bg-red-700", label: "Completed and verified" },
+          { value: earned, className: "bg-accent", label: "Completed and verified" },
           { value: in_progress, className: "bg-amber-300", label: "In progress (not counted yet)" },
         ]}
         size="sm"
@@ -153,7 +153,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Stat({ label, value, children }: { label: string; value: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5">
+    <div className="rounded-xl border border-slate-200 bg-surface p-5">
       <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">{label}</p>
       <p className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900">{value}</p>
       <div className="mt-3 text-sm text-slate-500">{children}</div>
@@ -165,7 +165,7 @@ function ToolCard({ href, title, children }: { href: string; title: string; chil
   return (
     <Link
       href={href}
-      className="group rounded-xl border border-slate-200 bg-white p-5 hover:border-slate-300 hover:bg-slate-50"
+      className="group rounded-xl border border-slate-200 bg-surface p-5 hover:border-slate-300 hover:bg-slate-50"
     >
       <p className="flex items-center justify-between font-semibold text-slate-900">
         {title}

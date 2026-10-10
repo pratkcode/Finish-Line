@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/SiteHeader";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const FEATURES = [
   {
@@ -21,9 +22,12 @@ export default function Home() {
     <div className="flex flex-1 flex-col">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-5 sm:px-6">
         <Logo />
-        <Link href="/dashboard" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-          Open dashboard →
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/dashboard" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+            Open dashboard →
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-16 sm:px-6">
@@ -40,13 +44,13 @@ export default function Home() {
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="/profile"
-            className="rounded-lg bg-red-700 px-5 py-2.5 font-medium text-white hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2"
+            className="rounded-lg bg-accent px-5 py-2.5 font-medium text-white hover:bg-accent-hover"
           >
             Start Planning
           </Link>
           <Link
             href="/courses"
-            className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-lg border border-slate-300 bg-surface px-5 py-2.5 font-medium text-slate-700 hover:bg-slate-50"
           >
             Browse courses
           </Link>
@@ -54,7 +58,7 @@ export default function Home() {
 
         <ul className="mt-16 grid gap-4 sm:grid-cols-3">
           {FEATURES.map((f) => (
-            <li key={f.title} className="rounded-xl border border-slate-200 bg-white p-5">
+            <li key={f.title} className="rounded-xl border border-slate-200 bg-surface p-5">
               <p className="font-semibold text-slate-900">{f.title}</p>
               <p className="mt-1 text-sm text-slate-600">{f.body}</p>
             </li>

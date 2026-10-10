@@ -34,11 +34,11 @@ export default function TermCard(props: Props) {
     <li className="relative" data-term={term.term}>
       <span
         aria-hidden
-        className={`absolute top-5 -left-[1.6rem] h-3 w-3 rounded-full border-2 border-white sm:-left-[1.85rem] ${
-          isLast && term.courses.length ? "bg-red-700" : "bg-slate-400"
+        className={`absolute top-5 -left-[1.6rem] h-3 w-3 rounded-full border-2 border-surface sm:-left-[1.85rem] ${
+          isLast && term.courses.length ? "bg-accent" : "bg-slate-400"
         }`}
       />
-      <div className={`rounded-xl border bg-white ${problems ? "border-red-300" : "border-slate-200"}`}>
+      <div className={`rounded-xl border bg-surface ${problems ? "border-red-300" : "border-slate-200"}`}>
         <button
           type="button"
           onClick={() => setOpen(!open)}
@@ -102,7 +102,7 @@ function CourseRow({ course, term, termChoices, termOf, busy, actions }: Props &
   return (
     <li className="py-3" data-course={course.code}>
       <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 basis-64">
           <p className="text-sm">
             <span className="font-semibold">{course.code} </span>
             <span className="text-slate-700">{course.name}</span>
@@ -144,7 +144,7 @@ function CourseRow({ course, term, termChoices, termOf, busy, actions }: Props &
               value={course.credits}
               disabled={busy}
               onChange={(e) => actions.setCredits(course.code, Number(e.target.value))}
-              className="rounded-md border border-slate-300 bg-white px-1.5 py-1 disabled:opacity-50"
+              className="rounded-md border border-slate-300 bg-surface px-1.5 py-1 disabled:opacity-50"
             >
               {Array.from({ length: course.credits_max - course.credits_min + 1 }, (_, i) => course.credits_min + i).map(
                 (n) => (
@@ -160,7 +160,7 @@ function CourseRow({ course, term, termChoices, termOf, busy, actions }: Props &
             value=""
             disabled={busy}
             onChange={(e) => e.target.value && actions.move(course.code, e.target.value)}
-            className="rounded-md border border-slate-300 bg-white px-1.5 py-1 text-slate-700 disabled:opacity-50"
+            className="rounded-md border border-slate-300 bg-surface px-1.5 py-1 text-slate-700 disabled:opacity-50"
           >
             <option value="">Move to…</option>
             {termChoices
@@ -251,7 +251,7 @@ function AddCourse({ term, termOf, completed, busy, actions }: Props) {
                       setOpen(false);
                       setSearch("");
                     }}
-                    className="shrink-0 rounded-md bg-red-700 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-800 disabled:opacity-50"
+                    className="shrink-0 rounded-md bg-accent px-2.5 py-1 text-xs font-medium text-white hover:bg-accent-hover disabled:opacity-50"
                   >
                     Add
                   </button>

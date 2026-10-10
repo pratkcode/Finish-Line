@@ -116,7 +116,7 @@ export default function GraduationPlanView() {
   return (
     <div className="space-y-6">
       {!plan.requirements_verified && (
-        <section role="note" className="rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-700">
+        <section role="note" className="rounded-xl border border-slate-300 bg-surface p-4 text-sm text-slate-700">
           <p className="font-semibold text-slate-900">
             Requirements for {plan.program_name} aren&apos;t verified in Finish Line yet
           </p>
@@ -139,7 +139,7 @@ export default function GraduationPlanView() {
           type="button"
           onClick={recommend}
           disabled={busy || !plan.requirements_verified}
-          className="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:opacity-50"
+          className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-hover disabled:opacity-50"
         >
           {plan.terms.length ? "Recommend courses for the rest of my plan" : "Generate a recommended plan"}
         </button>
@@ -148,7 +148,7 @@ export default function GraduationPlanView() {
             type="button"
             disabled={busy}
             onClick={() => confirm("Remove every course from your plan?") && run(() => clearPlan(sessionId))}
-            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+            className="rounded-lg border border-slate-300 bg-surface px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
           >
             Clear plan
           </button>
@@ -193,7 +193,7 @@ export default function GraduationPlanView() {
       )}
 
       {plan.terms.length === 0 && !recommendation && (
-        <p className="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-4 text-sm text-slate-600">
+        <p className="rounded-xl border border-dashed border-slate-300 bg-surface px-5 py-4 text-sm text-slate-600">
           Your plan is empty. Add courses to a semester below, or generate a recommended plan to start from.
         </p>
       )}
@@ -229,7 +229,7 @@ export default function GraduationPlanView() {
       </section>
 
       {plan.still_needed.length > 0 && plan.requirements_verified && (
-        <section className="rounded-xl border border-slate-200 bg-white p-5 text-sm">
+        <section className="rounded-xl border border-slate-200 bg-surface p-5 text-sm">
           <p className="font-semibold text-slate-900">Still needed after this plan</p>
           <ul className="mt-2 grid gap-1 text-slate-700 sm:grid-cols-2">
             {plan.still_needed.map((u) => (

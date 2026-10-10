@@ -44,7 +44,7 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
             type="button"
             onClick={onDismiss}
             disabled={busy}
-            className="rounded-lg border border-amber-300 bg-white px-3 py-1.5 font-medium hover:bg-amber-100 disabled:opacity-50"
+            className="rounded-lg border border-amber-300 bg-surface px-3 py-1.5 font-medium hover:bg-amber-100 disabled:opacity-50"
           >
             Dismiss
           </button>
@@ -52,7 +52,7 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
             type="button"
             onClick={onAccept}
             disabled={busy || additions.length === 0}
-            className="rounded-lg bg-slate-900 px-3 py-1.5 font-medium text-white hover:bg-slate-700 disabled:opacity-50"
+            className="rounded-lg bg-strong px-3 py-1.5 font-medium text-on-strong hover:bg-strong-hover disabled:opacity-50"
           >
             Add {additions.length} {additions.length === 1 ? "course" : "courses"} to my plan
           </button>
@@ -61,7 +61,7 @@ export default function RecommendationPanel({ recommendation, busy, onAccept, on
 
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
         {[...byTerm.entries()].map(([term, courses]) => (
-          <li key={term} className="rounded-lg bg-white/70 p-3">
+          <li key={term} className="rounded-lg bg-surface/70 p-3">
             <p className="font-semibold">{term}</p>
             <ul className="mt-1 space-y-1.5">
               {courses.map((c, i) => (

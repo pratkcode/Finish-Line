@@ -92,7 +92,7 @@ function OverallProgress({
   const total = required ?? applicable;
   return (
     <section className="grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2">
-      <div className="bg-white p-5">
+      <div className="bg-surface p-5">
         <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Credits that count</p>
         <p className="mt-1.5 text-3xl font-bold tracking-tight" data-testid="applicable-credits">
           {applicable} <span className="text-xl font-medium text-slate-400">/ {total}</span>
@@ -102,20 +102,20 @@ function OverallProgress({
             label="Credits toward degree"
             max={total}
             segments={[
-              { value: from_courses, className: "bg-red-700", label: "From completed and verified courses" },
-              { value: credit_block, className: "bg-red-500", label: "Verified transfer credit without a UMD equivalent" },
+              { value: from_courses, className: "bg-accent", label: "From completed and verified courses" },
+              { value: credit_block, className: "bg-accent/50", label: "Verified transfer credit without a UMD equivalent" },
               { value: in_progress, className: "bg-amber-300", label: "In progress (not counted yet)" },
             ]}
           />
         </div>
         <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-600">
           <li className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-red-700" />
+            <span className="h-2 w-2 rounded-full bg-accent" />
             {from_courses} from courses
           </li>
           {credit_block > 0 && (
             <li className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-red-500" />
+              <span className="h-2 w-2 rounded-full bg-accent/50" />
               {credit_block} verified transfer (no UMD equivalent)
             </li>
           )}
@@ -149,7 +149,7 @@ function OverallProgress({
           </details>
         )}
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-surface p-5">
         <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Requirements</p>
         <p className="mt-1.5 text-3xl font-bold tracking-tight">
           {tracked ? Math.round((100 * done) / tracked) : 100}%{" "}
@@ -173,7 +173,7 @@ function OverallProgress({
 function EligibilitySummary({ eligibility }: { eligibility: EligibilityAnalysis }) {
   const top = eligibility.missing_prerequisites.slice(0, 5);
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6">
+    <section className="rounded-xl border border-slate-200 bg-surface p-6">
       <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
         Remaining courses
       </h2>
@@ -220,7 +220,7 @@ function Section({
   const untracked = units.length - tracked.length;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6">
+    <section className="rounded-xl border border-slate-200 bg-surface p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-lg font-semibold">{name}</h2>
         <span className="text-sm text-slate-500">

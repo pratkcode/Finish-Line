@@ -130,7 +130,7 @@ export default function ProfileEditor() {
     <div className="space-y-6">
       {error && <ErrorBanner message={error} />}
 
-      <section className="rounded-xl border border-slate-200 bg-white p-6">
+      <section className="rounded-xl border border-slate-200 bg-surface p-6">
         <h2 className="text-lg font-semibold">Profile</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <Field label="University">
@@ -248,9 +248,9 @@ export default function ProfileEditor() {
 
 function CreditSummary({ session }: { session: PlanSession }) {
   const { completed, reported, unmatched, reported_too_low } = session.credits;
-  const count = session.courses.length;
+  const count = session.courses.filter((c) => c.status === "completed").length;
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6">
+    <section className="rounded-xl border border-slate-200 bg-surface p-6">
       <p className="text-sm text-slate-500">Completed credits</p>
       <p className="mt-1 text-3xl font-bold">{completed}</p>
       <p className="text-sm text-slate-500">
@@ -367,4 +367,4 @@ function ErrorBanner({ message }: { message: string }) {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700";
+  "w-full rounded-lg border border-slate-300 bg-surface px-3 py-2 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700";

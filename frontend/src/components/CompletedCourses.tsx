@@ -35,7 +35,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6">
+    <section className="rounded-xl border border-slate-200 bg-surface p-6">
       <h2 className="text-lg font-semibold">UMD courses</h2>
       <p className="mt-1 text-sm text-slate-500">
         Add courses you&apos;ve completed at UMD. To record which semester, courses you&apos;re taking now, or credit
@@ -55,7 +55,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="e.g. INST326"
-        className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700"
+        className="mt-1 w-full rounded-lg border border-slate-300 bg-surface px-3 py-2 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700"
       />
 
       {results.length > 0 && (
@@ -73,7 +73,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
                 <button
                   type="button"
                   onClick={() => run(() => addCompletedCourse(session.id, course.code))}
-                  className="shrink-0 rounded-md bg-red-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-800"
+                  className="shrink-0 rounded-md bg-accent px-3 py-1.5 text-xs font-medium text-white hover:bg-accent-hover"
                 >
                   Add completed course
                 </button>
@@ -121,7 +121,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
                     }),
                   )
                 }
-                className="rounded border border-slate-300 bg-white px-2 py-1"
+                className="rounded border border-slate-300 bg-surface px-2 py-1"
               >
                 {range(course.credits_min, course.credits_max).map((n) => (
                   <option key={n} value={n}>
@@ -141,7 +141,7 @@ export default function CompletedCourses({ session, onChange, onError }: Props) 
                   }),
                 )
               }
-              className="rounded border border-slate-300 bg-white px-2 py-1"
+              className="rounded border border-slate-300 bg-surface px-2 py-1"
             >
               <option value="">Grade</option>
               {GRADES.map((g) => (

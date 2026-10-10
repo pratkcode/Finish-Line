@@ -1,7 +1,7 @@
 import { expect, test, type APIRequestContext, type Page } from "@playwright/test";
 
 // Academic history, transfer credit, and the plan timeline, through the UI.
-const API = "http://localhost:8000";
+const API = process.env.E2E_API_URL ?? "http://localhost:8000";
 
 async function startSession(page: Page, request: APIRequestContext, fields: Record<string, unknown> = {}) {
   const session = await (

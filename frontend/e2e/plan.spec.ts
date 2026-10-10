@@ -2,7 +2,7 @@ import { expect, test, type APIRequestContext, type Page } from "@playwright/tes
 
 // Each test gets its own planning session, created through the API and loaded
 // into the browser the same way the app stores it.
-const API = "http://localhost:8000";
+const API = process.env.E2E_API_URL ?? "http://localhost:8000";
 const COMPLETED = ["ENGL101", "MATH115", "PSYC100", "STAT100", "INST126", "INST201", "SOCY105"];
 
 async function startSession(page: Page, request: APIRequestContext, program = "umd-information-science") {

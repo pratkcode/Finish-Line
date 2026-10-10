@@ -104,7 +104,7 @@ export default function AcademicHistory() {
           ).
         </p>
         {history.terms.length === 0 && (
-          <p className="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-4 text-sm text-slate-600">
+          <p className="rounded-xl border border-dashed border-slate-300 bg-surface px-5 py-4 text-sm text-slate-600">
             No semesters yet. Starting at UMD as a first-year? Add your current semester and the courses you&apos;re
             taking. Transferring? Add your semesters at your previous schools.
           </p>
@@ -165,7 +165,7 @@ function Summary({ history }: { history: History }) {
 
 function Stat({ label, value, testId, children }: { label: string; value: number; testId: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white p-4">
+    <div className="bg-surface p-4">
       <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">{label}</p>
       <p className="mt-1 text-2xl font-bold" data-testid={testId}>
         {value}
@@ -207,7 +207,7 @@ function AddTermForm({ actions }: { actions: Actions }) {
     <form
       onSubmit={submit}
       aria-label="Add a semester"
-      className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm"
+      className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-surface p-4 text-sm"
     >
       <label className="flex flex-col gap-1">
         <span className="font-medium text-slate-700">Semester</span>
@@ -261,7 +261,7 @@ function TermSection({ term, actions }: { term: HistoryTerm; actions: Actions })
   }[term.period];
 
   return (
-    <li className="rounded-xl border border-slate-200 bg-white p-5" data-history-term={term.term}>
+    <li className="rounded-xl border border-slate-200 bg-surface p-5" data-history-term={term.term}>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         {editing ? (
           <>
@@ -354,7 +354,7 @@ function CourseList({ courses, actions, terms }: { courses: HistoryCourse[]; act
     <ul className="mt-3 divide-y divide-slate-100 text-sm">
       {courses.map((c) => (
         <li key={c.code} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2" data-history-course={c.code}>
-          <span className="min-w-0 flex-1">
+          <span className="min-w-0 flex-1 basis-56">
             <span className="font-medium">{c.code}</span> <span className="text-slate-600">{c.name}</span>{" "}
             <span className="text-slate-400">· {c.credits} cr</span>
           </span>
@@ -499,7 +499,7 @@ function TransferList({ transfers, actions }: { transfers: TransferCredit[]; act
     <ul className="mt-3 divide-y divide-slate-100 text-sm">
       {transfers.map((x) => (
         <li key={x.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2" data-transfer={x.external_code ?? x.title ?? ""}>
-          <span className="min-w-0 flex-1">
+          <span className="min-w-0 flex-1 basis-56">
             <span className="font-medium">{x.external_code ?? (x.kind === "credits" ? "Credit" : "")}</span>{" "}
             <span className="text-slate-600">{x.title}</span> <span className="text-slate-400">· {x.credits} cr</span>
             {x.grade && <span className="text-slate-400"> · {x.grade}</span>}
@@ -707,7 +707,7 @@ function AddTransferForm({ termId, institution, actions }: { termId: number | nu
 function Unassigned({ history, actions }: { history: History; actions: Actions }) {
   const umdTerms = history.terms.filter((t) => t.at_umd);
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5">
+    <section className="rounded-xl border border-slate-200 bg-surface p-5">
       <h2 className="text-lg font-semibold">Not tied to a semester</h2>
       <p className="mt-1 text-sm text-slate-500">
         UMD courses added without a semester (e.g. from your Profile), and credit like AP or IB exams.
@@ -748,7 +748,7 @@ function Fulfillments({ history, actions }: { history: History; actions: Actions
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5">
+    <section className="rounded-xl border border-slate-200 bg-surface p-5">
       <h2 className="text-lg font-semibold">Requirements met another way</h2>
       <p className="mt-1 text-sm text-slate-500">
         For example, Gen Ed completed through an associate degree, or a requirement waived. Only items verified by UMD
@@ -759,7 +759,7 @@ function Fulfillments({ history, actions }: { history: History; actions: Actions
         <ul className="mt-3 divide-y divide-slate-100 text-sm">
           {history.fulfillments.map((f) => (
             <li key={f.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2" data-fulfillment={f.requirement_key}>
-              <span className="min-w-0 flex-1">
+              <span className="min-w-0 flex-1 basis-56">
                 <span className="font-medium">{f.requirement_name}</span>{" "}
                 <span className="text-slate-500">· {METHODS[f.method]}</span>
                 {f.note && <span className="block text-xs text-slate-500">{f.note}</span>}
@@ -862,12 +862,12 @@ function Fulfillments({ history, actions }: { history: History; actions: Actions
 }
 
 const inputClass =
-  "rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700";
-const smallSelect = "rounded-md border border-slate-300 bg-white px-1.5 py-1 text-xs disabled:opacity-50";
+  "rounded-md border border-slate-300 bg-surface px-2.5 py-1.5 text-sm focus:border-red-700 focus:outline-none focus:ring-1 focus:ring-red-700";
+const smallSelect = "rounded-md border border-slate-300 bg-surface px-1.5 py-1 text-xs disabled:opacity-50";
 const primaryButton =
-  "rounded-lg bg-red-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-800 disabled:opacity-50";
+  "rounded-lg bg-accent px-3 py-1.5 text-sm font-medium text-white hover:bg-accent-hover disabled:opacity-50";
 const smallPrimary =
-  "shrink-0 rounded-md bg-red-700 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-800 disabled:opacity-50";
+  "shrink-0 rounded-md bg-accent px-2.5 py-1 text-xs font-medium text-white hover:bg-accent-hover disabled:opacity-50";
 const linkButton = "text-sm text-slate-500 hover:text-slate-800 disabled:opacity-50";
 
 

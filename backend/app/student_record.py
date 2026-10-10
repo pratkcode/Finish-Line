@@ -117,14 +117,16 @@ def load_student_record(conn, session_id: UUID, session: dict | None = None) -> 
             "reason": "Add them as courses or transfer credit to count them"})
 
     for f in conn.execute(
-        "SELECT requirement_key, method, verification, note FROM requirement_fulfillments "
-        "WHERE session_id = %s ORDER BY id",
+        "SELECT f.requirement_key, f.method, f.verification, f.note, "
+        "(SELECT r.name FROM requirements r WHERE r.key = f.requirement_key LIMIT 1) AS name "
+        "FROM requirement_fulfillments f WHERE f.session_id = %s ORDER BY f.id",
         (session_id,),
     ).fetchall():
         if f["verification"] in COUNTED_VERIFICATIONS:
             record.fulfilled.add(f["requirement_key"])
         else:
-            record.pending.append({"kind": "fulfillment", "description": f["requirement_key"],
+            record.pending.append({"kind": "fulfillment",
+                                   "description": f["name"] or f["requirement_key"],
                                    "credits": 0,
                                    "reason": "Reported by you; not yet verified or approved"})
     return record

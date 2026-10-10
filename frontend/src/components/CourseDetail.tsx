@@ -255,7 +255,7 @@ function CourseChip({
       onClick={() => onSelect(code)}
       title={title}
       className={`rounded px-2 py-0.5 text-sm font-medium ring-1 hover:bg-red-50 ${
-        done ? "bg-emerald-50 text-emerald-800 ring-emerald-200" : "bg-white text-red-700 ring-slate-200"
+        done ? "bg-emerald-50 text-emerald-800 ring-emerald-200" : "bg-surface text-red-700 ring-slate-200"
       }`}
     >
       {done && <span aria-label="Completed">✓ </span>}

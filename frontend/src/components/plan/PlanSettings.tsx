@@ -30,7 +30,7 @@ export default function PlanSettings({ plan, busy, onSave }: Props) {
   return (
     <section
       aria-label="Plan settings"
-      className="flex flex-wrap items-end gap-x-6 gap-y-3 rounded-xl border border-slate-200 bg-white p-4 text-sm"
+      className="flex flex-wrap items-end gap-x-6 gap-y-3 rounded-xl border border-slate-200 bg-surface p-4 text-sm"
     >
       <label className="flex flex-col gap-1">
         <span className="font-medium text-slate-700">First semester to plan</span>
@@ -39,7 +39,7 @@ export default function PlanSettings({ plan, busy, onSave }: Props) {
           value={plan.plan_start_term}
           disabled={busy}
           onChange={(e) => onSave({ plan_start_term: e.target.value })}
-          className="rounded-md border border-slate-300 bg-white px-2 py-1.5 disabled:opacity-50"
+          className="rounded-md border border-slate-300 bg-surface px-2 py-1.5 disabled:opacity-50"
         >
           {starts.map((t) => (
             <option key={t} value={t}>
@@ -68,7 +68,7 @@ export default function PlanSettings({ plan, busy, onSave }: Props) {
             value={plan.max_summer_credits ?? plan.max_credits_per_term}
             disabled={busy}
             onChange={(e) => onSave({ max_summer_credits: Number(e.target.value) })}
-            className="rounded-md border border-slate-300 bg-white px-2 py-1.5 disabled:opacity-50"
+            className="rounded-md border border-slate-300 bg-surface px-2 py-1.5 disabled:opacity-50"
           >
             {Array.from({ length: 18 }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>
@@ -86,7 +86,7 @@ export default function PlanSettings({ plan, busy, onSave }: Props) {
           value={plan.target_graduation_term ?? ""}
           disabled={busy}
           onChange={(e) => onSave({ target_graduation_term: e.target.value || null })}
-          className="rounded-md border border-slate-300 bg-white px-2 py-1.5 disabled:opacity-50"
+          className="rounded-md border border-slate-300 bg-surface px-2 py-1.5 disabled:opacity-50"
         >
           <option value="">No target</option>
           {targets.map((t) => (

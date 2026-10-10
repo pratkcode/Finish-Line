@@ -1,10 +1,151 @@
 @import "tailwindcss";
 
+/*
+ * Theming
+ *
+ * The theme is set on <html data-theme="light|dark"> before the page paints
+ * (see ThemeScript in layout.tsx), so there's no flash of the wrong theme.
+ *
+ * Components use Tailwind's slate / red / amber / emerald / sky scales by
+ * role, and those roles hold in both themes:
+ *   slate-50..100   subtle panels, chips, hover fills, progress tracks
+ *   slate-200..300  borders, dividers, input outlines
+ *   slate-400..600  tertiary and secondary text, muted icons
+ *   slate-700..900  body text and headings
+ *   <color>-50..200 tinted backgrounds and borders for notices and badges
+ *   <color>-500..600 fills (progress, status icons)
+ *   <color>-700..950 tinted text
+ * Dark mode redefines each scale for a dark background (below), so a step
+ * keeps its role rather than its literal lightness. Where one color plays
+ * two roles in light mode, a semantic token is used instead:
+ *   surface       cards, panels, inputs, menus (white in light mode)
+ *   page          the page background
+ *   accent        filled primary buttons and the logo (white text on it)
+ *   strong        filled secondary buttons (text in on-strong)
+ *   focus         keyboard focus rings
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-strong: var(--strong);
+  --color-strong-hover: var(--strong-hover);
+  --color-on-strong: var(--on-strong);
+  --color-focus: var(--focus);
+}
+
+:root {
+  color-scheme: light;
+  --page: #f8fafc;
+  --surface: #ffffff;
+  --accent: #b91c1c; /* red-700 */
+  --accent-hover: #991b1b; /* red-800 */
+  --strong: #0f172a; /* slate-900 */
+  --strong-hover: #334155; /* slate-700 */
+  --on-strong: #ffffff;
+  --focus: #b91c1c;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0e1218;
+  --surface: #161b23;
+  --accent: #c7353b;
+  --accent-hover: #d84a50;
+  --strong: #e3e8ef;
+  --strong-hover: #c5cdd8;
+  --on-strong: #0e1218;
+  --focus: #f07a7d;
+
+  /* Neutrals: cool charcoal, lifted surfaces, soft text. */
+  --color-slate-50: #1a2029;
+  --color-slate-100: #212833;
+  --color-slate-200: #2b3340;
+  --color-slate-300: #3a4352;
+  --color-slate-400: #7a8597;
+  --color-slate-500: #959fb0;
+  --color-slate-600: #a9b2c1;
+  --color-slate-700: #c3cad5;
+  --color-slate-800: #d9dee6;
+  --color-slate-900: #eef1f5;
+
+  /* Red: accent text, errors, warnings. */
+  --color-red-50: #2a1619;
+  --color-red-100: #3a1b1f;
+  --color-red-200: #57252a;
+  --color-red-300: #733037;
+  --color-red-500: #e0545a;
+  --color-red-700: #f07a7d;
+  --color-red-800: #f59a9c;
+  --color-red-900: #f9bdbe;
+
+  /* Amber: in progress, pending, cautions. */
+  --color-amber-50: #261f12;
+  --color-amber-100: #382b12;
+  --color-amber-200: #4e3c18;
+  --color-amber-300: #a37a26;
+  --color-amber-700: #e5b04a;
+  --color-amber-800: #edc168;
+  --color-amber-900: #f3d28d;
+  --color-amber-950: #f8e2b4;
+
+  /* Emerald: complete, counted. */
+  --color-emerald-50: #102419;
+  --color-emerald-200: #1d4632;
+  --color-emerald-600: #23955f;
+  --color-emerald-700: #4cc48a;
+  --color-emerald-800: #74d4a5;
+
+  /* Sky: requirement chips, informational. */
+  --color-sky-50: #0f1f2d;
+  --color-sky-100: #132d43;
+  --color-sky-800: #86c6ee;
+  --color-sky-900: #aed9f5;
 }
 
 body {
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--page);
+  color: var(--color-slate-900);
+}
+
+/* Checkboxes and radios follow the accent. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent);
+}
+
+/* A visible keyboard focus ring everywhere, in both themes. Inputs that draw
+   their own focus border keep it. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline-offset: 0;
+}
+
+/* Subtle color transitions on interactive elements, turned off while the
+   theme switches so the whole page changes at once. */
+a,
+button,
+summary,
+select,
+input {
+  transition:
+    color 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
 }
